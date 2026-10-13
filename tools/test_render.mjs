@@ -49,6 +49,7 @@ location.hash='#lab';await winEvents.hashchange();
 assert(nodes.get('main').innerHTML.includes('110 / 111'));
 location.hash='#character/1304?source=github';await winEvents.hashchange();
 assert(nodes.get('main').innerHTML.includes('GITHUB 原始数据'));
+assert(!nodes.get('main').innerHTML.includes('存在异常，如有疑问请联系官方客服'));
 assert(nodes.get('main').innerHTML.includes('同奏持续时间'));
 assert(nodes.get('main').innerHTML.includes('66.47%'));
 events.change({target:{dataset:{skillLevel:'1'},value:'1',hasAttribute:()=>false}});

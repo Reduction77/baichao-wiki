@@ -99,7 +99,7 @@ def convert(data, role_id):
     item_rows = {x['Id']:x for x in data['items']}
     source_items = {str(i): {'name':text(item_rows[i]['Name']), 'icon':item_rows[i]['Icon']}
                     for i in sorted(ids)}
-    return {'id':role_id, 'name':text(r['Name']), 'nickname':text(r['NickName']),
+    return {'id':role_id, 'name':text(r['Name']), 'nickname': '' if text(r['NickName']).startswith('存在异常') else text(r['NickName']),
         'desc':text(r['Introduction']), 'rarity':r['QualityId'],
         'weapon':r['WeaponType'], 'element':r['ElementId'], 'tag':{},
         'icon':r['RoleHeadIconLarge'], 'background':r['FormationRoleCard'],
@@ -144,6 +144,7 @@ def main():
     out=convert(data,1304)
     out['provenance']={'repository':REPO,'commit':COMMIT,'gameVersion':'3.7.0',
         'resourceVersion':'3.7.8','locale':'zh-Hans','inputSha256':hashes,
+        'missingFields':['称号：上游文本为异常占位内容，已隐藏'],
         'scope':'今汐试验：文字、基础属性、技能倍率、共鸣链与材料从 GitHub 原始配置转换。图片沿用本站保存的 nanoka 图片快照。未转换伤害拆分、战斗标签、故事、Live2D 与推荐配装。'}
     if args.compare:
         out['comparison']=compare(out,json.loads(args.compare.read_text()))
