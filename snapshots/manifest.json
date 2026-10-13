@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "version": "3.7",
+  "parts": [
+    {
+      "file": "snapshot-01.zip",
+      "sha256": "6fc982b326981ceaff31e66bcdd30e19bb6fe291160c20c24fdc20c7e5c17541",
+      "files": 316
+    },
+    {
+      "file": "snapshot-02.zip",
+      "sha256": "6c0c6d8c0d2bd56611894ec6bd92cd6e6d9668ddff88aed4cd1b0523722d75f6",
+      "files": 147
+    },
+    {
+      "file": "snapshot-03.zip",
+      "sha256": "d6dd1b0b9b272d0fdba1c6793a55a31b2dfa673048db041517d061c15c58c361",
+      "files": 159
+    },
+    {
+      "file": "snapshot-04.zip",
+      "sha256": "b0e18a52892ecc04c3fba2ebb100c133100c476accbdf31be40ada8393fb1ff5",
+      "files": 161
+    },
+    {
+      "file": "snapshot-05.zip",
+      "sha256": "2c96cad13e161d4956b9d078a84d65bfbde7fed6bc8c6394f5951b1546635d42",
+      "files": 180
+    }
+  ]
+}

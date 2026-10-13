@@ -1,0 +1,46 @@
+// Data and render smoke check in Node; does not replace a real browser layout test.
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+const web=process.env.WIKI_TEST_DATA_DIR||path.resolve(import.meta.dirname,'../web');
+class Element {constructor(){this.innerHTML='';this.textContent='';this.value='';this.dataset={};this.classList={toggle(){},contains(){return false;}};}setAttribute(){} remove(){} }
+const nodes=new Map(['main','#results','#result-count','#sort','#group','#side-version','#detail-content'].map(k=>[k,new Element()]));
+const events={},winEvents={};
+globalThis.document={querySelector:s=>nodes.get(s)||null,querySelectorAll:()=>[],addEventListener:(n,f)=>events[n]=f,createElement:()=>new Element(),body:{append(){}}};
+globalThis.location={hash:'#home'};
+globalThis.history={replaceState:(_a,_b,url)=>location.hash=url};
+globalThis.window={addEventListener:(n,f)=>winEvents[n]=f,scrollTo(){}};
+const storage=new Map();globalThis.localStorage={getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)};
+globalThis.fetch=async uri=>{assert(!/^https?:/.test(uri),'Site must use local data');try{return {ok:true,status:200,json:async()=>JSON.parse(await fs.readFile(path.join(web,uri),'utf8'))};}catch{return {ok:false,status:404};}};
+await import('../web/assets/app.js');
+const meta=JSON.parse(await fs.readFile(path.join(web,'data/index.json'),'utf8'));
+assert(nodes.get('main').innerHTML.includes('探索每一段旅程'));
+let count=0;
+for(const kind of ['character','weapon','echo']){
+ location.hash='#'+kind;await winEvents.hashchange();assert(nodes.get('#result-count').textContent.includes(String(meta.counts[kind])));
+ const list=JSON.parse(await fs.readFile(path.join(web,'data',meta.snapshot,kind+'.json'),'utf8'));
+ for(const [id,entry] of Object.entries(list)){
+  location.hash='#'+kind+'/'+id;await winEvents.hashchange();
+  const html=nodes.get('main').innerHTML;
+  assert(!html.includes('暂时无法打开资料'),kind+'/'+id+' failed');
+  assert(html.includes('detail-hero'),kind+'/'+id+' hero missing');
+  count++;
+ }
+}
+location.hash='#character/1304';await winEvents.hashchange();
+events.change({target:{dataset:{control:'skillLevel'},value:'1'}});
+assert(nodes.get('#detail-content').innerHTML.includes('33.43%'));
+events.change({target:{dataset:{control:'skillLevel'},value:'10'}});
+assert(nodes.get('#detail-content').innerHTML.includes('66.47%'));
+events.click({target:{closest:()=>({dataset:{tab:'overview'},hasAttribute:()=>false})}});
+events.change({target:{dataset:{control:'charLevel'},value:'20'}});
+assert(nodes.get('#detail-content').innerHTML.includes('2,830')||nodes.get('#detail-content').innerHTML.includes('2830'));
+events.change({target:{dataset:{control:'stage'},value:'0'}});
+assert(nodes.get('#detail-content').innerHTML.includes('2253'));
+events.click({target:{closest:()=>({dataset:{fav:'character:1304'}})}});
+assert(JSON.parse(storage.get('baichao-favorites')).includes('character:1304'));
+location.hash='#character';await winEvents.hashchange();
+events.input({target:{id:'search',value:'今汐'}});
+assert(nodes.get('#result-count').textContent.startsWith('共 1 条'));
+for(const route of ['teams','favorites','about']){location.hash='#'+route;await winEvents.hashchange();assert(!nodes.get('main').innerHTML.includes('暂时无法打开资料'));}
+console.log(`Render checks passed: ${count} detail records, local fetches, skill levels, ascension stages, favorites, search, auxiliary pages.`);

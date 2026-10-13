@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+web/data/*
+!web/data/teams.json
+snapshots/.staging-*/
+.env
+.update.lock
+.DS_Store

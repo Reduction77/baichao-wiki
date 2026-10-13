@@ -1,0 +1,10 @@
+[
+  {
+    "title": "示例结构：请替换为已核实队伍",
+    "characters": [1304, 1102, 1503],
+    "requirements": "填写真实共鸣链及武器要求；此示例并非配队推荐",
+    "version": "填写攻略适用版本",
+    "rotation": "填写已核实的启动轴与循环轴",
+    "videos": [{"title": "填写视频标题", "up": "填写UP主", "url": "填写https://www.bilibili.com/video/开头的真实链接"}]
+  }
+]
