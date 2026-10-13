@@ -12,3 +12,21 @@ export function filterEntries(entries,query,{elements,weapon,rarity,group,intens
 export function safeVideo(url){try{const u=new URL(url);return u.protocol==='https:'&&(u.hostname==='www.bilibili.com'||u.hostname==='bilibili.com'||u.hostname==='b23.tv')?u.href:null;}catch{return null;}}
 
 export function formatStat(x){const v=Number(x.value);return x.is_percent?(v/100).toFixed(2)+'%':x.is_ratio?(v*100).toFixed(1)+'%':Math.round(v);}
+
+
+// Escape text first; render only an allowlist of the game's presentation tags.
+export function rich(value,params=[]){
+  const colors={Title:'title',Highlight:'highlight',Light:'spectro',Fire:'fusion',Thunder:'electro',Wind:'aero',Ice:'glacio',Dark:'havoc'};
+  const tokens=fill(value,params).split(/(<[^>]*>)/g),stack=[];
+  let out='';
+  for(const token of tokens){
+    if(!token.startsWith('<')){out+=esc(token);continue;}
+    const c=token.match(/^<color=(\w+)>$/i);
+    if(c){const cls=colors[c[1]]||'highlight';out+=`<span class="game-${cls}">`;stack.push('color');}
+    else if(/^<size=\d+>$/i.test(token)){out+='<span>';stack.push('size');}
+    else if(/^<\/(color|size)>$/i.test(token)){if(stack.length){out+='</span>';stack.pop();}}
+    else if(/^<br\s*\/?\s*>$/i.test(token))out+='\n';
+    // Links and semantic tags are deliberately reduced to their text content.
+  }
+  return out+'</span>'.repeat(stack.length);
+}

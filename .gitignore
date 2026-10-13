@@ -6,3 +6,6 @@ snapshots/.staging-*/
 .env
 .update.lock
 .DS_Store
+!web/data/experiments/
+!web/data/experiments/*.json
+.cache/

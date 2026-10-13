@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {fill,plain,esc,paramsAt,rowValue,statOptions,filterEntries,safeVideo,formatStat} from '../web/assets/core.js';
+import {rich,fill,plain,esc,paramsAt,rowValue,statOptions,filterEntries,safeVideo,formatStat} from '../web/assets/core.js';
 assert.equal(fill('提升{0}，持续{1}',['20%','15秒']),'提升20%，持续15秒');
 assert.equal(plain('<size=40><color=Title>普攻</color></size>\n造成{0}',['20%']),'普攻\n造成20%');
 assert.equal(esc('<img onerror="x">'),'&lt;img onerror=&quot;x&quot;&gt;');
@@ -18,3 +18,7 @@ console.log('Core checks passed: text safety, parameters, levels, filters, video
 assert.equal(formatStat({value:540,is_percent:true}), '5.40%');
 assert.equal(formatStat({value:0.486,is_ratio:true}), '48.6%');
 assert.equal(formatStat({value:2252.55}),2253);
+
+assert.equal(rich('<color=Title>普攻</color><img src=x onerror=alert(1)>'), '<span class="game-title">普攻</span>');
+assert.equal(rich('<color=Highlight>{0}</color>',['<script>alert(1)</script>']), '<span class="game-highlight">alert(1)</span>');
+assert.equal(rich('x & y'), 'x &amp; y');
