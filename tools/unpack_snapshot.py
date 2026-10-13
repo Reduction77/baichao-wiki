@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
-"""Restore the checked-in compressed snapshot before a Pages build."""
-import hashlib,json,pathlib,zipfile
+"""Restore the checked-in, checksum-verified compressed snapshot fragments."""
+import hashlib,io,json,pathlib,zipfile
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 def main():
  manifest=json.loads((ROOT/'snapshots/manifest.json').read_text())
  for part in manifest['parts']:
-  name=part['file']
-  if pathlib.Path(name).name!=name or not name.endswith('.zip'):raise ValueError('Invalid snapshot filename')
-  archive=ROOT/'snapshots'/name
-  if hashlib.sha256(archive.read_bytes()).hexdigest()!=part['sha256']:raise ValueError('Snapshot checksum mismatch: '+name)
-  with zipfile.ZipFile(archive) as z:
+  chunks=[]
+  for fragment in part['fragments']:
+   name=fragment['file']
+   if pathlib.Path(name).name!=name:raise ValueError('Invalid fragment name')
+   data=(ROOT/'snapshots'/name).read_bytes()
+   if hashlib.sha256(data).hexdigest()!=fragment['sha256']:raise ValueError('Fragment checksum mismatch: '+name)
+   chunks.append(data)
+  data=b''.join(chunks)
+  if hashlib.sha256(data).hexdigest()!=part['sha256']:raise ValueError('Snapshot checksum mismatch: '+part['file'])
+  with zipfile.ZipFile(io.BytesIO(data)) as z:
    for info in z.infolist():
     p=pathlib.PurePosixPath(info.filename)
     if p.is_absolute() or '..' in p.parts or not p.parts or p.parts[0]!='data':raise ValueError('Invalid snapshot path')

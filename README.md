@@ -26,7 +26,7 @@ https://reduction77.github.io/baichao-wiki/
 
 ## 资料快照与更新
 
-`snapshots/`保存经过校验的分卷ZIP，发布时由 `tools/unpack_snapshot.py` 解压为 `web/data/`。图片和JSON均从本地快照提供，首次发布不依赖nanoka网络响应。原始网页和脚本保留为普通源码文件，数据压缩用于减少仓库文件数量。
+`snapshots/`保存经过校验的压缩分片，发布时由 `tools/unpack_snapshot.py` 解压为 `web/data/`。图片和JSON均从本地快照提供，首次发布不依赖nanoka网络响应。原始网页和脚本保留为普通源码文件，数据分片用于可靠传输与校验。
 
 手动更新并把资料保存回源码仓库：
 
