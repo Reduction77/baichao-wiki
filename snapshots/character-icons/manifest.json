@@ -1,0 +1,30 @@
+{
+  "images": 785,
+  "sha256": "5db8d5701f4627681ce8043a6ccb0764975250001acfa3c6e0170d8e8f7cb03b",
+  "fragments": [
+    {
+      "file": "icons.000.bin",
+      "sha256": "4ec1cc1c7a58c3b62a3361e264ea5549e7640d4b4861e4fea1bf73a720f5b6e9"
+    },
+    {
+      "file": "icons.001.bin",
+      "sha256": "5e3782b881c31c6aadf093ca33042456fa096ed5d7dc54b80ee35892b9aa7c3e"
+    },
+    {
+      "file": "icons.002.bin",
+      "sha256": "d6ade1b95167fc19a643a6a04816d3a1c5cd3e4e8d30f3710fecb7747941b0a5"
+    },
+    {
+      "file": "icons.003.bin",
+      "sha256": "bf719059c9526c85f8828a8736699c092f83a13088e414e11ab4bb6267782bd6"
+    },
+    {
+      "file": "icons.004.bin",
+      "sha256": "61d669aea838338907637fac9d87b9d4ac68032745a1fbb8e91ba244f3deea89"
+    },
+    {
+      "file": "icons.005.bin",
+      "sha256": "9377562e4b02352d39b54fc8767234dea20865b035bcbf1c5f507fb0ad759957"
+    }
+  ]
+}

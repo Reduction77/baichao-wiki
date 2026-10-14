@@ -50,6 +50,7 @@ git push
 
 ```bash
 python3 tools/unpack_snapshot.py
+python3 tools/unpack_character_icons.py
 python3 tools/check_data.py
 node tools/test_core.mjs
 node tools/test_render.mjs
@@ -119,3 +120,5 @@ git push
 脚本读取 nanoka 游戏快照 manifest，仅导入比已发布正式服更高主次版本的测试游戏条目，不把资源修订号当作测试版本。版本索引、详情和图片一起保存，运行失败不发布不完整版本。若上游以后改用不同的测试版本命名，需要确认其发布状态并调整导入规则。Actions 勾选 refresh_data 时先更新正式服，再更新测试索引；与原刷新方式一样，这只影响本次部署，不提交回源码。没有新增定时任务。
 
 图标包还原：`python3 tools/unpack_character_icons.py`；额外版本检查：`node tools/test_versions.mjs` 和 `node tools/test_beta_render.mjs`。
+
+重新生成角色图标包：`python3 tools/pack_character_icons.py`。下载器复用每个线程的HTTPS连接，已有有效WebP无需重复下载；全部成功后生成带SHA256校验的分片。提交 `snapshots/character-icons/` 后，Pages发布与网页访问均无需向上游请求图标。资料检查同时核对每个角色技能和共鸣链图标是否可从本地映射解析。

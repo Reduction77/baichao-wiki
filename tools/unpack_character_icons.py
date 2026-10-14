@@ -13,7 +13,8 @@ for item in manifest['fragments']:
 archive=b''.join(parts)
 if hashlib.sha256(archive).hexdigest()!=manifest['sha256']:raise ValueError('Icon archive checksum mismatch')
 with zipfile.ZipFile(io.BytesIO(archive)) as z:
-    z.testzip()
+    bad=z.testzip()
+    if bad:raise ValueError('Corrupt icon archive entry: '+bad)
     for name in z.namelist():
         if name!='assets/character-icons.json' and not re.fullmatch(r'assets/character-icons/[0-9a-f]{20}\.webp',name):raise ValueError('Unexpected icon archive path')
     for name in z.namelist():

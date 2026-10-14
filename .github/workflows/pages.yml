@@ -35,6 +35,7 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && inputs.refresh_data
         run: |
           python3 tools/sync_data.py --keep 1
+          python3 tools/pack_character_icons.py
           python3 tools/sync_beta.py
       - name: Validate data and rendering
         run: |

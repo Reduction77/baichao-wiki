@@ -8,6 +8,10 @@ folder=web/'data'/meta['snapshot']
 errors=[]
 items=json.loads((folder/'items.json').read_text())
 images=json.loads((folder/'images.json').read_text())
+for extra in ['assets/character-icons.json','assets/pilot/images.json']:
+    path=web/extra
+    if not path.is_file():errors.append(extra+': missing')
+    else:images.update(json.loads(path.read_text()))
 for category in ['character','weapon','echo']:
     rows=json.loads((folder/(category+'.json')).read_text())
     if len(rows)!=meta['counts'][category]: errors.append(category+': count mismatch')
@@ -16,6 +20,13 @@ for category in ['character','weapon','echo']:
         if not f.is_file(): errors.append(str(f)+': missing');continue
         d=json.loads(f.read_text())
         if str(d.get('id'))!=ident:errors.append(category+'/'+ident+': ID mismatch')
+        if category=='character':
+            from sync_data import image_url
+            refs=[n.get('skill',{}).get('icon') for n in d.get('skill_trees',{}).values()]
+            refs.extend(n.get('icon') for n in d.get('chains',{}).values())
+            for ref in refs:
+                url=image_url(ref)
+                if url and url not in images:errors.append(category+'/'+ident+': missing skill/chain icon '+url)
         for costs in d.get('ascensions',{}).values():
             for c in costs:
                 if str(c['key']) not in items:errors.append(category+'/'+ident+': missing material '+str(c['key']))
