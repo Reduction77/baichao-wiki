@@ -25,11 +25,11 @@ FILES = {
  'texts': 'Textmaps/zh-Hans/multi_text/MultiText.json',
 }
 
-def fetch(root, path):
+def fetch(root, path, commit=COMMIT, repo=REPO):
     dest = root / path
     if not dest.exists():
         dest.parent.mkdir(parents=True, exist_ok=True)
-        url = f'https://raw.githubusercontent.com/{REPO}/{COMMIT}/{path}'
+        url = f'https://raw.githubusercontent.com/{repo}/{commit}/{path}'
         for attempt in range(3):
             try:
                 with urllib.request.urlopen(url, timeout=90) as response:

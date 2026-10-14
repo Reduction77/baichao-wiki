@@ -8,6 +8,10 @@ on:
         description: "Rebuild pinned GitHub data before publishing (does not advance the upstream commit)"
         type: boolean
         default: false
+      check_upstream:
+        description: "Check latest verified GitHub release without changing the pinned source"
+        type: boolean
+        default: true
 permissions:
   contents: read
   pages: write
@@ -42,6 +46,10 @@ jobs:
           node tools/test_render.mjs
           node tools/test_versions.mjs
           node tools/test_beta_render.mjs
+          python3 tools/test_github_updates.py
+      - name: Check upstream release (manual only)
+        if: github.event_name == 'workflow_dispatch' && inputs.check_upstream
+        run: python3 tools/check_github_updates.py --output web/data/source-status.json
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:

@@ -2,6 +2,7 @@ __pycache__/
 *.pyc
 web/data/*
 !web/data/teams.json
+!web/data/source-status.json
 snapshots/.staging-*/
 .env
 .update.lock

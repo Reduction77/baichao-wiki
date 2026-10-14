@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-10-14T11:37:55.602126+00:00",
+  "current": {
+    "repository": "Arikatsu/WutheringWaves_Data",
+    "commit": "9218d612ad815e398e064e577e42aaf878899968",
+    "gameVersion": "3.7.0",
+    "resourceVersion": "3.7.8",
+    "status": "Release"
+  },
+  "latestRelease": {
+    "repository": "Arikatsu/WutheringWaves_Data",
+    "commit": "9218d612ad815e398e064e577e42aaf878899968",
+    "status": "Release",
+    "gameVersion": "3.7.0",
+    "resourceVersion": "3.7.8"
+  },
+  "updateAvailable": false,
+  "latestCommit": "9218d612ad815e398e064e577e42aaf878899968",
+  "scanLimit": 30
+}

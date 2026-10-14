@@ -7,6 +7,7 @@ image reuse and optional post-generation comparison, never for text or numbers.
 import argparse, concurrent.futures, datetime, hashlib, json, pathlib, shutil, os
 from import_github_character import COMMIT, REPO, FILES, fetch, convert, costs, compare
 from sync_data import image_url
+from check_github_updates import config,verify,readme
 
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 EXTRA={
@@ -93,22 +94,26 @@ def build(data,scope):
  return details,catalog,items,sonatas,limitations
 
 def main():
- parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--compare',action='store_true');parser.add_argument('--compare-snapshot',type=pathlib.Path);args=parser.parse_args()
- files={**FILES,**EXTRA};cache=ROOT/'.cache/arikatsu'/COMMIT
+ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--compare',action='store_true');parser.add_argument('--compare-snapshot',type=pathlib.Path);parser.add_argument('--source-config',type=pathlib.Path,default=ROOT/'tools/github_source.json');parser.add_argument('--preview',action='store_true',help='Write candidate snapshot and report without changing the live index');args=parser.parse_args()
+ source=config(args.source_config);verify(source);commit=source['commit'];repo=source['repository']
+ files={**FILES,**EXTRA};cache=ROOT/'.cache/arikatsu'/commit
  def load(pair):
-  key,path=pair;value,digest=fetch(cache,path);return key,value,path,digest
+  key,path=pair;value,digest=fetch(cache,path,commit=commit,repo=repo);return key,value,path,digest
  data={};hashes={}
  with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
   for key,value,path,digest in pool.map(load,files.items()):data[key]=value;hashes[path]=digest
  scope=json.loads((ROOT/'tools/github_catalog_scope.json').read_text())
+ coverage={'newCharacters':sorted({x['RoleId'] for x in data['favor']}-set(scope['character'])),'newWeapons':sorted(({x['ItemId'] for x in data['weapons']}|{x['Id'] for x in data['skins']})-set(scope['weapon']))}
+ if any(coverage.values()) and not args.preview:raise ValueError('Update catalog scope before publishing newly discovered entries: '+json.dumps(coverage))
  details,catalog,items,sonatas,limitations=build(data,scope)
  web=ROOT/'web';old=json.loads((web/'data/index.json').read_text());previous=web/'data'/old['snapshot']
  image_maps={}
  for p in [previous/'images.json',web/'assets/character-icons.json',web/'assets/pilot/images.json',web/'assets/github-images.json']:
   if p.exists():image_maps.update(json.loads(p.read_text()))
  snapshot=datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%S')+'-'+str(os.getpid());stage=web/'data'/('.staging-'+snapshot)
- provenance={'repository':REPO,'commit':COMMIT,'gameVersion':'3.7.0','resourceVersion':'3.7.8','locale':'zh-Hans','scope':'文字、属性、技能倍率、共鸣链、武器效果、声骸技能与材料均由 GitHub 原始配置生成。图片沿用本站保存的本地图像快照。'}
- report={'source':provenance,'inputSha256':hashes,'counts':{k:len(v) for k,v in details.items()},'limitations':limitations,'comparison':{}}
+ provenance={'repository':repo,'commit':commit,'gameVersion':source['gameVersion'],'resourceVersion':source['resourceVersion'],'locale':'zh-Hans','scope':'文字、属性、技能倍率、共鸣链、武器效果、声骸技能与材料均由 GitHub 原始配置生成。图片沿用本站保存的本地图像快照。'}
+ hashes['README.md']=hashlib.sha256(readme(repo,commit).encode()).hexdigest()
+ report={'source':provenance,'inputSha256':hashes,'counts':{k:len(v) for k,v in details.items()},'limitations':limitations,'coverage':coverage,'comparison':{}}
  try:
   for kind,rows in details.items():
    for ident,d in rows.items():
@@ -123,12 +128,25 @@ def main():
    src=web/ref
    if not src.is_file():raise ValueError('Missing cached image: '+ref)
    images[url]=ref
+  refs=set()
+  for rows in details.values():
+   for d in rows.values():
+    refs.update(image_url(d.get(k)) for k in ['icon','background'])
+    refs.update(image_url(n['skill'].get('icon')) for n in d.get('skill_trees',{}).values())
+    refs.update(image_url(n.get('icon')) for n in d.get('chains',{}).values())
+  refs.update(image_url(i['icon']) for i in items.values());refs.discard('')
+  missing=sorted(refs-images.keys());report['missingImages']=missing
   write(stage/'images.json',images);write(stage/'provenance.json',report)
-  meta={**old,'version':'3.7','hotfix':'3.7.8','live':'3.7','source':f'https://github.com/{REPO}','sourcePage':f'https://github.com/{REPO}/tree/{COMMIT}','updated':datetime.datetime.now(datetime.timezone.utc).isoformat(),'snapshot':snapshot,'counts':report['counts'],'images':len(images),'missingImages':0,'provenance':provenance}
-  stage.rename(web/'data'/snapshot);write(web/'data/index.json',meta)
+  version='.'.join(source['gameVersion'].split('.')[:2])
+  meta={**old,'version':version,'hotfix':source['resourceVersion'],'live':version,'source':f'https://github.com/{repo}','sourcePage':f'https://github.com/{repo}/tree/{commit}','updated':datetime.datetime.now(datetime.timezone.utc).isoformat(),'snapshot':snapshot,'counts':report['counts'],'images':len(images),'missingImages':len(missing),'provenance':provenance}
+  if missing and not args.preview:raise ValueError('Missing local images; run --preview to inspect: '+str(len(missing)))
+  stage.rename(web/'data'/snapshot)
+  if args.preview:write(web/'data'/snapshot/'candidate-index.json',meta)
+  else:write(web/'data/index.json',meta)
  except Exception:
   shutil.rmtree(stage,ignore_errors=True);raise
  print('GitHub archive generated:',report['counts'],'materials:',len(items),flush=True)
- print('Provenance:',COMMIT,'limitations:',len(limitations),flush=True)
+ print('Provenance:',commit,'limitations:',len(limitations),flush=True)
+ if args.preview:print('Preview only; live index unchanged. Candidate:',web/'data'/snapshot,flush=True)
 
 if __name__=='__main__':main()
