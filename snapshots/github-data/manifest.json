@@ -1,0 +1,18 @@
+{
+  "snapshot": "20261014T105808-5",
+  "sha256": "677a07419f67e1efc9d53d14c9ae9b19628988d87761a787f68fec6fea7847e3",
+  "fragments": [
+    {
+      "file": "data.000.bin",
+      "sha256": "21b46e532ae9b578533d2715c2614544a0c42e5207f4d031c09e896249850170"
+    },
+    {
+      "file": "data.001.bin",
+      "sha256": "87d193c17fa477c083d7ae9bbe81534fe4e07f5bbe9b0a5204b215508571488c"
+    },
+    {
+      "file": "data.002.bin",
+      "sha256": "10081995137aafc253aeb1ca9d49f351785ded22df305e9964583b1d340c25aa"
+    }
+  ]
+}

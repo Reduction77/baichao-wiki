@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       refresh_data:
-        description: "Download live-version data before publishing (does not commit it)"
+        description: "Rebuild pinned GitHub data before publishing (does not advance the upstream commit)"
         type: boolean
         default: false
 permissions:
@@ -34,9 +34,7 @@ jobs:
       - name: Refresh source data (manual only)
         if: github.event_name == 'workflow_dispatch' && inputs.refresh_data
         run: |
-          python3 tools/sync_data.py --keep 1
-          python3 tools/pack_character_icons.py
-          python3 tools/sync_beta.py
+          python3 tools/import_github_archive.py
       - name: Validate data and rendering
         run: |
           python3 tools/check_data.py

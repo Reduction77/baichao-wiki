@@ -46,7 +46,7 @@ for(const route of ['teams','favorites','about','beta']){location.hash='#'+route
 console.log(`Render checks passed: ${count} detail records, local fetches, skill levels, ascension stages, favorites, search, auxiliary pages.`);
 
 location.hash='#lab';await winEvents.hashchange();
-assert(nodes.get('main').innerHTML.includes('110 / 111'));
+assert(nodes.get('main').innerHTML.includes(meta.provenance?'全站 GitHub 数据来源':'110 / 111'));
 location.hash='#character/1304?source=github';await winEvents.hashchange();
 assert(nodes.get('main').innerHTML.includes('GITHUB 原始配置'));
 assert(!nodes.get('main').innerHTML.includes('存在异常，如有疑问请联系官方客服'));

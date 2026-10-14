@@ -46,7 +46,15 @@ def costs(rows):
     return [{'key': x['Key'], 'value': x['Value']} for x in rows]
 
 def convert(data, role_id):
-    texts = {x['Id']: x['Content'] for x in data['texts']}
+    if '_prepared' not in data:
+        grouped={}
+        for kind,key in [('descriptions','SkillLevelGroupId'),('levels','SkillLevelGroupId'),('nodes','NodeGroup')]:
+            grouped[kind]={}
+            rows=sorted(data[kind],key=lambda x:x['Order']) if kind=='descriptions' else data[kind]
+            for row in rows:grouped[kind].setdefault(row[key],[]).append(row)
+        data['_prepared']={'texts':{x['Id']:x['Content'] for x in data['texts']},**grouped}
+    prepared=data['_prepared']
+    texts = prepared['texts']
     def text(key):
         if not key: return ''
         if key not in texts: raise ValueError(f'Missing localization: {key}')
@@ -57,8 +65,7 @@ def convert(data, role_id):
     skill_types = {x['Id']: text(x['TypeName']) for x in data['types']}
     skill_rows = {x['Id']: x for x in data['skills']}
     nodes = {}
-    for n in data['nodes']:
-        if n['NodeGroup'] != r['SkillTreeGroupId']: continue
+    for n in prepared['nodes'].get(r['SkillTreeGroupId'],[]):
         s = skill_rows.get(n['SkillId'])
         if s:
             group = s['SkillLevelGroupId']
@@ -69,10 +76,9 @@ def convert(data, role_id):
                 'level': {str(x['Order']): {'name': text(x['AttributeName']),
                     'param': [v['ArrayString'] for v in x['SkillDetailNum']],
                     'format': text(x['Description']) or None}
-                    for x in sorted(data['descriptions'], key=lambda x:x['Order'])
-                    if x['SkillLevelGroupId'] == group},
+                    for x in prepared['descriptions'].get(group,[])},
                 'consume': {str(x['SkillId']): costs(x['Consume'])
-                    for x in data['levels'] if x['SkillLevelGroupId'] == group}}
+                    for x in prepared['levels'].get(group,[])}}
         else:
             skill = {'name': text(n['PropertyNodeTitle']),
                 'desc': text(n['PropertyNodeDescribe']), 'param': n['PropertyNodeParam'],
@@ -99,7 +105,8 @@ def convert(data, role_id):
     item_rows = {x['Id']:x for x in data['items']}
     source_items = {str(i): {'name':text(item_rows[i]['Name']), 'icon':item_rows[i]['Icon']}
                     for i in sorted(ids)}
-    return {'id':role_id, 'name':text(r['Name']), 'nickname': '' if text(r['NickName']).startswith('存在异常') else text(r['NickName']),
+    nickname=texts.get(r['NickName'],'')
+    return {'id':role_id, 'name':text(r['Name']), 'nickname': '' if nickname.startswith('存在异常') else nickname,
         'desc':text(r['Introduction']), 'rarity':r['QualityId'],
         'weapon':r['WeaponType'], 'element':r['ElementId'], 'tag':{},
         'icon':r['RoleHeadIconLarge'], 'background':r['FormationRoleCard'],

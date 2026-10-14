@@ -20,4 +20,7 @@ def main():
     if p.is_absolute() or '..' in p.parts or not p.parts or p.parts[0]!='data':raise ValueError('Invalid snapshot path')
    z.extractall(ROOT/'web')
  print('Restored snapshot',manifest['version'])
+ if (ROOT/'snapshots/github-data/manifest.json').is_file():
+  from unpack_github_archive import main as restore_github
+  restore_github()
 if __name__=='__main__':main()

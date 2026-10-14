@@ -13,3 +13,5 @@ snapshots/.staging-*/
 !web/data/beta/**
 web/assets/character-icons/
 web/assets/character-icons.json
+web/assets/github-images.json
+web/assets/github-media/

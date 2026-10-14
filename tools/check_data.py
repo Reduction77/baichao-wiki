@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Validate local snapshot, references, image bytes, and team records."""
 import json,pathlib,sys
+from sync_data import image_url
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 web=ROOT/'web'
 meta=json.loads((web/'data/index.json').read_text())
@@ -20,8 +21,11 @@ for category in ['character','weapon','echo']:
         if not f.is_file(): errors.append(str(f)+': missing');continue
         d=json.loads(f.read_text())
         if str(d.get('id'))!=ident:errors.append(category+'/'+ident+': ID mismatch')
+        if meta.get('provenance') and d.get('provenance')!=meta['provenance']:errors.append(category+'/'+ident+': source mismatch')
+        for ref in [d.get('icon'),d.get('background')]:
+            url=image_url(ref)
+            if url and url not in images:errors.append(category+'/'+ident+': missing portrait/icon '+url)
         if category=='character':
-            from sync_data import image_url
             refs=[n.get('skill',{}).get('icon') for n in d.get('skill_trees',{}).values()]
             refs.extend(n.get('icon') for n in d.get('chains',{}).values())
             for ref in refs:
@@ -31,6 +35,15 @@ for category in ['character','weapon','echo']:
             for c in costs:
                 if str(c['key']) not in items:errors.append(category+'/'+ident+': missing material '+str(c['key']))
                 if not isinstance(c['value'],(float,int)) or c['value']<0:errors.append(category+'/'+ident+': invalid quantity')
+for ident,item in items.items():
+    url=image_url(item.get('icon'))
+    if url and url not in images:errors.append('Material '+ident+': missing image '+url)
+if meta.get('provenance'):
+    report=json.loads((folder/'provenance.json').read_text())
+    if report['source']!=meta['provenance'] or report['counts']!=meta['counts']:errors.append('Provenance report mismatch')
+    for kind,rows in report.get('comparison',{}).items():
+        for row in rows:
+            if row['label'] in ['基础属性','共鸣链','突破材料'] and row['checked']!=row['matched']:errors.append('Migration regression: '+kind+'/'+row['label'])
 for url,ref in images.items():
     f=web/ref
     if not f.is_file():errors.append(ref+': image missing');continue
