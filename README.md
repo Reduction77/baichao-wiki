@@ -84,3 +84,24 @@ python3 tools/import_github_archive.py --source-config .cache/candidate-source.j
 确认候选后将配置写入 `tools/github_source.json`，更新条目范围及本地图片，重新导入、检查、打包并提交。无需修改脚本内的版本常量。今汐旧试验链接保留历史固定提交，普通今汐页面随全站配置更新。
 
 Actions 手动运行新增 `check_upstream` 选项，默认核对上游并更新此次部署的核对时间；不切换正式服来源、不新增定时任务。检查器受 GitHub 网络及 API 配额影响，失败时不会发布该次构建。
+
+## 手动修正资料
+
+打开网站 `editor.html` 或导航“手动修正”。支持角色、武器、声骸、材料与合鸣的文字和数值字段。每条修正保存原值、修正值、原因，以及准确的游戏和资源版本。草稿保存在当前浏览器，可导入、导出或复制 JSON。
+
+GitHub Pages 是静态站点，编辑页不会直接写入仓库。导出后打开编辑页提供的 GitHub 链接，将内容完整替换到 `web/data/manual-corrections.json` 并提交到 main。Pages 工作流在恢复或刷新资料后、检查前自动应用该文件。无需重打包原始数据，之后同版本重新导入仍会应用。
+
+修正限定版本，跨版本旧规则会跳过并记录状态；同版本原值改变、字段不存在或多个启用规则指向同一字段时，发布会停止，要求核对。普通详情页标出已应用的修正及原因。材料修正也同步到角色材料列表。停用或删除规则并提交后，下次发布恢复该字段的原始值。编辑器不是账号后台，不收集 GitHub Token，也不会赋予访客修改线上资料的权限。
+
+本地应用与检查：
+
+```bash
+python3 tools/unpack_snapshot.py
+python3 tools/unpack_character_icons.py
+python3 tools/apply_corrections.py
+python3 tools/check_data.py
+python3 tools/test_corrections.py
+node tools/test_correction_editor.mjs
+```
+
+编辑器仅改已有标量字段；图片、资料结构、新条目和配队数据仍通过相应源码或映射维护。避免把修正直接写进原始分片，独立修正文件可以保留来源和核对边界。
