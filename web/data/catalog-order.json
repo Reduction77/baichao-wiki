@@ -1,0 +1,2283 @@
+{
+  "schema": 1,
+  "source": {
+    "repository": "Arikatsu/WutheringWaves_Data",
+    "commit": "9218d612ad815e398e064e577e42aaf878899968",
+    "gameVersion": "3.7.0",
+    "resourceVersion": "3.7.8",
+    "status": "Release"
+  },
+  "notes": "Characters use game role display priority checked against release sequence; weapons use first release snapshot and first convene sequence; echoes use first confirmed release snapshot. Entries introduced in the same snapshot have stable name order; no release dates are invented.",
+  "snapshotSources": [
+    {
+      "version": "1.0",
+      "commit": "a1b7b62d0476364d4af70202756853a91304e59b",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "f1291ef82799acb07a994d54b1369196c33e6059fb406e12b3f49dda9f11dafd",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "1.0.0",
+        "resourceVersion": "1.0.29"
+      },
+      "readmeSha256": "1cedac35fb7df5918205a6dc6f6011d6a5de75930ac5fb232ebb870a0213fa92"
+    },
+    {
+      "version": "1.0",
+      "commit": "a1b7b62d0476364d4af70202756853a91304e59b",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": null,
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "1.0.0",
+        "resourceVersion": "1.0.29"
+      },
+      "readmeSha256": "1cedac35fb7df5918205a6dc6f6011d6a5de75930ac5fb232ebb870a0213fa92"
+    },
+    {
+      "version": "1.0",
+      "commit": "a1b7b62d0476364d4af70202756853a91304e59b",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "5031ff56b3c3afa3866b87e1cbc77abce4bc4cfbc015c8e3cd90011f47cbe38e",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "1.0.0",
+        "resourceVersion": "1.0.29"
+      },
+      "readmeSha256": "1cedac35fb7df5918205a6dc6f6011d6a5de75930ac5fb232ebb870a0213fa92"
+    },
+    {
+      "version": "1.1",
+      "commit": "51f5a2d4bb035cf2c37e5def5692aad92f635504",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "eb96e975bcc4e733ddd1382b1ae73bbea4d7ef56e34525954db54ff4de94c5e0",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "1.1.0",
+        "resourceVersion": "1.1.20"
+      },
+      "readmeSha256": "a05ecc6186364d0561b95cc7e83226c7666f81996a4c2c67da9d5f63185d6a98"
+    },
+    {
+      "version": "1.1",
+      "commit": "51f5a2d4bb035cf2c37e5def5692aad92f635504",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": null,
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "1.1.0",
+        "resourceVersion": "1.1.20"
+      },
+      "readmeSha256": "a05ecc6186364d0561b95cc7e83226c7666f81996a4c2c67da9d5f63185d6a98"
+    },
+    {
+      "version": "1.1",
+      "commit": "51f5a2d4bb035cf2c37e5def5692aad92f635504",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "606251e5ea763144790fc5af177c1d9885b6c36d51d95a973640a4e9f4d909df",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "1.1.0",
+        "resourceVersion": "1.1.20"
+      },
+      "readmeSha256": "a05ecc6186364d0561b95cc7e83226c7666f81996a4c2c67da9d5f63185d6a98"
+    },
+    {
+      "version": "1.2",
+      "commit": "ac5d3d2850497463e7b20029050efb7b4d77b525",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "6d414b167f7470b138ff4f516999430eca37b2f2078b5097d1b8d3c8223d4386",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "1.2.0",
+        "resourceVersion": "1.2.19"
+      },
+      "readmeSha256": "22ce82d554aed7e4fd0a6ea055f46166af4f3710e5e17295e18f858cacc22509"
+    },
+    {
+      "version": "1.2",
+      "commit": "ac5d3d2850497463e7b20029050efb7b4d77b525",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": null,
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "1.2.0",
+        "resourceVersion": "1.2.19"
+      },
+      "readmeSha256": "22ce82d554aed7e4fd0a6ea055f46166af4f3710e5e17295e18f858cacc22509"
+    },
+    {
+      "version": "1.2",
+      "commit": "ac5d3d2850497463e7b20029050efb7b4d77b525",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "392b09d88f4d8739ccaaa511dbcd429c2eced33a5a92f120d008cb7af4031934",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "1.2.0",
+        "resourceVersion": "1.2.19"
+      },
+      "readmeSha256": "22ce82d554aed7e4fd0a6ea055f46166af4f3710e5e17295e18f858cacc22509"
+    },
+    {
+      "version": "1.3",
+      "commit": "2f616cbbc0d1f4ea70107f180df3b36d1e673a01",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "8218e5cdf93e3e8db61b15310bd9b2ebbf2ede86278530ca9965ee2acfed0722",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "1.3.0",
+        "resourceVersion": "1.3.12"
+      },
+      "readmeSha256": "647fa557e3c36d61b26ec1d38c3a83ce6094270b599989e9765aed4ededd6e68"
+    },
+    {
+      "version": "1.3",
+      "commit": "2f616cbbc0d1f4ea70107f180df3b36d1e673a01",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": null,
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "1.3.0",
+        "resourceVersion": "1.3.12"
+      },
+      "readmeSha256": "647fa557e3c36d61b26ec1d38c3a83ce6094270b599989e9765aed4ededd6e68"
+    },
+    {
+      "version": "1.3",
+      "commit": "2f616cbbc0d1f4ea70107f180df3b36d1e673a01",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "14e20c4ca071660a3711730f3a3eaed7ad6791df9ed936531b81d174271162fb",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "1.3.0",
+        "resourceVersion": "1.3.12"
+      },
+      "readmeSha256": "647fa557e3c36d61b26ec1d38c3a83ce6094270b599989e9765aed4ededd6e68"
+    },
+    {
+      "version": "1.4",
+      "commit": "54611d7b27b5a93014993a337473d68af9231cea",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "9a5bd6464808cf2b5b38cdaa871fc0fa10229271953242511b07c23d4a23bdfc",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "1.4.0",
+        "resourceVersion": "1.4.11"
+      },
+      "readmeSha256": "bea82faa455b982f4d62aee9e09470565438f028a90a6a7de370f93b1c78821b"
+    },
+    {
+      "version": "1.4",
+      "commit": "54611d7b27b5a93014993a337473d68af9231cea",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "9708285172c089607815e00bb5c533aa94202df604e6c2a44e501321c38d7725",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "1.4.0",
+        "resourceVersion": "1.4.11"
+      },
+      "readmeSha256": "bea82faa455b982f4d62aee9e09470565438f028a90a6a7de370f93b1c78821b"
+    },
+    {
+      "version": "1.4",
+      "commit": "54611d7b27b5a93014993a337473d68af9231cea",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "38f20df4b21ab18af0be37ca720328a0a1a7792514209bcd7e070f8e9087626e",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "1.4.0",
+        "resourceVersion": "1.4.11"
+      },
+      "readmeSha256": "bea82faa455b982f4d62aee9e09470565438f028a90a6a7de370f93b1c78821b"
+    },
+    {
+      "version": "2.0",
+      "commit": "55f0eaf488fcd4c55afdb66af628f6f22af6b775",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "7ed061da08008d8fd72e422f65fc6d481615a448e4d7cb07fca0cf34d1130899",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.0.0",
+        "resourceVersion": "2.0.15"
+      },
+      "readmeSha256": "38c26593f60ac218a7d4445d7a801decc3e3e4788fd63762636315ed5ddfcb7c"
+    },
+    {
+      "version": "2.0",
+      "commit": "55f0eaf488fcd4c55afdb66af628f6f22af6b775",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "0d13b558de8adedeb7f3be31a330f73e7ec0a726137f128d3ed48e8c2069848a",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.0.0",
+        "resourceVersion": "2.0.15"
+      },
+      "readmeSha256": "38c26593f60ac218a7d4445d7a801decc3e3e4788fd63762636315ed5ddfcb7c"
+    },
+    {
+      "version": "2.0",
+      "commit": "55f0eaf488fcd4c55afdb66af628f6f22af6b775",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "988a05d01add7b04355287e494a8dde88b2f127b46b6c611f418d84dc020b74d",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.0.0",
+        "resourceVersion": "2.0.15"
+      },
+      "readmeSha256": "38c26593f60ac218a7d4445d7a801decc3e3e4788fd63762636315ed5ddfcb7c"
+    },
+    {
+      "version": "2.1",
+      "commit": "44743e1f9d073a76cb84cc42479f0da487133297",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "9a5bc5ced77c5de981650aead2d6b0446446e66e6ae9b9669eb942789791c670",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.1.0",
+        "resourceVersion": "2.1.9"
+      },
+      "readmeSha256": "81c8ea41d399288073c4a82c44c73e806e947d2ca9354f93f8caaa8469725544"
+    },
+    {
+      "version": "2.1",
+      "commit": "44743e1f9d073a76cb84cc42479f0da487133297",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "02811aa981ac7a9de588ad11288fcb98d26661fe39b9ab110255f645bb1ecc88",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.1.0",
+        "resourceVersion": "2.1.9"
+      },
+      "readmeSha256": "81c8ea41d399288073c4a82c44c73e806e947d2ca9354f93f8caaa8469725544"
+    },
+    {
+      "version": "2.1",
+      "commit": "44743e1f9d073a76cb84cc42479f0da487133297",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "01d0d9a2ecf3e1bb58df06f5f961b7dd3c91706aaee5dfc6ee3b41485e84eeaa",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.1.0",
+        "resourceVersion": "2.1.9"
+      },
+      "readmeSha256": "81c8ea41d399288073c4a82c44c73e806e947d2ca9354f93f8caaa8469725544"
+    },
+    {
+      "version": "2.2",
+      "commit": "e5d915f55b816438ec1344d45a0fdf58e8a8e3f0",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "435d7e379fe44c0ca6ead378f3cc9a3389bc2552af7bcf4f30ffc369ff3d3054",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.2.0",
+        "resourceVersion": "2.2.14"
+      },
+      "readmeSha256": "a2a95c896176e6b1a8626965b1e95796df35a178bd12ad9017a9f2630677794c"
+    },
+    {
+      "version": "2.2",
+      "commit": "e5d915f55b816438ec1344d45a0fdf58e8a8e3f0",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "02811aa981ac7a9de588ad11288fcb98d26661fe39b9ab110255f645bb1ecc88",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.2.0",
+        "resourceVersion": "2.2.14"
+      },
+      "readmeSha256": "a2a95c896176e6b1a8626965b1e95796df35a178bd12ad9017a9f2630677794c"
+    },
+    {
+      "version": "2.2",
+      "commit": "e5d915f55b816438ec1344d45a0fdf58e8a8e3f0",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "3f420d48e6e03010d96338dab2f35edff28fba4e3fc5e12cc99b1da2188070f1",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.2.0",
+        "resourceVersion": "2.2.14"
+      },
+      "readmeSha256": "a2a95c896176e6b1a8626965b1e95796df35a178bd12ad9017a9f2630677794c"
+    },
+    {
+      "version": "2.3",
+      "commit": "fb1ebbcfadbcee99013aa93f1bd8266cbb6a8144",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "0e5bba9322727fd1dbc59d46f59cf594239d6873a3d9a918450810c8ff26cd7b",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.3.0",
+        "resourceVersion": "2.3.5"
+      },
+      "readmeSha256": "abc8c4353435057ee875ad22eae9be7aedad86561bfdfa8df5cf39fe98f402d3"
+    },
+    {
+      "version": "2.3",
+      "commit": "fb1ebbcfadbcee99013aa93f1bd8266cbb6a8144",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "66404cf37c025cd463d12b0b36b29e099b6a99b9b1dfd29e12c0b017b44ff231",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.3.0",
+        "resourceVersion": "2.3.5"
+      },
+      "readmeSha256": "abc8c4353435057ee875ad22eae9be7aedad86561bfdfa8df5cf39fe98f402d3"
+    },
+    {
+      "version": "2.3",
+      "commit": "fb1ebbcfadbcee99013aa93f1bd8266cbb6a8144",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "e848855b6c5a800e87978f0f4124e02f252a390e681d507bd76a1d849a99c3c3",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.3.0",
+        "resourceVersion": "2.3.5"
+      },
+      "readmeSha256": "abc8c4353435057ee875ad22eae9be7aedad86561bfdfa8df5cf39fe98f402d3"
+    },
+    {
+      "version": "2.4",
+      "commit": "97f7ae81da6f9d2f4f9c94e88501d19cac1261bc",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "89bc2977e52431f4b6ef1edd4149c7e951c23bf440b9176776a8fa0c3a5f9889",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.4.0",
+        "resourceVersion": "2.4.18"
+      },
+      "readmeSha256": "a8d491ae182b92e5e19361cdea28f968b44eb94ebe439c9bd346a596355bc2ca"
+    },
+    {
+      "version": "2.4",
+      "commit": "97f7ae81da6f9d2f4f9c94e88501d19cac1261bc",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "66404cf37c025cd463d12b0b36b29e099b6a99b9b1dfd29e12c0b017b44ff231",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.4.0",
+        "resourceVersion": "2.4.18"
+      },
+      "readmeSha256": "a8d491ae182b92e5e19361cdea28f968b44eb94ebe439c9bd346a596355bc2ca"
+    },
+    {
+      "version": "2.4",
+      "commit": "97f7ae81da6f9d2f4f9c94e88501d19cac1261bc",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "19faf28206d3cdc004bc7c28abc6c64b6a3cb24c029c5732f8dadd20d13cd220",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.4.0",
+        "resourceVersion": "2.4.18"
+      },
+      "readmeSha256": "a8d491ae182b92e5e19361cdea28f968b44eb94ebe439c9bd346a596355bc2ca"
+    },
+    {
+      "version": "2.5",
+      "commit": "18f84d7e003dfcde4f8cb9159c3a2ced7b511c25",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "e2acd61200bc6c3b5e18bbcf1a07728704c6d6dbd806c6dbe5ab4598bc09b824",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.5.0",
+        "resourceVersion": "2.5.11"
+      },
+      "readmeSha256": "c58130335450b93656a4789c961cb8a8cbf5b5540fe0f054c2d184836a4ec9c4"
+    },
+    {
+      "version": "2.5",
+      "commit": "18f84d7e003dfcde4f8cb9159c3a2ced7b511c25",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "66404cf37c025cd463d12b0b36b29e099b6a99b9b1dfd29e12c0b017b44ff231",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.5.0",
+        "resourceVersion": "2.5.11"
+      },
+      "readmeSha256": "c58130335450b93656a4789c961cb8a8cbf5b5540fe0f054c2d184836a4ec9c4"
+    },
+    {
+      "version": "2.5",
+      "commit": "18f84d7e003dfcde4f8cb9159c3a2ced7b511c25",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "bef0f80a6b5962fdaa8e8643a451cca7009029b1a9e6fd114574a8c3eb1cb70d",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.5.0",
+        "resourceVersion": "2.5.11"
+      },
+      "readmeSha256": "c58130335450b93656a4789c961cb8a8cbf5b5540fe0f054c2d184836a4ec9c4"
+    },
+    {
+      "version": "2.6",
+      "commit": "bdc6e733c6b5bb13df81c190a1dd5b737848858d",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "50681cff255b2f48872994bc51fd34e60dbe810d52b60e9ac87fe11aec13570a",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.6.0",
+        "resourceVersion": "2.6.17"
+      },
+      "readmeSha256": "3fde3aa801e0bca52bb39b4f91626b3d9fe6b737849ba355813f3d9cdc99e126"
+    },
+    {
+      "version": "2.6",
+      "commit": "bdc6e733c6b5bb13df81c190a1dd5b737848858d",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "2c03d6bda03834c99ba070783fe004953f5393bec57bcdf32ef094dbf316f87c",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.6.0",
+        "resourceVersion": "2.6.17"
+      },
+      "readmeSha256": "3fde3aa801e0bca52bb39b4f91626b3d9fe6b737849ba355813f3d9cdc99e126"
+    },
+    {
+      "version": "2.6",
+      "commit": "bdc6e733c6b5bb13df81c190a1dd5b737848858d",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "8aab15c79f794c8ddfd3c8f458fa5aa6ff9ba2ebdc944eaeda82fda56ca28ecb",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.6.0",
+        "resourceVersion": "2.6.17"
+      },
+      "readmeSha256": "3fde3aa801e0bca52bb39b4f91626b3d9fe6b737849ba355813f3d9cdc99e126"
+    },
+    {
+      "version": "2.7",
+      "commit": "47782d22a80e12e89b5eca9de052ca55076c3031",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "f69420163249ad283a11d8e4dd82cfc5656a9578270c659a2e74b79b68b2850b",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.7.0",
+        "resourceVersion": "2.7.9"
+      },
+      "readmeSha256": "78e63f72898958819e6fe8a0a148f80244c8a9c501167c0a24d2a5b2b50616de"
+    },
+    {
+      "version": "2.7",
+      "commit": "47782d22a80e12e89b5eca9de052ca55076c3031",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "228d7a16c0a84f97a488514d54df8fe751464f09249f5646af93f39fc031c6b7",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.7.0",
+        "resourceVersion": "2.7.9"
+      },
+      "readmeSha256": "78e63f72898958819e6fe8a0a148f80244c8a9c501167c0a24d2a5b2b50616de"
+    },
+    {
+      "version": "2.7",
+      "commit": "47782d22a80e12e89b5eca9de052ca55076c3031",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "485f2fa409e0097708a5a219870cf6c60e410aad31b8db4b9b55d046799d2b47",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.7.0",
+        "resourceVersion": "2.7.9"
+      },
+      "readmeSha256": "78e63f72898958819e6fe8a0a148f80244c8a9c501167c0a24d2a5b2b50616de"
+    },
+    {
+      "version": "2.8",
+      "commit": "4b8d67f164d48bdf01b610246d1444e67e4b568d",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "e186232928a528224e35f7fa2003774cfd838d7fd7c407e2f7ad2d9251c469c2",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.8.0",
+        "resourceVersion": "2.8.8"
+      },
+      "readmeSha256": "19f296b9c8f08ae8da3169408227daa9f573ec18d544af47d687da74304867b4"
+    },
+    {
+      "version": "2.8",
+      "commit": "4b8d67f164d48bdf01b610246d1444e67e4b568d",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "228d7a16c0a84f97a488514d54df8fe751464f09249f5646af93f39fc031c6b7",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.8.0",
+        "resourceVersion": "2.8.8"
+      },
+      "readmeSha256": "19f296b9c8f08ae8da3169408227daa9f573ec18d544af47d687da74304867b4"
+    },
+    {
+      "version": "2.8",
+      "commit": "4b8d67f164d48bdf01b610246d1444e67e4b568d",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "abf9aa1e12c13c2ad82c94dcd77a3ea8120d260a3e6062497e04114f54df3dc4",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "2.8.0",
+        "resourceVersion": "2.8.8"
+      },
+      "readmeSha256": "19f296b9c8f08ae8da3169408227daa9f573ec18d544af47d687da74304867b4"
+    },
+    {
+      "version": "3.0",
+      "commit": "03bdacb0001c5c8d4a3b1bc777268d0c9f4102e3",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "0931381028c34bc12dbb388c4a42795f7d46a8b126d118aaf6a078ff5ec3dc74",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.0.0",
+        "resourceVersion": "3.0.17"
+      },
+      "readmeSha256": "2ea4d02a7f02539cca189577cdbf37fe81296d5f0e87e4fc7d94329c5810db9d"
+    },
+    {
+      "version": "3.0",
+      "commit": "03bdacb0001c5c8d4a3b1bc777268d0c9f4102e3",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "228d7a16c0a84f97a488514d54df8fe751464f09249f5646af93f39fc031c6b7",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.0.0",
+        "resourceVersion": "3.0.17"
+      },
+      "readmeSha256": "2ea4d02a7f02539cca189577cdbf37fe81296d5f0e87e4fc7d94329c5810db9d"
+    },
+    {
+      "version": "3.0",
+      "commit": "03bdacb0001c5c8d4a3b1bc777268d0c9f4102e3",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "67b6ca800e5288ac2de12dc05ae60c30a7b0fc482bfdafea1a953926b40ee3e3",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.0.0",
+        "resourceVersion": "3.0.17"
+      },
+      "readmeSha256": "2ea4d02a7f02539cca189577cdbf37fe81296d5f0e87e4fc7d94329c5810db9d"
+    },
+    {
+      "version": "3.1",
+      "commit": "c03d19f5cdbe2e451d21273a884ba5da32347953",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "47e84df9581fd5e19666a8ba5204c8881f14345ff0d0e85cea27c5011e0d0369",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.1.0",
+        "resourceVersion": "3.1.15"
+      },
+      "readmeSha256": "15c49c3fea4ee92cedc47948565773288dd223e9acb99a07b0b0b050d89c555b"
+    },
+    {
+      "version": "3.1",
+      "commit": "c03d19f5cdbe2e451d21273a884ba5da32347953",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "6cd608850f2cd2bc7653e89319592f2f0a864b8cd6b7f69892de2efe8cfad895",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.1.0",
+        "resourceVersion": "3.1.15"
+      },
+      "readmeSha256": "15c49c3fea4ee92cedc47948565773288dd223e9acb99a07b0b0b050d89c555b"
+    },
+    {
+      "version": "3.1",
+      "commit": "c03d19f5cdbe2e451d21273a884ba5da32347953",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "d3354239e877006d1ed8aef41bf4f729868070e53b4ba762f91e938ce6b64ca1",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.1.0",
+        "resourceVersion": "3.1.15"
+      },
+      "readmeSha256": "15c49c3fea4ee92cedc47948565773288dd223e9acb99a07b0b0b050d89c555b"
+    },
+    {
+      "version": "3.2",
+      "commit": "d8bba3a04813405bb3a20363ad84b44ba12a4eaa",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "2d617b239b30cca85bbee4c12d8f1ff14b4e01b0008bfb363f0f0b0d3e1e9258",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.2.0",
+        "resourceVersion": "3.2.8"
+      },
+      "readmeSha256": "5cc50f66bffd027df66ec6c4d886db14fd911722536964dd56552e66962ce305"
+    },
+    {
+      "version": "3.2",
+      "commit": "d8bba3a04813405bb3a20363ad84b44ba12a4eaa",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "6cd608850f2cd2bc7653e89319592f2f0a864b8cd6b7f69892de2efe8cfad895",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.2.0",
+        "resourceVersion": "3.2.8"
+      },
+      "readmeSha256": "5cc50f66bffd027df66ec6c4d886db14fd911722536964dd56552e66962ce305"
+    },
+    {
+      "version": "3.2",
+      "commit": "d8bba3a04813405bb3a20363ad84b44ba12a4eaa",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "d3354239e877006d1ed8aef41bf4f729868070e53b4ba762f91e938ce6b64ca1",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.2.0",
+        "resourceVersion": "3.2.8"
+      },
+      "readmeSha256": "5cc50f66bffd027df66ec6c4d886db14fd911722536964dd56552e66962ce305"
+    },
+    {
+      "version": "3.3",
+      "commit": "259a57145003b84c3020cc423fac91aa5c522c0a",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "a9905fc9de3b49b35f743e0a5f560d41bd20a8a3c3a3534c7a4ab8c61d238162",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.3.0",
+        "resourceVersion": "3.3.9"
+      },
+      "readmeSha256": "832e7768aa81e0d7a777cb172eef35a3337bef54276f5d22bba95ea2e5d9f4d4"
+    },
+    {
+      "version": "3.3",
+      "commit": "259a57145003b84c3020cc423fac91aa5c522c0a",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "6cd608850f2cd2bc7653e89319592f2f0a864b8cd6b7f69892de2efe8cfad895",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.3.0",
+        "resourceVersion": "3.3.9"
+      },
+      "readmeSha256": "832e7768aa81e0d7a777cb172eef35a3337bef54276f5d22bba95ea2e5d9f4d4"
+    },
+    {
+      "version": "3.3",
+      "commit": "259a57145003b84c3020cc423fac91aa5c522c0a",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "9821e85fb9b317cdbb1a149fdc6dfec9746a22682ce3ababe14d6d10cad27bf5",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.3.0",
+        "resourceVersion": "3.3.9"
+      },
+      "readmeSha256": "832e7768aa81e0d7a777cb172eef35a3337bef54276f5d22bba95ea2e5d9f4d4"
+    },
+    {
+      "version": "3.4",
+      "commit": "7d29ebe7a4a98845ca04d00ab622356891ea8c45",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "cc3c90f91c811068e9bf961d982fb242df1b8d3d5fc40832c0eb74360db42e02",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.4.0",
+        "resourceVersion": "3.4.13"
+      },
+      "readmeSha256": "4312e60fcedce39e203e709550f65b3bd47c435071af94566bcb86fb28e36733"
+    },
+    {
+      "version": "3.4",
+      "commit": "7d29ebe7a4a98845ca04d00ab622356891ea8c45",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "6cd608850f2cd2bc7653e89319592f2f0a864b8cd6b7f69892de2efe8cfad895",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.4.0",
+        "resourceVersion": "3.4.13"
+      },
+      "readmeSha256": "4312e60fcedce39e203e709550f65b3bd47c435071af94566bcb86fb28e36733"
+    },
+    {
+      "version": "3.4",
+      "commit": "7d29ebe7a4a98845ca04d00ab622356891ea8c45",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "417556b069312751abe72ae50cf3ecbb712604d1bb14f0fb979d8a3ba1294b11",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.4.0",
+        "resourceVersion": "3.4.13"
+      },
+      "readmeSha256": "4312e60fcedce39e203e709550f65b3bd47c435071af94566bcb86fb28e36733"
+    },
+    {
+      "version": "3.5",
+      "commit": "dae29691c04ef0f48d0810b5d244fb0b37288c60",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "05088e62fc1a17868fb933e1e2cbadd1874c1852f821cf1d4af947f2e609153d",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.5.0",
+        "resourceVersion": "3.5.5"
+      },
+      "readmeSha256": "4a5dea53d27a7c9f83d1ceb9210491dede443b8b8fb5ce4b2a07dc8314d12bbe"
+    },
+    {
+      "version": "3.5",
+      "commit": "dae29691c04ef0f48d0810b5d244fb0b37288c60",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "6cd608850f2cd2bc7653e89319592f2f0a864b8cd6b7f69892de2efe8cfad895",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.5.0",
+        "resourceVersion": "3.5.5"
+      },
+      "readmeSha256": "4a5dea53d27a7c9f83d1ceb9210491dede443b8b8fb5ce4b2a07dc8314d12bbe"
+    },
+    {
+      "version": "3.5",
+      "commit": "dae29691c04ef0f48d0810b5d244fb0b37288c60",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "48bf041b11eb8488ba4ec736472134c91a7e49f1ab061b0bf7f43f2753f944ff",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.5.0",
+        "resourceVersion": "3.5.5"
+      },
+      "readmeSha256": "4a5dea53d27a7c9f83d1ceb9210491dede443b8b8fb5ce4b2a07dc8314d12bbe"
+    },
+    {
+      "version": "3.6",
+      "commit": "353f2eaed119bc9f680eab92807d20ac75a79b40",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "6cb9cbeaa20b9f4fe5c5a07459fcb858b952411755496962e381131abd34959d",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.6.0",
+        "resourceVersion": "3.6.6"
+      },
+      "readmeSha256": "96aca17f158083ddea1a0643a1eb8fd8396f4c368017c48f0898c1bac5b643bc"
+    },
+    {
+      "version": "3.6",
+      "commit": "353f2eaed119bc9f680eab92807d20ac75a79b40",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "3c4c8beae0f8c23f31aacbb8574926b17555b4b837bf3b22d37dde1f1d33230d",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.6.0",
+        "resourceVersion": "3.6.6"
+      },
+      "readmeSha256": "96aca17f158083ddea1a0643a1eb8fd8396f4c368017c48f0898c1bac5b643bc"
+    },
+    {
+      "version": "3.6",
+      "commit": "353f2eaed119bc9f680eab92807d20ac75a79b40",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "a7f2b4b39c8511de48b86a7db65a3f1f14c3809a079cd410a77848707befe082",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.6.0",
+        "resourceVersion": "3.6.6"
+      },
+      "readmeSha256": "96aca17f158083ddea1a0643a1eb8fd8396f4c368017c48f0898c1bac5b643bc"
+    },
+    {
+      "version": "3.7",
+      "commit": "9218d612ad815e398e064e577e42aaf878899968",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "7c6acf5fb8274b390148a4071740aa78bb29f0ec735138f1ffb5f2d4978482aa",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.7.0",
+        "resourceVersion": "3.7.8"
+      },
+      "readmeSha256": "53118accbecc7809107aca5642164bb6a79f35f31bad8bd81071bffd49d7b06f"
+    },
+    {
+      "version": "3.7",
+      "commit": "9218d612ad815e398e064e577e42aaf878899968",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "3c4c8beae0f8c23f31aacbb8574926b17555b4b837bf3b22d37dde1f1d33230d",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.7.0",
+        "resourceVersion": "3.7.8"
+      },
+      "readmeSha256": "53118accbecc7809107aca5642164bb6a79f35f31bad8bd81071bffd49d7b06f"
+    },
+    {
+      "version": "3.7",
+      "commit": "9218d612ad815e398e064e577e42aaf878899968",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "c224be97ea99b70f3fc093a1ed9984f286e26c8edbe0b8abe34e2ec2c6456604",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.7.0",
+        "resourceVersion": "3.7.8"
+      },
+      "readmeSha256": "53118accbecc7809107aca5642164bb6a79f35f31bad8bd81071bffd49d7b06f"
+    }
+  ],
+  "character": {
+    "1402": {
+      "order": 4
+    },
+    "1202": {
+      "order": 3
+    },
+    "1503": {
+      "order": 10
+    },
+    "1501": {
+      "order": 1
+    },
+    "1102": {
+      "order": 12
+    },
+    "1601": {
+      "order": 7
+    },
+    "1502": {
+      "order": 2
+    },
+    "1103": {
+      "order": 5
+    },
+    "1203": {
+      "order": 8
+    },
+    "1602": {
+      "order": 14
+    },
+    "1403": {
+      "order": 6
+    },
+    "1404": {
+      "order": 18
+    },
+    "1204": {
+      "order": 9
+    },
+    "1603": {
+      "order": 26
+    },
+    "1301": {
+      "order": 16
+    },
+    "1302": {
+      "order": 19
+    },
+    "1104": {
+      "order": 15
+    },
+    "1303": {
+      "order": 17
+    },
+    "1604": {
+      "order": 2
+    },
+    "1605": {
+      "order": 2
+    },
+    "1405": {
+      "order": 11
+    },
+    "1304": {
+      "order": 20
+    },
+    "1305": {
+      "order": 23
+    },
+    "1205": {
+      "order": 21
+    },
+    "1105": {
+      "order": 22
+    },
+    "1504": {
+      "order": 27
+    },
+    "1106": {
+      "order": 25
+    },
+    "1505": {
+      "order": 24
+    },
+    "1606": {
+      "order": 29
+    },
+    "1107": {
+      "order": 28
+    },
+    "1206": {
+      "order": 31
+    },
+    "1506": {
+      "order": 30
+    },
+    "1406": {
+      "order": 31.5
+    },
+    "1607": {
+      "order": 32
+    },
+    "1407": {
+      "order": 34
+    },
+    "1507": {
+      "order": 33
+    },
+    "1408": {
+      "order": 31.5
+    },
+    "1207": {
+      "order": 36
+    },
+    "1608": {
+      "order": 37
+    },
+    "1409": {
+      "order": 35
+    },
+    "1306": {
+      "order": 38
+    },
+    "1410": {
+      "order": 39
+    },
+    "1307": {
+      "order": 43
+    },
+    "1208": {
+      "order": 40
+    },
+    "1508": {
+      "order": 42
+    },
+    "1411": {
+      "order": 41
+    },
+    "1509": {
+      "order": 44
+    },
+    "1209": {
+      "order": 45
+    },
+    "1510": {
+      "order": 47
+    },
+    "1210": {
+      "order": 46
+    },
+    "1412": {
+      "order": 48
+    },
+    "1211": {
+      "order": 51
+    },
+    "1308": {
+      "order": 52
+    },
+    "1109": {
+      "order": 54
+    },
+    "1511": {
+      "order": 53
+    },
+    "1108": {
+      "order": 50
+    },
+    "1309": {
+      "order": 54.5
+    },
+    "1310": {
+      "order": 54.5
+    },
+    "1610": {
+      "order": 55
+    },
+    "1110": {
+      "order": 56
+    },
+    "1413": {
+      "order": 57
+    },
+    "1311": {
+      "order": 59
+    },
+    "1212": {
+      "order": 58
+    },
+    "1312": {
+      "order": 60
+    }
+  },
+  "weapon": {
+    "21010011": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21010012": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21010013": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21010015": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21010016": {
+      "version": "1.0",
+      "order": 200001
+    },
+    "21010023": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21010024": {
+      "version": "1.0",
+      "order": 200003
+    },
+    "21010026": {
+      "version": "1.1",
+      "order": 200003
+    },
+    "21010034": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21010036": {
+      "version": "2.4",
+      "order": 200027
+    },
+    "21010043": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21010044": {
+      "version": "1.0",
+      "order": 200001
+    },
+    "21010045": {
+      "version": "3.0",
+      "order": 0
+    },
+    "21010046": {
+      "version": "2.6",
+      "order": 200033
+    },
+    "21010053": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21010056": {
+      "version": "2.8",
+      "order": 200042
+    },
+    "21010063": {
+      "version": "1.1",
+      "order": 0
+    },
+    "21010064": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21010066": {
+      "version": "3.0",
+      "order": 200049
+    },
+    "21010074": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21010076": {
+      "version": "3.6",
+      "order": 200081
+    },
+    "21010084": {
+      "version": "1.3",
+      "order": 0
+    },
+    "21010094": {
+      "version": "2.0",
+      "order": 0
+    },
+    "21010104": {
+      "version": "2.6",
+      "order": 0
+    },
+    "21020011": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21020012": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21020013": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21020015": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21020016": {
+      "version": "1.1",
+      "order": 200004
+    },
+    "21020017": {
+      "version": "1.4",
+      "order": 0
+    },
+    "21020023": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21020024": {
+      "version": "1.0",
+      "order": 200004
+    },
+    "21020026": {
+      "version": "1.4",
+      "order": 200009
+    },
+    "21020034": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21020036": {
+      "version": "2.1",
+      "order": 200017
+    },
+    "21020043": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21020044": {
+      "version": "1.0",
+      "order": 200003
+    },
+    "21020045": {
+      "version": "3.0",
+      "order": 0
+    },
+    "21020046": {
+      "version": "2.2",
+      "order": 0
+    },
+    "21020053": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21020056": {
+      "version": "2.4",
+      "order": 200026
+    },
+    "21020064": {
+      "version": "1.0",
+      "order": 200002
+    },
+    "21020066": {
+      "version": "2.7",
+      "order": 200039
+    },
+    "21020074": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21020076": {
+      "version": "3.1",
+      "order": 200052
+    },
+    "21020084": {
+      "version": "1.3",
+      "order": 0
+    },
+    "21020086": {
+      "version": "3.3",
+      "order": 200062
+    },
+    "21020094": {
+      "version": "2.0",
+      "order": 0
+    },
+    "21020096": {
+      "version": "3.5",
+      "order": 200072
+    },
+    "21020104": {
+      "version": "2.6",
+      "order": 0
+    },
+    "21020106": {
+      "version": "3.6",
+      "order": 200079
+    },
+    "21020107": {
+      "version": "3.7",
+      "order": 200087
+    },
+    "21030011": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21030012": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21030013": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21030015": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21030016": {
+      "version": "2.0",
+      "order": 200012
+    },
+    "21030023": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21030024": {
+      "version": "1.0",
+      "order": 200002
+    },
+    "21030026": {
+      "version": "2.3",
+      "order": 200023
+    },
+    "21030034": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21030036": {
+      "version": "2.7",
+      "order": 200037
+    },
+    "21030043": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21030044": {
+      "version": "1.0",
+      "order": 200004
+    },
+    "21030045": {
+      "version": "3.0",
+      "order": 0
+    },
+    "21030046": {
+      "version": "3.0",
+      "order": 200046
+    },
+    "21030053": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21030056": {
+      "version": "3.4",
+      "order": 0
+    },
+    "21030064": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21030066": {
+      "version": "3.4",
+      "order": 0
+    },
+    "21030074": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21030084": {
+      "version": "1.3",
+      "order": 0
+    },
+    "21030094": {
+      "version": "2.0",
+      "order": 0
+    },
+    "21030104": {
+      "version": "2.6",
+      "order": 0
+    },
+    "21040011": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21040012": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21040013": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21040015": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21040016": {
+      "version": "1.2",
+      "order": 200006
+    },
+    "21040023": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21040024": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21040026": {
+      "version": "2.0",
+      "order": 200014
+    },
+    "21040034": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21040036": {
+      "version": "2.3",
+      "order": 200022
+    },
+    "21040043": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21040044": {
+      "version": "1.0",
+      "order": 200003
+    },
+    "21040045": {
+      "version": "3.0",
+      "order": 0
+    },
+    "21040046": {
+      "version": "2.6",
+      "order": 200035
+    },
+    "21040053": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21040056": {
+      "version": "3.1",
+      "order": 200055
+    },
+    "21040064": {
+      "version": "1.0",
+      "order": 200001
+    },
+    "21040066": {
+      "version": "3.2",
+      "order": 200057
+    },
+    "21040074": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21040084": {
+      "version": "1.3",
+      "order": 0
+    },
+    "21040094": {
+      "version": "2.0",
+      "order": 0
+    },
+    "21040104": {
+      "version": "2.6",
+      "order": 0
+    },
+    "21050011": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21050012": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21050013": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21050015": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21050016": {
+      "version": "1.0",
+      "order": 200002
+    },
+    "21050017": {
+      "version": "2.0",
+      "order": 0
+    },
+    "21050023": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21050024": {
+      "version": "1.0",
+      "order": 200001
+    },
+    "21050026": {
+      "version": "1.2",
+      "order": 200005
+    },
+    "21050027": {
+      "version": "2.1",
+      "order": 0
+    },
+    "21050034": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21050036": {
+      "version": "1.3",
+      "order": 200007
+    },
+    "21050043": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21050044": {
+      "version": "1.0",
+      "order": 200002
+    },
+    "21050045": {
+      "version": "3.0",
+      "order": 0
+    },
+    "21050046": {
+      "version": "2.1",
+      "order": 200016
+    },
+    "21050053": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21050056": {
+      "version": "2.2",
+      "order": 200019
+    },
+    "21050064": {
+      "version": "1.0",
+      "order": 200004
+    },
+    "21050066": {
+      "version": "2.5",
+      "order": 200029
+    },
+    "21050074": {
+      "version": "1.0",
+      "order": 0
+    },
+    "21050076": {
+      "version": "3.3",
+      "order": 200064
+    },
+    "21050084": {
+      "version": "1.3",
+      "order": 0
+    },
+    "21050086": {
+      "version": "3.4",
+      "order": 200070
+    },
+    "21050094": {
+      "version": "2.0",
+      "order": 0
+    },
+    "21050096": {
+      "version": "3.5",
+      "order": 200074
+    },
+    "21050104": {
+      "version": "2.6",
+      "order": 0
+    },
+    "21050116": {
+      "version": "3.7",
+      "order": 200084
+    },
+    "80080001": {
+      "version": "1.4",
+      "order": 0
+    },
+    "80080002": {
+      "version": "1.4",
+      "order": 0
+    },
+    "80080003": {
+      "version": "1.4",
+      "order": 0
+    },
+    "80080004": {
+      "version": "1.4",
+      "order": 0
+    },
+    "80080005": {
+      "version": "1.4",
+      "order": 0
+    },
+    "80080006": {
+      "version": "1.4",
+      "order": 0
+    },
+    "80080007": {
+      "version": "2.0",
+      "order": 0
+    },
+    "80080008": {
+      "version": "2.1",
+      "order": 0
+    },
+    "80080009": {
+      "version": "3.6",
+      "order": 0
+    }
+  },
+  "echo": {
+    "6000038": {
+      "version": "1.0",
+      "order": 0
+    },
+    "6000039": {
+      "version": "1.0",
+      "order": 0
+    },
+    "6000040": {
+      "version": "1.0",
+      "order": 0
+    },
+    "6000041": {
+      "version": "1.0",
+      "order": 0
+    },
+    "6000042": {
+      "version": "1.0",
+      "order": 0
+    },
+    "6000043": {
+      "version": "1.0",
+      "order": 0
+    },
+    "6000044": {
+      "version": "1.0",
+      "order": 0
+    },
+    "6000045": {
+      "version": "1.0",
+      "order": 0
+    },
+    "6000046": {
+      "version": "1.0",
+      "order": 0
+    },
+    "6000047": {
+      "version": "1.0",
+      "order": 0
+    },
+    "6000048": {
+      "version": "1.0",
+      "order": 0
+    },
+    "6000049": {
+      "version": "1.0",
+      "order": 0
+    },
+    "6000050": {
+      "version": "1.0",
+      "order": 0
+    },
+    "6000051": {
+      "version": "1.1",
+      "order": 0
+    },
+    "6000052": {
+      "version": "1.0",
+      "order": 0
+    },
+    "6000053": {
+      "version": "1.0",
+      "order": 0
+    },
+    "6000054": {
+      "version": "1.1",
+      "order": 0
+    },
+    "6000055": {
+      "version": "1.1",
+      "order": 0
+    },
+    "6000056": {
+      "version": "1.1",
+      "order": 0
+    },
+    "6000057": {
+      "version": "1.1",
+      "order": 0
+    },
+    "6000058": {
+      "version": "1.1",
+      "order": 0
+    },
+    "6000059": {
+      "version": "1.1",
+      "order": 0
+    },
+    "6000060": {
+      "version": "1.3",
+      "order": 0
+    },
+    "6000061": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000062": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000063": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000064": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000065": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000066": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000067": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000068": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000069": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000070": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000071": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000072": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000073": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000074": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000075": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000076": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000077": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000078": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000079": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000080": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000081": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000082": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000083": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000084": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000085": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000086": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000087": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000088": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000089": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000090": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000091": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000092": {
+      "version": "2.0",
+      "order": 0
+    },
+    "6000093": {
+      "version": "2.1",
+      "order": 0
+    },
+    "6000094": {
+      "version": "2.1",
+      "order": 0
+    },
+    "6000095": {
+      "version": "2.1",
+      "order": 0
+    },
+    "6000096": {
+      "version": "2.1",
+      "order": 0
+    },
+    "6000097": {
+      "version": "2.1",
+      "order": 0
+    },
+    "6000098": {
+      "version": "2.2",
+      "order": 0
+    },
+    "6000099": {
+      "version": "2.2",
+      "order": 0
+    },
+    "6000100": {
+      "version": "2.2",
+      "order": 0
+    },
+    "6000101": {
+      "version": "2.2",
+      "order": 0
+    },
+    "6000102": {
+      "version": "2.2",
+      "order": 0
+    },
+    "6000103": {
+      "version": "2.2",
+      "order": 0
+    },
+    "6000104": {
+      "version": "2.2",
+      "order": 0
+    },
+    "6000105": {
+      "version": "2.2",
+      "order": 0
+    },
+    "6000106": {
+      "version": "2.2",
+      "order": 0
+    },
+    "6000107": {
+      "version": "2.4",
+      "order": 0
+    },
+    "6000108": {
+      "version": "2.4",
+      "order": 0
+    },
+    "6000109": {
+      "version": "2.4",
+      "order": 0
+    },
+    "6000110": {
+      "version": "2.4",
+      "order": 0
+    },
+    "6000111": {
+      "version": "2.4",
+      "order": 0
+    },
+    "6000112": {
+      "version": "2.4",
+      "order": 0
+    },
+    "6000113": {
+      "version": "2.4",
+      "order": 0
+    },
+    "6000114": {
+      "version": "2.4",
+      "order": 0
+    },
+    "6000115": {
+      "version": "2.5",
+      "order": 0
+    },
+    "6000116": {
+      "version": "2.5",
+      "order": 0
+    },
+    "6000117": {
+      "version": "2.5",
+      "order": 0
+    },
+    "6000118": {
+      "version": "2.5",
+      "order": 0
+    },
+    "6000119": {
+      "version": "2.5",
+      "order": 0
+    },
+    "6000120": {
+      "version": "2.6",
+      "order": 0
+    },
+    "6000121": {
+      "version": "2.6",
+      "order": 0
+    },
+    "6000160": {
+      "version": "2.6",
+      "order": 0
+    },
+    "6000161": {
+      "version": "2.6",
+      "order": 0
+    },
+    "6000162": {
+      "version": "2.6",
+      "order": 0
+    },
+    "6000163": {
+      "version": "2.6",
+      "order": 0
+    },
+    "6000164": {
+      "version": "2.6",
+      "order": 0
+    },
+    "6000165": {
+      "version": "2.6",
+      "order": 0
+    },
+    "6000166": {
+      "version": "2.6",
+      "order": 0
+    },
+    "6000167": {
+      "version": "2.7",
+      "order": 0
+    },
+    "6000168": {
+      "version": "2.7",
+      "order": 0
+    },
+    "6000169": {
+      "version": "2.7",
+      "order": 0
+    },
+    "6000170": {
+      "version": "2.7",
+      "order": 0
+    },
+    "6000171": {
+      "version": "2.8",
+      "order": 0
+    },
+    "6000172": {
+      "version": "2.8",
+      "order": 0
+    },
+    "6000173": {
+      "version": "2.8",
+      "order": 0
+    },
+    "6000174": {
+      "version": "3.0",
+      "order": 0
+    },
+    "6000175": {
+      "version": "3.0",
+      "order": 0
+    },
+    "6000176": {
+      "version": "3.0",
+      "order": 0
+    },
+    "6000177": {
+      "version": "3.0",
+      "order": 0
+    },
+    "6000178": {
+      "version": "3.0",
+      "order": 0
+    },
+    "6000179": {
+      "version": "3.0",
+      "order": 0
+    },
+    "6000180": {
+      "version": "3.0",
+      "order": 0
+    },
+    "6000181": {
+      "version": "3.0",
+      "order": 0
+    },
+    "6000182": {
+      "version": "3.0",
+      "order": 0
+    },
+    "6000183": {
+      "version": "3.0",
+      "order": 0
+    },
+    "6000184": {
+      "version": "3.0",
+      "order": 0
+    },
+    "6000185": {
+      "version": "3.0",
+      "order": 0
+    },
+    "6000186": {
+      "version": "3.0",
+      "order": 0
+    },
+    "6000187": {
+      "version": "3.0",
+      "order": 0
+    },
+    "6000188": {
+      "version": "3.0",
+      "order": 0
+    },
+    "6000189": {
+      "version": "3.0",
+      "order": 0
+    },
+    "6000190": {
+      "version": "3.0",
+      "order": 0
+    },
+    "6000191": {
+      "version": "3.1",
+      "order": 0
+    },
+    "6000192": {
+      "version": "3.1",
+      "order": 0
+    },
+    "6000193": {
+      "version": "3.1",
+      "order": 0
+    },
+    "6000194": {
+      "version": "3.1",
+      "order": 0
+    },
+    "6000195": {
+      "version": "3.1",
+      "order": 0
+    },
+    "6000196": {
+      "version": "3.1",
+      "order": 0
+    },
+    "6000197": {
+      "version": "3.1",
+      "order": 0
+    },
+    "6000198": {
+      "version": "3.3",
+      "order": 0
+    },
+    "6000199": {
+      "version": "3.3",
+      "order": 0
+    },
+    "6000200": {
+      "version": "3.3",
+      "order": 0
+    },
+    "6000201": {
+      "version": "3.4",
+      "order": 0
+    },
+    "6000202": {
+      "version": "3.5",
+      "order": 0
+    },
+    "6000203": {
+      "version": "3.5",
+      "order": 0
+    },
+    "6000204": {
+      "version": "3.5",
+      "order": 0
+    },
+    "6000205": {
+      "version": "3.5",
+      "order": 0
+    },
+    "6000206": {
+      "version": "3.5",
+      "order": 0
+    },
+    "6000207": {
+      "version": "3.5",
+      "order": 0
+    },
+    "6000208": {
+      "version": "3.5",
+      "order": 0
+    },
+    "6000209": {
+      "version": "3.5",
+      "order": 0
+    },
+    "6000210": {
+      "version": "3.5",
+      "order": 0
+    },
+    "6000211": {
+      "version": "3.5",
+      "order": 0
+    },
+    "6000212": {
+      "version": "3.5",
+      "order": 0
+    },
+    "6000213": {
+      "version": "3.5",
+      "order": 0
+    },
+    "6000214": {
+      "version": "3.5",
+      "order": 0
+    },
+    "6000215": {
+      "version": "3.5",
+      "order": 0
+    },
+    "6000216": {
+      "version": "3.5",
+      "order": 0
+    },
+    "6000217": {
+      "version": "3.5",
+      "order": 0
+    },
+    "6000218": {
+      "version": "3.5",
+      "order": 0
+    },
+    "6000219": {
+      "version": "3.7",
+      "order": 0
+    },
+    "6000220": {
+      "version": "3.7",
+      "order": 0
+    },
+    "6000221": {
+      "version": "3.6",
+      "order": 0
+    },
+    "6000222": {
+      "version": "3.7",
+      "order": 0
+    },
+    "6000223": {
+      "version": "3.7",
+      "order": 0
+    },
+    "6000224": {
+      "version": "3.7",
+      "order": 0
+    },
+    "6000225": {
+      "version": "3.7",
+      "order": 0
+    },
+    "390070051": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390070052": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390070053": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390070064": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390070065": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390070066": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390070067": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390070068": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390070069": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390070070": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390070071": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390070074": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390070075": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390070076": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390070077": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390070078": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390070079": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390070100": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390070105": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390077004": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390077005": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390077012": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390077013": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390077016": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390077017": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390077021": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390077022": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390077023": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390077024": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390077025": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390077028": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390077029": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390077033": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390077038": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390080003": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390080005": {
+      "version": "1.0",
+      "order": 0
+    },
+    "390080007": {
+      "version": "1.0",
+      "order": 0
+    }
+  }
+}

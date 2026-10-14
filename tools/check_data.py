@@ -7,6 +7,8 @@ web=ROOT/'web'
 meta=json.loads((web/'data/index.json').read_text())
 folder=web/'data'/meta['snapshot']
 errors=[]
+order=json.loads((web/'data/catalog-order.json').read_text())
+if order.get('source',{}).get('commit')!=meta.get('provenance',{}).get('commit'):errors.append('Catalog ordering must match the selected data source')
 items=json.loads((folder/'items.json').read_text())
 images=json.loads((folder/'images.json').read_text())
 for extra in ['assets/character-icons.json','assets/pilot/images.json']:
@@ -16,6 +18,7 @@ for extra in ['assets/character-icons.json','assets/pilot/images.json']:
 for category in ['character','weapon','echo']:
     rows=json.loads((folder/(category+'.json')).read_text())
     if len(rows)!=meta['counts'][category]: errors.append(category+': count mismatch')
+    if set(order.get(category,{}))!=set(rows):errors.append(category+': incomplete catalog order')
     for ident,row in rows.items():
         f=folder/category/(ident+'.json')
         if not f.is_file(): errors.append(str(f)+': missing');continue

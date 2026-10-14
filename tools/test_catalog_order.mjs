@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';
+import {catalogEntries,compareCatalog,betaVersionsForKind} from '../web/assets/catalog-order.js';
+const ordering=JSON.parse(fs.readFileSync(new URL('../web/data/catalog-order.json',import.meta.url)));
+const a={id:'1304',zh:'今汐',rank:5},b={id:'1311',zh:'心',rank:5},c={id:'1312',zh:'锁暝',rank:5};assert.deepEqual([a,c,b].sort((x,y)=>compareCatalog('character',x,y,ordering)).map(x=>x.id),['1312','1311','1304']);
+assert(compareCatalog('weapon',{id:'21020107',zh:'沉冥'},{id:'21050116',zh:'玉阙玄华'},ordering)<0);
+assert(compareCatalog('echo',{id:'6000223',zh:'解形煞'},{id:'390070051',zh:'先锋幼岩'},ordering)<0);
+const registry={releasedGameVersion:'3.7.0',versions:[{gameVersion:'3.7.50',channel:'beta',directory:'data/beta/3.7.50/',characters:['9999'],index:{9999:{name:'不能出现'}}},{gameVersion:'3.8.50',channel:'beta',directory:'data/beta/3.8.50/',characters:['1304','9999'],weapons:['8888'],echoes:['7777'],index:{1304:{name:'旧角色测试调整'},9999:{name:'测试新角色',rank:4}},weaponIndex:{8888:{name:'测试武器',rank:4}},echoIndex:{7777:{name:'测试声骸',rank:[3,4,5],group:[1]}}},{gameVersion:'3.8.51',channel:'beta',directory:'data/beta/3.8.51/',characters:['9999'],index:{9999:{name:'最新测试角色',rank:4}}}]};
+const chars=catalogEntries('character',[a,b,c],registry);assert.equal(chars.length,4);assert.equal(chars.find(x=>x.id==='9999').betaVersion,'3.8.51');assert.equal(chars.find(x=>x.id==='1304').zh,'今汐');assert.equal(chars.sort((x,y)=>compareCatalog('character',x,y,ordering))[0].id,'9999');assert.equal(chars.sort((x,y)=>compareCatalog('character',x,y,ordering,'rarity'))[0].id,'9999');
+assert.equal(catalogEntries('weapon',[],registry)[0].id,'8888');assert.equal(catalogEntries('echo',[],registry)[0].id,'7777');assert.equal(betaVersionsForKind(registry,'weapon','8888').length,1);assert.equal(catalogEntries('character',[a],{...registry,releasedGameVersion:'3.8.0'}).length,1);
+console.log('Catalog order checks passed: release order, beta-first across categories, latest beta snapshot, deduplication and release cutoff.');

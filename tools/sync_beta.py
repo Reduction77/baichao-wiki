@@ -69,7 +69,7 @@ def main():
             for url,ref in pool.map(image,refs):
                 if url:images[url]=ref
         for ident,d in details.items():write(out/version/'character'/f'{ident}.json',d)
-        records.append({'gameVersion':version,'channel':'beta','directory':f'data/beta/{version}/','source':f'{BASE}/ww/{version}/','characters':sorted(details,key=int),'index':{i:{'name':d.get('zh',i),'icon':d.get('icon')} for i,d in index.items()},'images':images,'missingImages':missing})
+        records.append({'gameVersion':version,'channel':'beta','directory':f'data/beta/{version}/','source':f'{BASE}/ww/{version}/','characters':sorted(details,key=int),'index':{i:{**d,'name':d.get('zh',i)} for i,d in index.items()},'images':images,'missingImages':missing})
     old=json.loads((out/'index.json').read_text()) if (out/'index.json').exists() else {}
     # Old beta files may remain archived, but only eligible records are published.
     write(out/'index.json',{'schema':1,'releasedGameVersion':live if len(live.split('.'))==3 else live+'.0','checkedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'sources':[{'url':BASE+'/manifest.json','live':live,'available':manifest.get('available',[])}]+[s for s in old.get('sources',[]) if 'github.com/' in s.get('url','')],'versions':records})

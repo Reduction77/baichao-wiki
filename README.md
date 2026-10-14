@@ -84,3 +84,13 @@ python3 tools/import_github_archive.py --source-config .cache/candidate-source.j
 确认候选后将配置写入 `tools/github_source.json`，更新条目范围及本地图片，重新导入、检查、打包并提交。无需修改脚本内的版本常量。今汐旧试验链接保留历史固定提交，普通今汐页面随全站配置更新。
 
 Actions 手动运行新增 `check_upstream` 选项，默认核对上游并更新此次部署的核对时间；不切换正式服来源、不新增定时任务。检查器受 GitHub 网络及 API 配额影响，失败时不会发布该次构建。
+
+## 默认发布顺序与测试服优先
+
+首页角色档案与三类图鉴默认使用最新发布顺序，并优先展示尚未转正式服的测试新条目；首页同时提供近期武器、声骸卡片。仍可选择星级、名称或 ID 排序。正式服已存在的条目不被测试调整版重复替换，测试对比入口仍可查看这些调整。
+
+排序记录独立保存在 `web/data/catalog-order.json`，不使用角色、武器或声骸的 ID 大小推断发布时间。角色使用游戏展示顺序并处理漂泊者新增属性；武器结合最早正式服快照和首次唤取配置序列；声骸按最早正式服快照归属版本排序。同版本同批声骸按名称稳定排列，不虚构精确发布日期。所有历史快照提交和输入文件校验值保存在排序记录内。
+
+升级数据后运行 `python3 tools/build_catalog_order.py` 更新并提交排序记录；Actions 勾选 refresh_data 时会同步重建。首次需要下载公开 GitHub 历史配置，后续复用缓存；网页只读取已保存的排序 JSON。
+
+现有测试来源仍为空。前端支持真实未来快照中新增 characters、weapons、echoes；对应的索引为 indexes.character、indexes.weapon、indexes.echo，也兼容旧角色 index。详情文件分别置于该版本目录下的 character、weapon、echo。未提供真实资料时不会生成测试卡片。已发布主次版本的测试资料仍会隐藏。
