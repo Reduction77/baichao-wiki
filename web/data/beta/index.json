@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "releasedGameVersion": "3.7.0",
+  "checkedAt": "2026-10-13T21:44:28.781265+00:00",
+  "sources": [
+    {
+      "url": "https://static.nanoka.cc/manifest.json",
+      "live": "3.7",
+      "available": [
+        "3.7"
+      ]
+    },
+    {
+      "url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/README.md",
+      "status": "Release",
+      "gameVersion": "3.7.0",
+      "resourceVersion": "3.7.8"
+    }
+  ],
+  "versions": []
+}

@@ -89,3 +89,33 @@ python3 tools/import_github_character.py --compare web/data/20261013T031747-2/ch
 ## 深色模式与阅读布局
 
 全站使用深色蓝主题，白色技能与共鸣链图标放在深色底板上。今汐试验页按技能逐条排列，在宽屏上将说明和倍率分栏；窄屏自动改为上下排列。倍率表使用交替行底色与醒目的数值，保留独立等级及简易说明功能。
+
+## 全角色布局与测试服对比
+
+64 个正式服角色使用统一的深色阅读布局，保留共鸣模态、技能独立等级、属性节点、配队入口与收藏。所有角色的技能和共鸣链图标由额外压缩包恢复，访问时不使用外部图片热链。正式服角色目前仍使用原本的资料快照；今汐的 GitHub 数据版仍是单独的数据试验，未把其他角色冒充为 GitHub 来源。
+
+入口：`#beta`，测试角色详情：`#beta/<ID>?version=<新版本>&from=<旧版本>`。可比较档案、选定等级的基础属性、技能文字和倍率、共鸣模态、共鸣链和突破材料，支持类别筛选及仅显示变化。图片、故事、伤害拆分与推荐配装不参与对比。只有一份快照时会说明暂不能对比两个版本。
+
+### 版本规则
+
+- 同一主次游戏版本正式服发布后，隐藏该版本及更早版本的测试快照，旧测试链接也不会读取对应数据。
+- 游戏版本与资源修订号分开判定。Arikatsu 固定提交标明 `Status: Release`、游戏 `3.7.0`、资源 `3.7.8`，属于正式服资源修订。不能因资源号末位非零就把它标为测试服。
+- `web/data/beta/index.json` 明确声明 `channel: beta`；正式服页面不提供混入测试服的版本选项。前端以正式服索引的 live 版本作为筛选下限，正式快照更新后无需改页面代码就能隐藏已发布版本的测试资料。
+- 当前来源 manifest 仅有正式服3.7，测试列表为空。用于检查对比行为的合成样本只在测试进程内存中，未作为网站资料发布。
+
+### 更新未来测试快照
+
+```bash
+python3 tools/unpack_snapshot.py
+python3 tools/unpack_character_icons.py
+python3 tools/sync_beta.py
+node tools/test_versions.mjs
+node tools/test_beta_render.mjs
+git add web/data/beta
+git commit -m "Update eligible beta snapshots"
+git push
+```
+
+脚本读取 nanoka 游戏快照 manifest，仅导入比已发布正式服更高主次版本的测试游戏条目，不把资源修订号当作测试版本。版本索引、详情和图片一起保存，运行失败不发布不完整版本。若上游以后改用不同的测试版本命名，需要确认其发布状态并调整导入规则。Actions 勾选 refresh_data 时先更新正式服，再更新测试索引；与原刷新方式一样，这只影响本次部署，不提交回源码。没有新增定时任务。
+
+图标包还原：`python3 tools/unpack_character_icons.py`；额外版本检查：`node tools/test_versions.mjs` 和 `node tools/test_beta_render.mjs`。

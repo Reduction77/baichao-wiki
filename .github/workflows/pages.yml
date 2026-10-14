@@ -28,15 +28,21 @@ jobs:
         with:
           node-version: "22"
       - name: Restore bundled data and images
-        run: python3 tools/unpack_snapshot.py
+        run: |
+          python3 tools/unpack_snapshot.py
+          python3 tools/unpack_character_icons.py
       - name: Refresh source data (manual only)
         if: github.event_name == 'workflow_dispatch' && inputs.refresh_data
-        run: python3 tools/sync_data.py --keep 1
+        run: |
+          python3 tools/sync_data.py --keep 1
+          python3 tools/sync_beta.py
       - name: Validate data and rendering
         run: |
           python3 tools/check_data.py
           node tools/test_core.mjs
           node tools/test_render.mjs
+          node tools/test_versions.mjs
+          node tools/test_beta_render.mjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:

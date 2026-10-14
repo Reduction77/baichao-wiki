@@ -9,3 +9,7 @@ snapshots/.staging-*/
 !web/data/experiments/
 !web/data/experiments/*.json
 .cache/
+!web/data/beta/
+!web/data/beta/**
+web/assets/character-icons/
+web/assets/character-icons.json

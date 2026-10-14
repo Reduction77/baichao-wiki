@@ -23,32 +23,32 @@ for(const kind of ['character','weapon','echo']){
   location.hash='#'+kind+'/'+id;await winEvents.hashchange();
   const html=nodes.get('main').innerHTML;
   assert(!html.includes('暂时无法打开资料'),kind+'/'+id+' failed');
-  assert(html.includes('detail-hero'),kind+'/'+id+' hero missing');
+  assert(html.includes(kind==='character'?'pilot-top':'detail-hero'),kind+'/'+id+' hero missing');
   count++;
  }
 }
 location.hash='#character/1304';await winEvents.hashchange();
 events.change({target:{dataset:{control:'skillLevel'},value:'1'}});
-assert(nodes.get('#detail-content').innerHTML.includes('33.43%'));
+assert(nodes.get('main').innerHTML.includes('33.43%'));
 events.change({target:{dataset:{control:'skillLevel'},value:'10'}});
-assert(nodes.get('#detail-content').innerHTML.includes('66.47%'));
+assert(nodes.get('main').innerHTML.includes('66.47%'));
 events.click({target:{closest:()=>({dataset:{tab:'overview'},hasAttribute:()=>false})}});
 events.change({target:{dataset:{control:'charLevel'},value:'20'}});
-assert(nodes.get('#detail-content').innerHTML.includes('2,830')||nodes.get('#detail-content').innerHTML.includes('2830'));
+assert(nodes.get('main').innerHTML.includes('2,830')||nodes.get('main').innerHTML.includes('2830'));
 events.change({target:{dataset:{control:'stage'},value:'0'}});
-assert(nodes.get('#detail-content').innerHTML.includes('2253'));
+assert(nodes.get('main').innerHTML.includes('2253'));
 events.click({target:{closest:()=>({dataset:{fav:'character:1304'}})}});
 assert(JSON.parse(storage.get('baichao-favorites')).includes('character:1304'));
 location.hash='#character';await winEvents.hashchange();
 events.input({target:{id:'search',value:'今汐'}});
 assert(nodes.get('#result-count').textContent.startsWith('共 1 条'));
-for(const route of ['teams','favorites','about']){location.hash='#'+route;await winEvents.hashchange();assert(!nodes.get('main').innerHTML.includes('暂时无法打开资料'));}
+for(const route of ['teams','favorites','about','beta']){location.hash='#'+route;await winEvents.hashchange();assert(!nodes.get('main').innerHTML.includes('暂时无法打开资料'));}
 console.log(`Render checks passed: ${count} detail records, local fetches, skill levels, ascension stages, favorites, search, auxiliary pages.`);
 
 location.hash='#lab';await winEvents.hashchange();
 assert(nodes.get('main').innerHTML.includes('110 / 111'));
 location.hash='#character/1304?source=github';await winEvents.hashchange();
-assert(nodes.get('main').innerHTML.includes('GITHUB 原始数据'));
+assert(nodes.get('main').innerHTML.includes('GITHUB 原始配置'));
 assert(!nodes.get('main').innerHTML.includes('存在异常，如有疑问请联系官方客服'));
 assert(nodes.get('main').innerHTML.includes('同奏持续时间'));
 assert(nodes.get('main').innerHTML.includes('66.47%'));
@@ -69,3 +69,8 @@ assert(nodes.get('main').innerHTML.includes('技能材料合计'));
 events.click({target:{closest:()=>({dataset:{tab:'chains'},hasAttribute:()=>false})}});
 assert(nodes.get('main').innerHTML.includes('共鸣链 6'));
 console.log('GitHub pilot checks passed: local data, source routing, independent skill levels, simple text, ascension stages, materials and chains.');
+
+location.hash='#beta';await winEvents.hashchange();assert(nodes.get('main').innerHTML.includes('当前没有可展示的测试服快照'));
+location.hash='#beta/1304?version=3.7.50';await winEvents.hashchange();assert(nodes.get('main').innerHTML.includes('没有可用的未发布测试版本'));
+location.hash='#character/1506';await winEvents.hashchange();assert(nodes.get('main').innerHTML.includes('菲比'));assert(nodes.get('main').innerHTML.includes('衍射'));assert(!nodes.get('main').innerHTML.includes('JINHSI'));
+console.log('All-character layout and released-version beta exclusion checks passed.');
