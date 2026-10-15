@@ -1,4 +1,4 @@
-import {createTeamBuilder} from './team-builder.js?v=20261015-curated';
+import {createTeamBuilder} from './team-builder.js?v=20261015-toggle';
 import {catalogEntries,compareCatalog,betaVersionsForKind} from './catalog-order.js?v=20261014-latest';
 import {characterPage,labPage,archiveLabPage} from './experiment.js?v=20261014-latest';
 import {eligibleBetaVersions,betaVersionsFor,comparisonPanel,betaCatalog} from './versions.js?v=20261014-latest';
