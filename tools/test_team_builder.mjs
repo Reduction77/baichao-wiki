@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import assert from 'node:assert/strict';
-import {matrixPermanent,matrixCurrent,defaultState,parseState,characterMap,uses,limitFor,unavailableReason,budgetConflicts,selectCharacter,saveTeam,recommend,matchingTeams} from '../web/assets/team-builder-core.js';
+import {configureMatrixRules,matrixPermanent,matrixCurrent,defaultState,parseState,characterMap,uses,limitFor,unavailableReason,budgetConflicts,selectCharacter,saveTeam,recommend,matchingTeams} from '../web/assets/team-builder-core.js';
 import {createTeamBuilder} from '../web/assets/team-builder.js';
 const web=new URL('../web/',import.meta.url);
 const profiles=JSON.parse(await fs.readFile(new URL('data/team-builder.json',web)));
@@ -84,3 +84,14 @@ await click('clear-teams');assert.equal(builder.getState().teams.length,1);await
 await click('clear-teams');await click('confirm-clear');assert.equal(builder.getState().teams.length,0);
 const reopened=createTeamBuilder({profiles,img:()=>'',storage});reopened.mount(new Node());assert.deepEqual(reopened.getState(),builder.getState());
 console.log('Team builder checks passed: 60 profiles, bidirectional recommendations, shared Rover quota, matrix budgets, ordering, persistence, safe import, links and UI events.');
+
+const configured=JSON.parse(await fs.readFile(new URL('data/matrix-rules.json',web)));
+configureMatrixRules(configured,profiles);
+assert.equal(limitFor({...defaultState(),matrix:true},chars.get('1106')),2);
+configureMatrixRules({schema:1,permanent:['1503'],current:['1304']},profiles);
+assert.equal(limitFor({...defaultState(),matrix:true},chars.get('1304')),2);
+assert.equal(limitFor({...defaultState(),matrix:true},chars.get('1509')),1);
+assert.throws(()=>configureMatrixRules({schema:1,permanent:['1503'],current:['1503']},profiles));
+assert.throws(()=>configureMatrixRules({schema:1,permanent:[],current:['99999']},profiles));
+configureMatrixRules(configured,profiles);
+console.log('Published matrix JSON configuration and validation passed.');

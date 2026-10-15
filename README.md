@@ -112,3 +112,7 @@ Actions 手动运行新增 `check_upstream` 选项，默认核对上游并更新
 更新数据、范围或定位转换时，运行 `python3 tools/build_team_profiles.py` 并提交生成结果；Actions 在恢复或刷新后会自动重建，再执行 `node tools/test_team_builder.mjs` 检查来源、双向推荐、配额、导入及界面事件。网页仅加载精简定位文件，不为配队工具额外请求全部角色详情，也不请求外部推荐接口。
 
 迁移核对记录与维护细节见 [数据维护文档](docs/data-maintenance.md)。
+
+## Windows 本地管理后台
+
+源码位于 `admin/windows`，使用 Python 3.11+ 标准库，双击 `start.bat` 启动。支持配队视频、推荐组合与来源、矩阵次数编辑，本地草稿、备份、GitHub 同步、差异预览、原子提交与 Pages 发布状态查询。说明见 [Windows 使用说明](admin/windows/使用说明.md)。矩阵次数由 `web/data/matrix-rules.json` 管理；修改后通过同一次提交发布。只监听本机，不部署到公开 Wiki 的导航中。

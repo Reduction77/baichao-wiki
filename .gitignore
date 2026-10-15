@@ -22,3 +22,6 @@ web/assets/github-media/
 !web/data/team-builder.json
 
 !web/data/team-recommendations.json
+
+!web/data/matrix-rules.json
+admin/windows/.local/
