@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import assert from 'node:assert/strict';
-import {matrixPermanent,matrixPeriods,defaultState,parseState,characterMap,uses,limitFor,unavailableReason,budgetConflicts,selectCharacter,saveTeam,recommend,matchingTeams} from '../web/assets/team-builder-core.js';
+import {matrixPermanent,matrixCurrent,defaultState,parseState,characterMap,uses,limitFor,unavailableReason,budgetConflicts,selectCharacter,saveTeam,recommend,matchingTeams} from '../web/assets/team-builder-core.js';
 import {createTeamBuilder} from '../web/assets/team-builder.js';
 const web=new URL('../web/',import.meta.url);
 const profiles=JSON.parse(await fs.readFile(new URL('data/team-builder.json',web)));
@@ -29,18 +29,13 @@ assert.equal(recommend(s,profiles,config).length,0);assert.match(selectCharacter
 assert.equal(saveTeam(s,chars),'');assert.equal(s.teams.length,1);assert.equal(s.draft.length,0);
 assert.match(unavailableReason(s,jinhsi,chars),/次数/);
 s.matrix=true;assert.equal(limitFor(s,jinhsi),1);assert.equal(limitFor(s,zhezhi),1);
-for(const period of Object.keys(matrixPeriods)){
- s.matrixPeriod=period;
- for(const id of matrixPermanent)assert.equal(limitFor(s,chars.get(id)),2,`${id} must have two uses in every period`);
- assert.equal(limitFor(s,chars.get('1509')),period==='linnae-bonus'?2:1);
- assert.equal(limitFor(s,jinhsi),1);
-}
+assert.equal(matrixPermanent.length,7);assert(matrixPermanent.includes('1106'));assert.deepEqual(matrixCurrent,['1509']);
+for(const id of [...matrixPermanent,...matrixCurrent])assert.equal(limitFor(s,chars.get(id)),2,`${id} must have two uses in the current rules`);
 s=defaultState();s.matrix=true;
 for(const team of [['1509','1304','1503'],['1509','1107','1503']]){for(const id of team)assert.equal(selectCharacter(s,id,chars),'');assert.equal(saveTeam(s,chars),'');}
 assert.equal(uses(s,chars)['1509'],2);assert.equal(uses(s,chars)['1503'],2);
 assert.match(selectCharacter(s,'1509',chars),/次数/);assert.match(selectCharacter(s,'1503',chars),/次数/);
-s.matrixPeriod='after-linnae';assert.deepEqual(budgetConflicts(s,chars).map(p=>p.id),['1509']);
-assert.match(selectCharacter(s,'1509',chars),/次数/);assert.equal(limitFor(s,chars.get('1503')),2);
+assert.equal(budgetConflicts(s,chars).length,0);
 s.matrix=false;assert.equal(budgetConflicts(s,chars).length,2);
 s.teams.splice(0,1);assert.equal(budgetConflicts(s,chars).length,0);
 // Atomic team matching: the electric and concerto systems must never cross-pollinate.
@@ -54,9 +49,10 @@ const rover=profiles.characters.filter(p=>p.family==='rover');assert(rover.lengt
 const r=defaultState();selectCharacter(r,rover[0].id,chars);assert.match(selectCharacter(r,rover[1].id,chars),/已在当前/);
 assert.throws(()=>parseState({schema:1,teams:[{characters:[rover[0].id,rover[1].id,'1304']}]},profiles),/重复/);
 const restored=parseState({schema:1,matrix:true,teams:[{name:'<script>text</script>',characters:['1304','1105','1503']}],draft:['1502'],limits:{rover:3}},profiles);
-assert.equal(restored.draft[0],profiles.aliases['1502']);assert.equal(restored.schema,3);assert.equal(restored.matrixPeriod,'linnae-bonus');assert(!('matrixCharacter' in restored));assert(!('limits' in restored));assert.equal(limitFor(restored,jinhsi),1);
-const legacy=parseState({schema:2,matrix:true,matrixCharacter:'1304',teams:[]},profiles);assert.equal(legacy.matrixPeriod,'linnae-bonus');assert.equal(limitFor(legacy,jinhsi),1);assert.equal(limitFor(legacy,chars.get('1509')),2);
-for(const raw of [{schema:3,teams:[],matrixPeriod:'invalid'},{schema:3,teams:[],matrixPeriod:'linnae-bonus',matrixCharacter:'1304'},{schema:99,teams:[]},{schema:1,teams:[{characters:['1304','1105','999999']}]},{schema:2,teams:[],matrixCharacter:['1304','1107']},{schema:2,teams:[],matrixCharacter:'unknown'},{schema:2,teams:[],limits:{rover:2}},{schema:1,teams:[{characters:['1304','1304','1503']}]},{schema:1,teams:[],excluded:['unknown']},{schema:1,teams:[{characters:['1304','1105']}]}])assert.throws(()=>parseState(raw,profiles));
+assert.equal(restored.draft[0],profiles.aliases['1502']);assert.equal(restored.schema,4);assert(!('matrixPeriod' in restored));assert(!('matrixCharacter' in restored));assert(!('limits' in restored));assert.equal(limitFor(restored,jinhsi),1);
+const legacy=parseState({schema:2,matrix:true,matrixCharacter:'1304',teams:[]},profiles);assert(!('matrixPeriod' in legacy));assert.equal(limitFor(legacy,jinhsi),1);assert.equal(limitFor(legacy,chars.get('1509')),2);
+const oldPeriod=parseState({schema:3,matrix:true,matrixPeriod:'legacy-period',teams:[{characters:['1509','1304','1503']}]},profiles);assert(!('matrixPeriod' in oldPeriod));assert.equal(oldPeriod.teams.length,1);assert.equal(limitFor(oldPeriod,chars.get('1509')),2);
+for(const raw of [{schema:4,teams:[],matrixPeriod:'invalid'},{schema:4,teams:[],matrixCharacter:'1304'},{schema:99,teams:[]},{schema:1,teams:[{characters:['1304','1105','999999']}]},{schema:2,teams:[],matrixCharacter:['1304','1107']},{schema:2,teams:[],matrixCharacter:'unknown'},{schema:2,teams:[],limits:{rover:2}},{schema:1,teams:[{characters:['1304','1304','1503']}]},{schema:1,teams:[],excluded:['unknown']},{schema:1,teams:[{characters:['1304','1105']}]}])assert.throws(()=>parseState(raw,profiles));
 
 class Node{constructor(){this.innerHTML='';this.textContent='';this.value='';this.handlers={};this.dataset={};}addEventListener(n,f){this.handlers[n]=f;}removeEventListener(n){delete this.handlers[n];}focus(){}querySelector(selector){return nodes.get(selector)||null;}querySelectorAll(){return [];}}
 const root=new Node(),nodes=new Map(['#tb-message','#tb-roster-list','#tb-import-text','#tb-import-error','.tb-dialog'].map(k=>[k,new Node()]));
@@ -74,8 +70,8 @@ await click('left',{index:'2'});assert.deepEqual(builder.getState().draft,['1304
 await click('save');assert.equal(builder.getState().teams.length,1);
 assert(root.innerHTML.includes('href="#character/1304"'));
 await click('matrix');assert.equal(builder.getState().matrix,true);
-assert(root.innerHTML.includes('tb-matrix-period'));assert(!root.innerHTML.includes('tb-matrix-character'));assert(root.innerHTML.includes('每期固定可用 2 次'));assert(!root.innerHTML.includes('tb-default-limit'));assert(!root.innerHTML.includes('data-limit='));
-root.handlers.change({target:{id:'tb-matrix-period',value:'after-linnae',dataset:{}}});assert.equal(builder.getState().matrixPeriod,'after-linnae');
+assert(!root.innerHTML.includes('tb-matrix-period'));assert(root.innerHTML.includes('本期矩阵规则'));assert(root.innerHTML.includes('釉瑚'));assert(!root.innerHTML.includes('下一期'));assert(!root.innerHTML.includes('tb-matrix-character'));assert(root.innerHTML.includes('每期固定可用 2 次'));assert(!root.innerHTML.includes('tb-default-limit'));assert(!root.innerHTML.includes('data-limit='));
+
 await click('pick',{id:'1509'});assert.equal(builder.getState().draft.length,1);
 await click('edit-team',{index:'0'});assert.equal(builder.getState().teams.length,1,'Editing must not overwrite a current draft');
 await click('clear-draft');await click('edit-team',{index:'0'});assert.equal(builder.getState().teams.length,0);

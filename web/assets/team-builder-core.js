@@ -1,17 +1,13 @@
 // Recommendations require an explicitly sourced, complete three-character team.
 export const roleNames={main:'主力输出',support:'协奏增益',sustain:'生存治疗'};
 // Permanent allowances apply in every matrix period; temporary bonuses never stack.
-export const matrixPermanent=['1110','1505','1503','1307','1209','1103'];
-export const matrixPeriods={
- 'linnae-bonus':{label:'本期 · 琳奈额外可用2次',character:'1509'},
- 'after-linnae':{label:'下一期 · 琳奈恢复1次',character:''}
-};
-export const defaultMatrixPeriod='linnae-bonus';
-export const defaultState=()=>({schema:3,matrix:false,matrixPeriod:defaultMatrixPeriod,excluded:[],draft:[],teams:[]});
+export const matrixPermanent=['1110','1505','1503','1307','1209','1103','1106'];
+export const matrixCurrent=['1509'];
+export const defaultState=()=>({schema:4,matrix:false,excluded:[],draft:[],teams:[]});
 export function characterMap(profiles){return new Map(profiles.characters.map(p=>[p.id,p]));}
 export function canonicalId(value,profiles){return profiles.aliases?.[String(value)]||null;}
 export function uses(state,characters){const counts={};for(const t of state.teams)for(const id of t.characters){const family=characters.get(id)?.family;if(family)counts[family]=(counts[family]||0)+1;}return counts;}
-export function limitFor(state,p){return state.matrix&&(matrixPermanent.includes(p.family)||matrixPeriods[state.matrixPeriod]?.character===p.family)?2:1;}
+export function limitFor(state,p){return state.matrix&&(matrixPermanent.includes(p.family)||matrixCurrent.includes(p.family))?2:1;}
 export function unavailableReason(state,p,characters){
  if(state.excluded.includes(p.family))return '未设为可用角色';
  if(state.draft.some(id=>characters.get(id)?.family===p.family))return '已在当前编队中';
@@ -28,21 +24,18 @@ export function saveTeam(state,characters){
  state.teams.push({name:`队伍 ${state.teams.length+1}`,characters:[...state.draft]});state.draft=[];return '';
 }
 export function parseState(raw,profiles){
- if(!raw||typeof raw!=='object'||![1,2,3].includes(raw.schema)||!Array.isArray(raw.teams)||raw.teams.length>100)throw Error('不是有效的白潮配队文件，最多导入 100 支队伍');
+ if(!raw||typeof raw!=='object'||![1,2,3,4].includes(raw.schema)||!Array.isArray(raw.teams)||raw.teams.length>100)throw Error('不是有效的白潮配队文件，最多导入 100 支队伍');
  const characters=characterMap(profiles),state=defaultState();
  state.matrix=raw.matrix===true;
  const families=new Set([...characters.values()].map(p=>p.family));
  if(raw.schema===2){
   if(raw.matrixCharacter!==undefined&&(typeof raw.matrixCharacter!=='string'||(raw.matrixCharacter&&!families.has(raw.matrixCharacter))))throw Error('本期指定角色设置不正确');
-  if(raw.limits!==undefined||raw.defaultLimit!==undefined)throw Error('旧版自定义次数设置无效，请使用矩阵期次规则');
+  if(raw.limits!==undefined||raw.defaultLimit!==undefined)throw Error('旧版自定义次数设置无效，请使用当前矩阵规则');
 
  }
- if(raw.schema===3){
-  if(typeof raw.matrixPeriod!=='string'||!Object.hasOwn(matrixPeriods,raw.matrixPeriod))throw Error('矩阵期次设置不正确');
-  if(raw.limits!==undefined||raw.defaultLimit!==undefined||raw.matrixCharacter!==undefined)throw Error('矩阵次数由固定角色与期次规则决定');
-  state.matrixPeriod=raw.matrixPeriod;
- }
- // Legacy quotas/designations are discarded; teams and roster remain intact.
+ if(raw.schema===3&&raw.matrixPeriod!==undefined&&typeof raw.matrixPeriod!=='string')throw Error('旧版矩阵设置格式不正确');
+ if(raw.schema===4&&(raw.limits!==undefined||raw.defaultLimit!==undefined||raw.matrixCharacter!==undefined||raw.matrixPeriod!==undefined))throw Error('矩阵次数由当前已确认规则决定');
+ // Legacy quotas/designations/period selections are discarded; teams and roster remain intact.
  if(raw.excluded!==undefined&&(!Array.isArray(raw.excluded)||raw.excluded.some(key=>!families.has(key))))throw Error('可用角色设置格式不正确');
  state.excluded=[...new Set(raw.excluded||[])];
  function ids(input,max){if(!Array.isArray(input)||input.length>max)throw Error('队伍角色数量不正确');const ids=input.map(v=>canonicalId(v,profiles));if(ids.some(v=>!v))throw Error('文件包含当前资料库中不存在的角色');const fs=ids.map(id=>characters.get(id).family);if(new Set(fs).size!==ids.length)throw Error('同队存在重复角色或漂泊者形态');return ids;}
