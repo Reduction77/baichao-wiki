@@ -20,3 +20,5 @@ web/assets/github-media/
 !web/data/catalog-order.json
 
 !web/data/team-builder.json
+
+!web/data/team-recommendations.json

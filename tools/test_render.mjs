@@ -82,7 +82,7 @@ location.hash='#teams';await winEvents.hashchange();
 assert(nodes.get('main').innerHTML.includes('打开配队工作台'));
 location.hash='#team-builder?character=1304';await winEvents.hashchange();
 assert(nodes.get('main').innerHTML.includes('配队工作台'));
-assert(nodes.get('#team-builder-root').innerHTML.includes('折枝的共鸣技能伤害加深匹配今汐'));
+assert(nodes.get('#team-builder-root').innerHTML.includes('已收录完整配队'));
 assert(nodes.get('#team-builder-root').innerHTML.includes('href="#character/1304"'));
 assert.equal(location.hash,'#team-builder');
 location.hash='#character/1105';await winEvents.hashchange();
