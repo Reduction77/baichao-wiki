@@ -1,5 +1,5 @@
 import {esc,elements,safeVideo} from './core.js';
-import {matrixPermanent,matrixCurrent,roleNames,defaultState,parseState,characterMap,uses,limitFor,unavailableReason,budgetConflicts,selectCharacter,saveTeam,recommend,matchingTeams} from './team-builder-core.js?v=20261016-clean-notice';
+import {matrixPermanent,matrixCurrent,roleNames,defaultState,parseState,characterMap,uses,limitFor,unavailableReason,budgetConflicts,selectCharacter,saveTeam,recommend,matchingTeams} from './team-builder-core.js?v=20261016-copy-cleanup';
 const STORAGE='baichao-team-builder-v1';
 export function createTeamBuilder({profiles,img,teams=[],recommendations:config={},storage=globalThis.localStorage,notify=()=>{}}){
  const chars=characterMap(profiles);let state=defaultState(),root,editing=false,group=false,q='',role='',element='',dialog='',initialMessage='';
@@ -27,7 +27,7 @@ export function createTeamBuilder({profiles,img,teams=[],recommendations:config=
  }
  function curatedTeams(ids){
   const matches=matchingTeams(state,profiles,config);
-  return matches.length?`<div class="tb-videos tb-curated"><strong>已收录完整配队 · ${matches.length} 条</strong>${matches.map(t=>`<article class="tb-curated-team"><h3>${esc(t.system)} · ${esc(t.kind)}</h3><p>${t.characters.map(id=>`<a href="#character/${id}">${esc(chars.get(id).name)} ↗</a>`).join(' / ')}</p><small>${esc(t.requirements)}</small>${t.sourceIds.map(id=>{const v=config.sources[id],url=safeVideo(v?.url);return url?`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">▶ ${esc(v.title)} ／${esc(v.up)} ↗</a><small>${v.gameVersion?'来源版本 '+esc(v.gameVersion)+' · ':''}${v.verification==='user-provided'?'用户提供的视频记录':'已核对搜索索引标题与简介，未逐帧核验'}</small>`:'';}).join('')}</article>`).join('')}</div>`:'';
+  return matches.length?`<div class="tb-videos tb-curated"><strong>已收录完整配队 · ${matches.length} 条</strong>${matches.map(t=>`<article class="tb-curated-team"><h3>${esc(t.system)} · ${esc(t.kind)}</h3><p>${t.characters.map(id=>`<a href="#character/${id}">${esc(chars.get(id).name)} ↗</a>`).join(' / ')}</p><small>${esc(t.requirements)}</small>${t.sourceIds.map(id=>{const v=config.sources[id],url=safeVideo(v?.url);return url?`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">▶ ${esc(v.title)} ／${esc(v.up)} ↗</a>${v.gameVersion?`<small>视频版本：${esc(v.gameVersion)}</small>`:''}`:'';}).join('')}</article>`).join('')}</div>`:'';
  }
  function relatedVideos(ids){const records=teams.filter(t=>ids.length>=2&&ids.every(id=>t.characters.map(String).some(raw=>profiles.aliases[raw]===id)));return records.length?`<div class="tb-videos"><strong>已有配队视频</strong>${records.flatMap(t=>t.videos||[]).map(v=>safeVideo(v.url)?`<a href="${esc(safeVideo(v.url))}" target="_blank" rel="noopener noreferrer">▶ ${esc(v.title)} <span>／${esc(v.up)}</span> ↗</a>`:'').join('')}</div>`:'';}
  function savedTeams(){return state.teams.length?`<div class="tb-saved-list">${state.teams.map((t,i)=>`<article class="tb-saved"><div class="tb-saved-head"><h3><span>${String(i+1).padStart(2,'0')}</span>${esc(t.name)}</h3><div><button data-tb="edit-team" data-index="${i}" aria-label="编辑${esc(t.name)}">编辑</button><button data-tb="delete-team" data-index="${i}" aria-label="删除${esc(t.name)}">删除</button></div></div><div class="tb-saved-roles">${t.characters.map(id=>{const p=chars.get(id);return `<a href="#character/${id}" aria-label="查看${esc(p.name)}档案">${portrait(p)}<span>${esc(p.name)}<small>${primary(p)}</small></span><span>↗</span></a>`;}).join('')}</div>${relatedVideos(t.characters)}</article>`).join('')}</div>`:'<div class="tb-saved-empty"><span>▱</span><strong>还没有暂存的队伍</strong><p>选满三名角色后点击“暂存队伍”，再继续规划下一队。</p></div>';}
@@ -92,7 +92,7 @@ export function createTeamBuilder({profiles,img,teams=[],recommendations:config=
   else if(action==='cancel-dialog')dialog='';
   else if(action==='confirm-clear'){state.teams=[];dialog='';feedback='已清空暂存队伍。';}
   else if(action==='confirm-import'){
-   try{const incoming=parseState(JSON.parse(root.querySelector('#tb-import-text').value),profiles);state=incoming;dialog='';feedback='已导入配队及设置；旧版自定义次数、指定角色与期次设置不会沿用，请核对当前矩阵规则及超额提示。';}
+   try{const incoming=parseState(JSON.parse(root.querySelector('#tb-import-text').value),profiles);state=incoming;dialog='';feedback='配队已导入。';}
    catch(error){root.querySelector('#tb-import-error').textContent=error instanceof SyntaxError?'JSON 格式有误，请粘贴完整导出内容。':error.message;return;}
   }
   else if(action==='export'){download(new Blob([JSON.stringify({...state,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'}),'白潮配队.json');message('已导出配队，可用于备份或换浏览器导入。');return;}

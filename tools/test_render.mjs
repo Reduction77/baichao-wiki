@@ -46,8 +46,8 @@ for(const route of ['teams','favorites','about','beta']){location.hash='#'+route
 console.log(`Render checks passed: ${count} detail records, local fetches, skill levels, ascension stages, favorites, search, auxiliary pages.`);
 
 location.hash='#lab';await winEvents.hashchange();
-assert(nodes.get('main').innerHTML.includes(meta.provenance?'全站 GitHub 数据来源':'110 / 111'));
-if(meta.provenance){const status=JSON.parse(await fs.readFile(path.join(web,'data/source-status.json'),'utf8').catch(()=>'{"current":{}}'));if(status.current?.commit===meta.provenance.commit)assert(nodes.get('main').innerHTML.includes(status.updateAvailable?'发现新的正式服资源':'已是最近核对的正式服版本'));}
+assert(nodes.get('main').innerHTML.includes('数据来源与更新'));
+if(meta.provenance){const status=JSON.parse(await fs.readFile(path.join(web,'data/source-status.json'),'utf8').catch(()=>'{"current":{}}'));if(status.current?.commit===meta.provenance.commit)assert(nodes.get('main').innerHTML.includes(status.updateAvailable?'发现新的正式服资源':'最近一次检查未发现更新'));}
 location.hash='#character/1304?source=github';await winEvents.hashchange();
 assert(nodes.get('main').innerHTML.includes('GITHUB 原始配置'));
 assert(!nodes.get('main').innerHTML.includes('存在异常，如有疑问请联系官方客服'));
