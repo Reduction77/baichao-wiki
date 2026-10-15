@@ -25,3 +25,7 @@ web/assets/github-media/
 
 !web/data/matrix-rules.json
 admin/windows/.local/
+
+build/
+dist/
+*.spec

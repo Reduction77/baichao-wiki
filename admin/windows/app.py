@@ -9,6 +9,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qs, quote, urlsplit
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 
+VERSION = '1.1'
 ROOT = Path(__file__).resolve().parent
 FILES = {'videos': 'web/data/teams.json', 'recommendations': 'web/data/team-recommendations.json', 'matrix': 'web/data/matrix-rules.json'}
 PROFILE = 'web/data/team-builder.json'
@@ -329,7 +330,9 @@ def instance_lock(directory):
     return handle
 
 def main():
-    parser=argparse.ArgumentParser(); parser.add_argument('--port',type=int,default=8765); parser.add_argument('--no-browser',action='store_true'); parser.add_argument('--data-dir',type=Path)
+    for stream in (sys.stdout,sys.stderr):
+        if stream is not None and hasattr(stream,'reconfigure'):stream.reconfigure(encoding='utf-8',errors='replace')
+    parser=argparse.ArgumentParser(); parser.add_argument('--version',action='version',version='Baichao Wiki Admin '+VERSION); parser.add_argument('--port',type=int,default=8765); parser.add_argument('--no-browser',action='store_true'); parser.add_argument('--data-dir',type=Path)
     args=parser.parse_args(); directory=args.data_dir or Path(os.environ.get('LOCALAPPDATA',str(Path.home()/'.local/share')))/'BaichaoWikiAdmin'
     try: instance=instance_lock(directory)
     except UserError as e: raise SystemExit(str(e))
@@ -347,4 +350,18 @@ def main():
     except KeyboardInterrupt: pass
     finally: server.server_close(); instance.close()
 
-if __name__=='__main__': main()
+if __name__=='__main__':
+    try:main()
+    except SystemExit as error:
+        if getattr(sys,'frozen',False) and error.code not in (None,0):
+            print(str(error),flush=True)
+            try:input('按回车关闭窗口…')
+            except (EOFError,KeyboardInterrupt):pass
+        raise
+    except Exception:
+        print('启动失败，请检查数据目录是否可写，或重新解压程序后重试。',file=sys.stderr,flush=True)
+        if getattr(sys,'frozen',False):
+            try:input('按回车关闭窗口…')
+            except (EOFError,KeyboardInterrupt):pass
+        raise SystemExit(1)
+

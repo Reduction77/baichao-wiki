@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - 'admin/windows/**'
+      - 'admin/build_windows_exe.py'
       - '.github/workflows/admin-windows.yml'
   workflow_dispatch:
 permissions:
@@ -22,3 +23,24 @@ jobs:
           python-version: '3.12'
       - run: python -m unittest discover -s admin/windows -p "test_*.py"
       - run: python admin/windows/app.py --help
+
+  portable:
+    needs: test
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: x64
+      - name: Install build dependency
+        run: python -m pip install pyinstaller==6.16.0
+      - name: Build and test the actual portable EXE
+        run: python admin/build_windows_exe.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BaichaoWikiAdmin-Windows-Portable-v1.1
+          path: dist/BaichaoWikiAdmin-Windows-Portable-v1.1.zip
+          if-no-files-found: error
+          retention-days: 30
