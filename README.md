@@ -112,3 +112,15 @@ Actions 手动运行新增 `check_upstream` 选项，默认核对上游并更新
 更新数据、范围或定位转换时，运行 `python3 tools/build_team_profiles.py` 并提交生成结果；Actions 在恢复或刷新后会自动重建，再执行 `node tools/test_team_builder.mjs` 检查来源、双向推荐、配额、导入及界面事件。网页仅加载精简定位文件，不为配队工具额外请求全部角色详情，也不请求外部推荐接口。
 
 迁移核对记录与维护细节见 [数据维护文档](docs/data-maintenance.md)。
+
+## 管理后台与发布资料
+
+管理程序独立维护在 [baichao-panel](https://github.com/Reduction77/baichao-panel)，本仓库只保存公开 Wiki 页面与资料。
+
+- [下载 Windows 与服务器安装包](https://github.com/Reduction77/baichao-panel/releases/latest)：每个 Release 分别附 Windows 便携 ZIP 和服务器 TAR.GZ。
+- [服务器部署与 NPM 配置](https://github.com/Reduction77/baichao-panel#服务器部署debian-13--docker-compose)：支持 Debian 13 / Docker Compose、管理员登录和 HTTPS 反向代理。
+- Windows 版解压后双击 EXE；服务器版按 Panel README 配置 .env、管理员密码和 GitHub 令牌后部署。
+
+后台只需授权此 Wiki 仓库的 GitHub 细粒度令牌：Contents 读写；如需查看部署进度，再开启 Actions 只读。不需要把管理程序、令牌、.env 或个人草稿提交到本仓库。
+
+使用流程：从 GitHub 同步资料 → 编辑配队/推荐组合/矩阵次数 → 保存草稿 → 预览差异 → 确认发布 → 等待本仓库 Pages 工作流成功。保存草稿不会改变公开页面，后台停止运行也不影响 Wiki 访问。Windows 与服务器端分别保留草稿，发布前应同步最新版本，遇到冲突先导出备份再合并。
