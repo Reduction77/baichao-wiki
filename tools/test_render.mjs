@@ -3,8 +3,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 const web=process.env.WIKI_TEST_DATA_DIR||path.resolve(import.meta.dirname,'../web');
-class Element {constructor(){this.innerHTML='';this.textContent='';this.value='';this.dataset={};this.classList={toggle(){},contains(){return false;}};}setAttribute(){} remove(){} }
-const nodes=new Map(['main','#results','#result-count','#sort','#group','#side-version','#detail-content'].map(k=>[k,new Element()]));
+class Element {constructor(){this.innerHTML='';this.textContent='';this.value='';this.dataset={};this.classList={toggle(){},contains(){return false;}};}setAttribute(){} remove(){} addEventListener(){} removeEventListener(){} querySelector(s){return nodes.get(s)||null;} }
+const nodes=new Map(['main','#results','#result-count','#sort','#group','#side-version','#detail-content','#team-builder-root','#tb-roster-list','#tb-message'].map(k=>[k,new Element()]));
 const events={},winEvents={};
 globalThis.document={querySelector:s=>nodes.get(s)||null,querySelectorAll:()=>[],addEventListener:(n,f)=>events[n]=f,createElement:()=>new Element(),body:{append(){}}};
 globalThis.location={hash:'#home'};
@@ -75,3 +75,19 @@ location.hash='#beta';await winEvents.hashchange();assert(nodes.get('main').inne
 location.hash='#beta/1304?version=3.7.50';await winEvents.hashchange();assert(nodes.get('main').innerHTML.includes('没有可用的未发布测试版本'));
 location.hash='#character/1506';await winEvents.hashchange();assert(nodes.get('main').innerHTML.includes('菲比'));assert(nodes.get('main').innerHTML.includes('衍射'));assert(!nodes.get('main').innerHTML.includes('JINHSI'));
 console.log('All-character layout and released-version beta exclusion checks passed.');
+
+location.hash='#character/1304';await winEvents.hashchange();
+assert(nodes.get('main').innerHTML.includes('#team-builder?character=1304'));
+location.hash='#teams';await winEvents.hashchange();
+assert(nodes.get('main').innerHTML.includes('打开配队工作台'));
+location.hash='#team-builder?character=1304';await winEvents.hashchange();
+assert(nodes.get('main').innerHTML.includes('配队工作台'));
+assert(nodes.get('#team-builder-root').innerHTML.includes('折枝的共鸣技能伤害加深匹配今汐'));
+assert(nodes.get('#team-builder-root').innerHTML.includes('href="#character/1304"'));
+assert.equal(location.hash,'#team-builder');
+location.hash='#character/1105';await winEvents.hashchange();
+assert(nodes.get('main').innerHTML.includes('pilot-top'));
+location.hash='#team-builder';await winEvents.hashchange();
+assert(nodes.get('#team-builder-root').innerHTML.includes('三人编队已就绪')===false);
+assert(nodes.get('#team-builder-root').innerHTML.includes('1/3'));
+console.log('Team builder routing passed: navigation, preselection, profile links and return-state preservation.');

@@ -18,3 +18,5 @@ web/assets/github-images.json
 web/assets/github-media/
 
 !web/data/catalog-order.json
+
+!web/data/team-builder.json
