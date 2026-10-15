@@ -1,9 +1,9 @@
 import {esc,elements,safeVideo} from './core.js';
-import {matrixPermanent,matrixCurrent,roleNames,defaultState,parseState,characterMap,uses,limitFor,unavailableReason,budgetConflicts,selectCharacter,saveTeam,recommend,matchingTeams} from './team-builder-core.js?v=20261016-current-rules';
+import {matrixPermanent,matrixCurrent,roleNames,defaultState,parseState,characterMap,uses,limitFor,unavailableReason,budgetConflicts,selectCharacter,saveTeam,recommend,matchingTeams} from './team-builder-core.js?v=20261016-clean-notice';
 const STORAGE='baichao-team-builder-v1';
 export function createTeamBuilder({profiles,img,teams=[],recommendations:config={},storage=globalThis.localStorage,notify=()=>{}}){
  const chars=characterMap(profiles);let state=defaultState(),root,editing=false,group=false,q='',role='',element='',dialog='',initialMessage='';
- try{const saved=storage.getItem(STORAGE);if(saved){const raw=JSON.parse(saved);state=parseState(raw,profiles);if(raw.schema<4)initialMessage='矩阵规则已更新：七名固定角色每期可用两次，本期额外角色为琳奈；旧队伍已保留，旧的期次选项、指定角色与自定义次数已移除。';}}catch{initialMessage='此前保存的编队无法读取，已开启新的编队。';}
+ try{const saved=storage.getItem(STORAGE);if(saved){const raw=JSON.parse(saved);state=parseState(raw,profiles);}}catch{initialMessage='此前保存的编队无法读取，已开启新的编队。';}
  const primary=p=>roleNames[p.primary];
  const charLink=p=>`<a class="tb-profile" href="#character/${p.id}" aria-label="查看${esc(p.name)}档案" title="查看${esc(p.name)}档案">档案 ↗</a>`;
  const portrait=p=>img(p.icon,'','tb-avatar');
