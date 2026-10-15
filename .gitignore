@@ -24,8 +24,3 @@ web/assets/github-media/
 !web/data/team-recommendations.json
 
 !web/data/matrix-rules.json
-admin/windows/.local/
-
-build/
-dist/
-*.spec
