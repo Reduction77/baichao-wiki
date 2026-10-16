@@ -71,8 +71,8 @@ events.click({target:{closest:()=>({dataset:{tab:'chains'},hasAttribute:()=>fals
 assert(nodes.get('main').innerHTML.includes('共鸣链 6'));
 console.log('GitHub pilot checks passed: local data, source routing, independent skill levels, simple text, ascension stages, materials and chains.');
 
-location.hash='#beta';await winEvents.hashchange();assert(nodes.get('main').innerHTML.includes('当前没有可展示的测试服快照'));
-location.hash='#beta/1304?version=3.7.50';await winEvents.hashchange();assert(nodes.get('main').innerHTML.includes('没有可用的未发布测试版本'));
+location.hash='#beta';await winEvents.hashchange();assert(nodes.get('main').innerHTML.includes('暂无可对比的版本资料'));
+location.hash='#beta/1304?version=3.7.50';await winEvents.hashchange();assert(nodes.get('main').innerHTML.includes('暂无该角色可展示的版本资料'));
 location.hash='#character/1506';await winEvents.hashchange();assert(nodes.get('main').innerHTML.includes('菲比'));assert(nodes.get('main').innerHTML.includes('衍射'));assert(!nodes.get('main').innerHTML.includes('JINHSI'));
 console.log('All-character layout and released-version beta exclusion checks passed.');
 
