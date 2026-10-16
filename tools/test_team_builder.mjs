@@ -29,7 +29,7 @@ assert.equal(recommend(s,profiles,config).length,0);assert.match(selectCharacter
 assert.equal(saveTeam(s,chars),'');assert.equal(s.teams.length,1);assert.equal(s.draft.length,0);
 assert.match(unavailableReason(s,jinhsi,chars),/次数/);
 s.matrix=true;assert.equal(limitFor(s,jinhsi),1);assert.equal(limitFor(s,zhezhi),1);
-assert.equal(matrixPermanent.length,7);assert(matrixPermanent.includes('1106'));assert.deepEqual(matrixCurrent,['1509']);
+assert.equal(matrixPermanent.length,6);assert(!matrixPermanent.includes('1106'));assert.deepEqual(matrixCurrent,['1509']);
 for(const id of [...matrixPermanent,...matrixCurrent])assert.equal(limitFor(s,chars.get(id)),2,`${id} must have two uses in the current rules`);
 s=defaultState();s.matrix=true;
 for(const team of [['1509','1304','1503'],['1509','1107','1503']]){for(const id of team)assert.equal(selectCharacter(s,id,chars),'');assert.equal(saveTeam(s,chars),'');}
@@ -87,7 +87,7 @@ console.log('Team builder checks passed: 60 profiles, bidirectional recommendati
 
 const configured=JSON.parse(await fs.readFile(new URL('data/matrix-rules.json',web)));
 configureMatrixRules(configured,profiles);
-assert.equal(limitFor({...defaultState(),matrix:true},chars.get('1106')),2);
+assert.equal(limitFor({...defaultState(),matrix:true},chars.get('1106')),1);
 configureMatrixRules({schema:1,permanent:['1503'],current:['1304']},profiles);
 assert.equal(limitFor({...defaultState(),matrix:true},chars.get('1304')),2);
 assert.equal(limitFor({...defaultState(),matrix:true},chars.get('1509')),1);

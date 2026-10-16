@@ -1,7 +1,7 @@
 // Recommendations require an explicitly sourced, complete three-character team.
 export const roleNames={main:'主力输出',support:'协奏增益',sustain:'生存治疗'};
 // Permanent allowances apply in every matrix period; temporary bonuses never stack.
-export let matrixPermanent=['1110','1505','1503','1307','1209','1103','1106'];
+export let matrixPermanent=['1110','1505','1503','1307','1209','1103'];
 export let matrixCurrent=['1509'];
 export function configureMatrixRules(rules,profiles){
  const families=new Set(profiles.characters.map(p=>p.family));
