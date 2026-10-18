@@ -1,7 +1,11 @@
 [
   {
     "title": "今汐 · 折枝 · 维里奈",
-    "characters": [1304, 1105, 1503],
+    "characters": [
+      1304,
+      1105,
+      1503
+    ],
     "requirements": "共鸣链、武器及特殊环境要求未核实",
     "version": "适用版本未核实",
     "rotation": "启动与循环手法请查看原视频。",
@@ -15,7 +19,11 @@
   },
   {
     "title": "今汐 · 折枝 · 守岸人",
-    "characters": [1304, 1105, 1505],
+    "characters": [
+      1304,
+      1105,
+      1505
+    ],
     "requirements": "共鸣链、武器及特殊环境要求未核实",
     "version": "适用版本未核实",
     "rotation": "启动与循环手法请查看原视频。",
@@ -29,7 +37,11 @@
   },
   {
     "title": "今汐 · 维里奈 · 渊武",
-    "characters": [1304, 1503, 1303],
+    "characters": [
+      1304,
+      1503,
+      1303
+    ],
     "requirements": "共鸣链、武器及特殊环境要求未核实",
     "version": "适用版本未核实",
     "rotation": "启动与循环手法请查看原视频。",
@@ -43,21 +55,29 @@
   },
   {
     "title": "今汐 · 吟霖 · 维里奈",
-    "characters": [1304, 1302, 1503],
+    "characters": [
+      1304,
+      1302,
+      1503
+    ],
     "requirements": "共鸣链、武器及特殊环境要求未核实",
     "version": "适用版本未核实",
     "rotation": "启动与循环手法请查看原视频。",
     "videos": [
       {
         "title": "【鸣潮】不想抽折枝？试试今吟花！简化版双喷轴详细讲解~",
-        "up": "历不厉害你紫哥",
-        "url": "https://www.bilibili.com/video/BV1qrFhYMEWJ"
+        "up": "厉不厉害你柴哥",
+        "url": "https://www.bilibili.com/video/BV1qFrFYMEWJ/"
       }
     ]
   },
   {
     "title": "今汐 · 长离 · 维里奈",
-    "characters": [1304, 1205, 1503],
+    "characters": [
+      1304,
+      1205,
+      1503
+    ],
     "requirements": "共鸣链、武器及特殊环境要求未核实",
     "version": "适用版本未核实",
     "rotation": "启动与循环手法请查看原视频。",
@@ -71,7 +91,11 @@
   },
   {
     "title": "今汐 · 心 · 守岸人",
-    "characters": [1304, 1311, 1505],
+    "characters": [
+      1304,
+      1311,
+      1505
+    ],
     "requirements": "共鸣链、武器及特殊环境要求未核实",
     "version": "适用版本未核实",
     "rotation": "启动与循环手法请查看原视频。",

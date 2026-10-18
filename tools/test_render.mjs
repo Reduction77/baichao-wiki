@@ -91,3 +91,18 @@ location.hash='#team-builder';await winEvents.hashchange();
 assert(nodes.get('#team-builder-root').innerHTML.includes('三人编队已就绪')===false);
 assert(nodes.get('#team-builder-root').innerHTML.includes('1/3'));
 console.log('Team builder routing passed: navigation, preselection, profile links and return-state preservation.');
+
+location.hash='#teams?character=1206';await winEvents.hashchange();
+assert(nodes.get('main').innerHTML.includes('BV1LERPYUEQs'));
+assert(!nodes.get('main').innerHTML.includes('BV1JeAwegEUy'));
+assert(nodes.get('main').innerHTML.includes('href="#character/1206"'));
+events.change({target:{id:'team-character',value:'1506',dataset:{}}});await winEvents.hashchange();
+assert.equal(location.hash,'#teams?character=1506');assert(nodes.get('main').innerHTML.includes('BV1JeAwegEUy'));
+location.hash='#character/1412';await winEvents.hashchange();
+events.click({target:{closest:()=>({dataset:{tab:'teams'},hasAttribute:()=>false})}});
+assert(nodes.get('main').innerHTML.includes('BV1E7Awz8Evn'));
+assert(nodes.get('main').innerHTML.includes('第三人与适用链数按具体片段查看'));
+location.hash='#team-builder?character=1412';await winEvents.hashchange();
+assert(nodes.get('#team-builder-root').innerHTML.includes('BV1E7Awz8Evn'));
+assert(nodes.get('#team-builder-root').innerHTML.includes('角色攻略与手法参考'));
+console.log('Workbook integration UI passed: role filtering, Brant and Phoebe sources, character guide tabs and builder guide display.');

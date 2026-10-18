@@ -49,6 +49,7 @@ jobs:
           node tools/test_render.mjs
           node tools/test_versions.mjs
           node tools/test_team_builder.mjs
+          node tools/test_team_library.mjs
           node tools/test_catalog_order.mjs
           node tools/test_beta_catalog.mjs
           node tools/test_beta_render.mjs

@@ -428,9 +428,10 @@
       ],
       "roles": [
         "support",
-        "sustain"
+        "sustain",
+        "main"
       ],
-      "primary": "sustain",
+      "primary": "main",
       "releaseOrder": 31
     },
     {
@@ -1077,7 +1078,8 @@
       ],
       "roles": [
         "support",
-        "sustain"
+        "sustain",
+        "main"
       ],
       "primary": "sustain",
       "releaseOrder": 39
@@ -1332,7 +1334,8 @@
         "虚湮"
       ],
       "roles": [
-        "sustain"
+        "sustain",
+        "main"
       ],
       "primary": "sustain",
       "releaseOrder": 42
