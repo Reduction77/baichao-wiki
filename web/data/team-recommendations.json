@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updatedAt": "2026-10-18",
+  "updatedAt": "2026-10-19",
   "verification": "配队依据视频标题、简介与作者标注整理。未注明的共鸣链、武器及充能条件请查看原视频；进阶、实战演示、历史版本与特殊配置已分别标注。",
   "sources": {
     "BV1VAsseLEGd": {
@@ -1589,13 +1589,21 @@
           "sourceId": "BV1JE1qYxEfP",
           "kind": "实战演示",
           "note": "实战手法演示，合轴点较少；作者提示输出上限较低。"
+        },
+        {
+          "sourceId": "BV1ZE4m1R7i2",
+          "kind": "教学参考",
+          "note": "安可、长离、维里奈双输出手法教学。",
+          "teamVerification": "owner-confirmed",
+          "checkedAt": "2026-10-19"
         }
       ],
       "name": "安可 / 长离 / 维里奈",
       "sourceIds": [
-        "BV1JE1qYxEfP"
+        "BV1JE1qYxEfP",
+        "BV1ZE4m1R7i2"
       ],
-      "kind": "实战演示"
+      "kind": "实战演示 / 教学参考"
     },
     {
       "id": "team-1203-1205-1505",
@@ -2963,13 +2971,21 @@
           "sourceId": "BV1bBEK6jEFF",
           "kind": "教学参考",
           "note": "露丽守25秒手法教学。"
+        },
+        {
+          "sourceId": "BV14wEJ6EEhS",
+          "kind": "进阶教学",
+          "note": "露西、丽贝卡、守岸人进阶流程。P1进阶教程，P2双处决启动与循环演示，P3完整素材；请按对应队伍查看配置。",
+          "teamVerification": "owner-confirmed",
+          "checkedAt": "2026-10-19"
         }
       ],
       "name": "露西 / 丽贝卡 / 守岸人",
       "sourceIds": [
-        "BV1bBEK6jEFF"
+        "BV1bBEK6jEFF",
+        "BV14wEJ6EEhS"
       ],
-      "kind": "教学参考"
+      "kind": "教学参考 / 进阶教学"
     },
     {
       "id": "team-1308-1503-1511",
@@ -3018,14 +3034,22 @@
           "sourceId": "BV1MqJG6NEup",
           "kind": "实战演示",
           "note": "矩阵实战参考：P1轮切，P2合轴；分数与该视频环境有关。"
+        },
+        {
+          "sourceId": "BV14wEJ6EEhS",
+          "kind": "进阶教学",
+          "note": "露西、丽贝卡、莫宁进阶流程。P1进阶教程，P2双处决启动与循环演示，P3完整素材；请按对应队伍查看配置。",
+          "teamVerification": "owner-confirmed",
+          "checkedAt": "2026-10-19"
         }
       ],
       "name": "露西 / 丽贝卡 / 莫宁",
       "sourceIds": [
         "BV1v2ET6fE7C",
-        "BV1MqJG6NEup"
+        "BV1MqJG6NEup",
+        "BV14wEJ6EEhS"
       ],
-      "kind": "教学参考 / 实战演示"
+      "kind": "教学参考 / 实战演示 / 进阶教学"
     },
     {
       "id": "team-1102-1505-1603",
@@ -3513,6 +3537,60 @@
         "BV1r6AzzuEcQ"
       ],
       "kind": "教学参考"
+    },
+    {
+      "id": "team-1405-1410-1505",
+      "characters": [
+        "1410",
+        "1405",
+        "1505"
+      ],
+      "mains": [
+        "1410"
+      ],
+      "system": "常规",
+      "requirements": "共鸣链、武器与充能要求请以各视频说明为准。",
+      "references": [
+        {
+          "sourceId": "BV1jNpizKEjG",
+          "kind": "教学参考",
+          "note": "尤诺主C，鉴心、守岸人辅助；包含手法教学与机制原理。",
+          "teamVerification": "owner-confirmed",
+          "checkedAt": "2026-10-19"
+        }
+      ],
+      "name": "尤诺 / 鉴心 / 守岸人",
+      "sourceIds": [
+        "BV1jNpizKEjG"
+      ],
+      "kind": "教学参考"
+    },
+    {
+      "id": "team-1102-1505-1604",
+      "characters": [
+        "1604",
+        "1102",
+        "1505"
+      ],
+      "mains": [
+        "1604"
+      ],
+      "system": "常规",
+      "requirements": "共鸣链、武器与充能要求请以各视频说明为准。",
+      "references": [
+        {
+          "sourceId": "BV1DwrUYcEg5",
+          "kind": "基础与进阶教学",
+          "note": "2.0版本暗散守教学，含25秒基础、20秒进阶、16秒错轮；共鸣链、武器与充能条件请按对应流程查看。",
+          "teamVerification": "owner-confirmed",
+          "checkedAt": "2026-10-19"
+        }
+      ],
+      "name": "漂泊者·湮灭 / 散华 / 守岸人",
+      "sourceIds": [
+        "BV1DwrUYcEg5"
+      ],
+      "kind": "基础与进阶教学"
     }
   ],
   "coveredMains": [
@@ -3548,27 +3626,6 @@
     "1504"
   ],
   "guides": [
-    {
-      "id": "guide-1203-BV1ZE4m1R7i2",
-      "type": "guide",
-      "title": "安可 · 安可与长离手法补充（不绑定第三人）",
-      "characters": [
-        "1203"
-      ],
-      "mains": [
-        "1203"
-      ],
-      "requirements": "共鸣链、武器与充能要求请以各视频说明为准。",
-      "version": "来源版本与配置见视频说明",
-      "references": [
-        {
-          "sourceId": "BV1ZE4m1R7i2",
-          "kind": "角色攻略",
-          "note": "安可、长离双人手法补充，第三人未确认，不作为完整三人配队推荐。"
-        }
-      ],
-      "system": "常规"
-    },
     {
       "id": "guide-1212-BV1B6Y86AEGU",
       "type": "guide",
@@ -3607,48 +3664,6 @@
           "sourceId": "BV1E7Awz8Evn",
           "kind": "角色攻略",
           "note": "角色进阶指南，含2链及以上等不同配置内容；第三人与适用链数按具体片段查看。"
-        }
-      ],
-      "system": "常规"
-    },
-    {
-      "id": "guide-1511-BV14wEJ6EEhS",
-      "type": "guide",
-      "title": "露西 · 双处决与5大进阶指南（第三人按片段）",
-      "characters": [
-        "1511"
-      ],
-      "mains": [
-        "1511"
-      ],
-      "requirements": "共鸣链、武器与充能要求请以各视频说明为准。",
-      "version": "来源版本与配置见视频说明",
-      "references": [
-        {
-          "sourceId": "BV14wEJ6EEhS",
-          "kind": "角色攻略",
-          "note": "P1进阶教程，P2双处决启动与循环演示，P3完整素材；第三人与链武按具体片段查看。"
-        }
-      ],
-      "system": "常规"
-    },
-    {
-      "id": "guide-1410-BV1jNpizKEjG",
-      "type": "guide",
-      "title": "尤诺 · 尤诺主C手法",
-      "characters": [
-        "1410"
-      ],
-      "mains": [
-        "1410"
-      ],
-      "requirements": "共鸣链、武器与充能要求请以各视频说明为准。",
-      "version": "来源版本与配置见视频说明",
-      "references": [
-        {
-          "sourceId": "BV1jNpizKEjG",
-          "kind": "角色攻略",
-          "note": "尤诺主C手法与机制参考，未限定完整三人队。"
         }
       ],
       "system": "常规"
@@ -3712,27 +3727,6 @@
           "sourceId": "BV1ZW42197TD",
           "kind": "角色攻略",
           "note": "1.1版本长离、炽霞双人合轴手法参考，未限定第三人。"
-        }
-      ],
-      "system": "常规"
-    },
-    {
-      "id": "guide-1604-BV1DwrUYcEg5",
-      "type": "guide",
-      "title": "湮灭漂泊者 · 暗散配队攻略（第三人按片段核实）",
-      "characters": [
-        "1604"
-      ],
-      "mains": [
-        "1604"
-      ],
-      "requirements": "共鸣链、武器与充能要求请以各视频说明为准。",
-      "version": "来源版本与配置见视频说明",
-      "references": [
-        {
-          "sourceId": "BV1DwrUYcEg5",
-          "kind": "角色攻略",
-          "note": "2.0版本暗散教学，含25秒基础、20秒进阶、16秒错轮；第三人及配置按对应片段查看。"
         }
       ],
       "system": "常规"

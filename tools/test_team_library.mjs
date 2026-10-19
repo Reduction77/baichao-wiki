@@ -33,7 +33,16 @@ assert.match(find(['1208','1204','1209']).references[0].note,/莫宁必须1链/)
 assert.match(find(['1508','1509','1505']).requirements,/3\+1/);
 assert(config.guides.some(t=>t.characters.includes('1508')&&t.references.some(r=>r.sourceId==='BV125UQByEeT')));
 assert(!config.teams.some(t=>t.sourceIds.includes('BV125UQByEeT')));
-for(const bv of ['BV1ZE4m1R7i2','BV1B6Y86AEGU','BV1E7Awz8Evn','BV14wEJ6EEhS','BV1DwrUYcEg5']){assert(config.guides.some(g=>g.references.some(r=>r.sourceId===bv)));assert(!config.teams.some(t=>t.sourceIds.includes(bv)));}
+for(const bv of ['BV1B6Y86AEGU','BV1E7Awz8Evn']){assert(config.guides.some(g=>g.references.some(r=>r.sourceId===bv)));assert(!config.teams.some(t=>t.sourceIds.includes(bv)));}
+for(const [ids,bv] of [
+ [['1203','1205','1503'],'BV1ZE4m1R7i2'],
+ [['1511','1308','1505'],'BV14wEJ6EEhS'],
+ [['1511','1308','1209'],'BV14wEJ6EEhS'],
+ [['1410','1405','1505'],'BV1jNpizKEjG'],
+ [['1604','1102','1505'],'BV1DwrUYcEg5'],
+]){assert(find(ids)?.sourceIds.includes(bv),'confirmed full team '+bv);assert(!config.guides.some(g=>g.references.some(r=>r.sourceId===bv)));}
+const yunoState={...defaultState(),draft:['1410','1405']};assert(recommend(yunoState,profiles,config).some(p=>p.id==='1505'));
+assert(find(['1604','1102','1103']),'Keep the separately sourced Baizhi team');
 for(const sustain of ['1503','1505'])assert(find(['1506','1501',sustain]).sourceIds.includes('BV1JeAwegEUy'));
 for(const pair of [['1206','1102'],['1102','1206'],['1208','1204'],['1204','1208']]){const s={...defaultState(),draft:[pair[0]]};assert(recommend(s,profiles,config).some(p=>p.id===pair[1]));}
 const fixture={characters:['1304','1105','1503'],name:'name',sourceIds:['new'],references:[{sourceId:'old',note:'stale'}]};
