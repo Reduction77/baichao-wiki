@@ -29,6 +29,14 @@ for kind in ['character','weapon','echo']:
 for item in json.loads((folder/'sonatas.json').read_text()).values():
     if item['name'].get('en'):names[item['name']['zh']]=item['name']['en']
 texts.update(names)
+beta_sources=[];beta_inline={}
+for version in json.loads((web/'data/beta/index.json').read_text()).get('versions',[]):
+    if not version.get('languageFile'):continue
+    path=web/version['languageFile'];overlay=json.loads(path.read_text())
+    for key,value in overlay['texts'].items():texts.setdefault(key,value)
+    for key,value in overlay.get('names',{}).items():names.setdefault(key,value)
+    beta_inline.update(overlay.get('inline',{}))
+    beta_sources.append({'version':version['gameVersion'],'source':overlay['source'],'sha256':hashlib.sha256(path.read_bytes()).hexdigest()})
 names.update({'导电漂泊者':names.get('漂泊者·导电','Rover: Electro'),'气动漂泊者':names.get('漂泊者·气动','Rover: Aero'),'衍射漂泊者':names.get('漂泊者·衍射','Rover: Spectro'),'湮灭漂泊者':names.get('漂泊者·湮灭','Rover: Havoc')})
 editorial=json.loads((ROOT/'tools/localization-editorial-en.json').read_text())
 inline={}
@@ -36,8 +44,9 @@ for path in sorted((folder/'character').glob('*.json')):
     detail=json.loads(path.read_text())
     for value in [detail.get('nickname'),*detail.get('chara_info',{}).values()]:
         if value and value in texts:inline[value]=texts[value]
-payload={'schema':1,'source':{'repository':source['repository'],'commit':source['commit'],'inputSha256':hashes},'texts':texts,'names':names,'inline':inline,'editorial':editorial}
+inline.update(beta_inline)
+payload={'schema':1,'source':{'repository':source['repository'],'commit':source['commit'],'inputSha256':hashes,'versionLocales':beta_sources},'texts':texts,'names':names,'inline':inline,'editorial':editorial}
 body=json.dumps(payload,ensure_ascii=False,separators=(',',':')).encode()
 dest=web/'data/locales';dest.mkdir(parents=True,exist_ok=True)
 (dest/'en.game.json.gz').write_bytes(gzip.compress(body,mtime=0))
-print(f'English: {len(texts)} official strings, {len(names)} names, {len(body)} bytes; gzip {(dest/"en.game.json.gz").stat().st_size} bytes')
+print(f'English locale: {len(texts)} strings, {len(names)} names, {len(body)} bytes; gzip {(dest/"en.game.json.gz").stat().st_size} bytes')

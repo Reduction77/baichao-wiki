@@ -14,11 +14,13 @@ const storage=new Map();globalThis.localStorage={getItem:k=>storage.get(k)||null
 globalThis.fetch=async uri=>{assert(!/^https?:/.test(uri),'Site must use local data');try{return {ok:true,status:200,json:async()=>JSON.parse(await fs.readFile(path.join(web,uri),'utf8'))};}catch{return {ok:false,status:404};}};
 await import('../web/assets/app.js');
 const meta=JSON.parse(await fs.readFile(path.join(web,'data/index.json'),'utf8'));
+const registry=JSON.parse(await fs.readFile(path.join(web,'data/beta/index.json'),'utf8'));
+const {catalogEntries}=await import('../web/assets/catalog-order.js');
 assert(nodes.get('main').innerHTML.includes('探索每一段旅程'));
 let count=0;
 for(const kind of ['character','weapon','echo']){
- location.hash='#'+kind;await winEvents.hashchange();assert(nodes.get('#result-count').textContent.includes(String(meta.counts[kind])));
  const list=JSON.parse(await fs.readFile(path.join(web,'data',meta.snapshot,kind+'.json'),'utf8'));
+ location.hash='#'+kind;await winEvents.hashchange();const total=catalogEntries(kind,Object.entries(list).map(([id,d])=>({...d,id})),registry).length;assert.equal(nodes.get('#result-count').textContent,`共 ${total} 条 / ${total} 条资料`);
  for(const [id,entry] of Object.entries(list)){
   location.hash='#'+kind+'/'+id;await winEvents.hashchange();
   const html=nodes.get('main').innerHTML;
@@ -71,7 +73,7 @@ events.click({target:{closest:()=>({dataset:{tab:'chains'},hasAttribute:()=>fals
 assert(nodes.get('main').innerHTML.includes('共鸣链 6'));
 console.log('GitHub pilot checks passed: local data, source routing, independent skill levels, simple text, ascension stages, materials and chains.');
 
-location.hash='#beta';await winEvents.hashchange();assert(nodes.get('main').innerHTML.includes('暂无可对比的版本资料'));
+location.hash='#beta';await winEvents.hashchange();assert(nodes.get('main').innerHTML.includes(registry.versions.length?'莉莉':'暂无可对比的版本资料'));
 location.hash='#beta/1304?version=3.7.50';await winEvents.hashchange();assert(nodes.get('main').innerHTML.includes('暂无该角色可展示的版本资料'));
 location.hash='#character/1506';await winEvents.hashchange();assert(nodes.get('main').innerHTML.includes('菲比'));assert(nodes.get('main').innerHTML.includes('衍射'));assert(!nodes.get('main').innerHTML.includes('JINHSI'));
 console.log('All-character layout and released-version beta exclusion checks passed.');

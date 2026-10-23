@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import {gunzipSync} from 'node:zlib';
-import {initLanguage,setLanguage,getLanguage,translateText,gameText,localizeDOM} from '../web/assets/i18n.js?v=20261023-i18n3';
+import {initLanguage,setLanguage,getLanguage,translateText,gameText,localizeDOM} from '../web/assets/i18n.js?v=20261023-reviewed1';
 import {echoCost,imageLookupKey,plain,paramsAt} from '../web/assets/core.js';
 const read=async file=>JSON.parse(await fs.readFile(new URL('../web/'+file,import.meta.url)));
 const meta=await read('data/index.json'),packed=await fs.readFile(new URL('../web/data/locales/en.game.json.gz',import.meta.url)),data=JSON.parse(gunzipSync(packed));
@@ -18,6 +18,8 @@ assert.equal(translateText('编辑队伍 1'),'Edit Team 1');
 assert.equal(translateText('查看今汐档案'),'View Jinhsi profile');
 assert.equal(translateText('  今汐 / 长离 / 维里奈  '),'  Jinhsi / Changli / Verina  ');
 assert.equal(gameText('今汐'),'Jinhsi');
+assert.equal(gameText('莉莉'),'Lily');assert.equal(gameText('安魂'),'Lullaby');
+assert.equal(gameText('绮梦百合'),'Ascension Material #42601650');
 assert.equal(translateText('搜索共鸣者'),'Search Resonators');
 assert.equal(translateText('寒光技能等级'),`${gameText('寒光')} skill level`);
 assert.equal(translateText('漂泊者·导电'),gameText('漂泊者·导电'));

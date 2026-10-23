@@ -134,3 +134,15 @@ Excel 配队资料已合入上述配置：按三人角色集合合并队伍，�
 后台只需授权此 Wiki 仓库的 GitHub 细粒度令牌：Contents 读写；如需查看部署进度，再开启 Actions 只读。不需要把管理程序、令牌、.env 或个人草稿提交到本仓库。
 
 使用流程：从 GitHub 同步资料 → 编辑配队/推荐组合/矩阵次数 → 保存草稿 → 预览差异 → 确认发布 → 等待本仓库 Pages 工作流成功。保存草稿不会改变公开页面，后台停止运行也不影响 Wiki 访问。Windows 与服务器端分别保留草稿，发布前应同步最新版本，遇到冲突先导出备份再合并。
+
+## 已审核的资料补充与 3.8.1 版本条目
+
+正式服补充清单保存在 `tools/data/character-completions.json`，来源仍为当前固定 GitHub 提交。构建时在解包后执行 `python3 tools/complete_character_data.py`，补充已审核的 16 项独立参数（含男女漂泊者共 18 行），以及衍射漂泊者强化后的技能说明。原始压缩档案不变；同值参数备选行、声骸名称与分类不在这次补充范围内。脚本校验来源提交，更新固定来源后需重新审核补充清单。
+
+`python3 tools/complete_character_data.py --build` 可根据固定原始配置重新生成并应用清单。`python3 tools/test_character_completions.py` 验证补充范围、重复应用及未授权字段保持一致。
+
+`web/data/beta/3.8.1/` 保存 nanoka 3.8.1 的莉莉、安魂，以及锁暝与沉冥的版本变化，注册表为 `web/data/beta/index.json`。正式服数据不会被后续版本覆盖；入口沿用首页、图鉴及版本资料页，已有条目提供正式服与版本资料跳转。来源摘要与输入文件 SHA-256 记录在注册表中。
+
+维护这些条目时，先下载对应版本的中英文 character、weapon 与 item JSON，文件名使用 `ww__3.8.1__zh__character__1512.json` 等格式，再执行 `python3 tools/import_reviewed_beta.py --source-dir <下载目录>`。该工具仅导入审核过的四个版本条目，不扩展其他栏目；`--retry-missing-images` 可重新尝试尚未提供的图像。已确认借用其他角色或武器的占位图不会展示；缺失的安魂参数显示“待完善”，空缺的英文材料名称以材料编号显示。
+
+补充完成后运行 `python3 tools/build_locales.py` 并提交更新后的英文语言包。`node tools/test_reviewed_content.mjs` 检查跳转、等级/谐振切换、材料、占位参数与正式服隔离。

@@ -1,4 +1,4 @@
-import {gameText} from './i18n.js?v=20261023-i18n3';
+import {gameText} from './i18n.js?v=20261023-reviewed1';
 export const elements={1:'冷凝',2:'热熔',3:'导电',4:'气动',5:'衍射',6:'湮灭'};
 export const weapons={1:'长刃',2:'迅刀',3:'佩枪',4:'臂铠',5:'音感仪'};
 export const intensities={0:'轻波级',1:'巨浪级',2:'怒涛级',3:'海啸级'};

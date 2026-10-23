@@ -1,5 +1,8 @@
 // Interface and editorial text. Game descriptions use the pinned official text map.
 export const uiText={
+ '后续版本资料来自 nanoka 对应版本快照，具体效果以官方正式发布为准。':'Future-version data comes from the corresponding nanoka snapshot. Official releases determine the final content.',
+ '角色版本资料对比':'Resonator Version Comparison',
+ '资料尚未完善':'Incomplete data','部分立绘或图标尚未公开。':'Some portraits or icons are not yet available.','部分效果参数待完善，以正式发布为准。':'Some effect parameters are pending. Official releases determine the final content.','待完善':'Pending','版本资料按来源与版本分别标注，具体效果以官方正式发布为准。':'Version archives identify their source and version. Official releases determine the final content.',
  '可选角色':'Available Resonators','资料分类':'Categories',
  '语言':'Language','网站语言':'Site language','白潮 · 三人配队规划':'Baichao · Three-member team planner',
  '用此角色配队':'Build a team with this Resonator','白潮 · 我的配队':'Baichao · My Teams',
