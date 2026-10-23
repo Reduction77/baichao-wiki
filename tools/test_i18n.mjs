@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import {gunzipSync} from 'node:zlib';
-import {initLanguage,setLanguage,getLanguage,translateText,gameText,localizeDOM} from '../web/assets/i18n.js?v=20261023-i18n2';
+import {initLanguage,setLanguage,getLanguage,translateText,gameText,localizeDOM} from '../web/assets/i18n.js?v=20261023-i18n3';
 import {echoCost,imageLookupKey,plain,paramsAt} from '../web/assets/core.js';
 const read=async file=>JSON.parse(await fs.readFile(new URL('../web/'+file,import.meta.url)));
 const meta=await read('data/index.json'),packed=await fs.readFile(new URL('../web/data/locales/en.game.json.gz',import.meta.url)),data=JSON.parse(gunzipSync(packed));
@@ -13,6 +13,8 @@ await setLanguage('en');assert.equal(requests,1);assert.equal(storage.get('baich
 assert.equal(translateText('资料首页'),'Home');assert.equal(translateText('声骸图鉴'),'Echo Catalog');
 assert.equal(translateText('共 5 条 / 187 条资料'),'5 of 187 entries');
 assert.equal(translateText('选择第 2 位角色'),'Select Resonator 2');
+assert.equal(translateText('1. 队伍 1'),'1. Team 1');
+assert.equal(translateText('编辑队伍 1'),'Edit Team 1');
 assert.equal(translateText('查看今汐档案'),'View Jinhsi profile');
 assert.equal(translateText('  今汐 / 长离 / 维里奈  '),'  Jinhsi / Changli / Verina  ');
 assert.equal(gameText('今汐'),'Jinhsi');

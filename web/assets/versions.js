@@ -1,4 +1,4 @@
-import {esc,plain,paramsAt,rowValue,elements,weapons} from './core.js?v=20261023-i18n2';
+import {esc,plain,paramsAt,rowValue,elements,weapons} from './core.js?v=20261023-i18n3';
 export function gameSeries(version){const m=String(version).match(/^(\d+)\.(\d+)(?:\.\d+)?$/);if(!m)return null;return [Number(m[1]),Number(m[2])];}
 function compareSeries(a,b){return a[0]-b[0]||a[1]-b[1];}
 export function eligibleBetaVersions(registry){const released=gameSeries(registry.releasedGameVersion);if(!released)return [];return (registry.versions||[]).filter(v=>{const s=gameSeries(v.gameVersion);return v.channel==='beta'&&s&&compareSeries(s,released)>0&&v.directory===`data/beta/${v.gameVersion}/`&&['characters','weapons','echoes'].some(k=>Array.isArray(v[k]))&&['characters','weapons','echoes'].every(k=>v[k]===undefined||Array.isArray(v[k]));}).sort((a,b)=>a.gameVersion.localeCompare(b.gameVersion,undefined,{numeric:true}));}

@@ -1,4 +1,4 @@
-import {uiText} from './i18n-ui.js?v=20261023-i18n2';
+import {uiText} from './i18n-ui.js?v=20261023-i18n3';
 
 const STORAGE='baichao-language';
 let language='zh',game={},names={},editorial={},loading,expectedCommit='',changeHandler=()=>{};
@@ -26,7 +26,7 @@ const patterns=[
  [/^(\d+) 位候选$/,(_,n)=>`${n} candidates`],
  [/(\d+) 个角色形态/g,(_,n)=>`${n} Resonator forms`],
  [/^选择第 (\d+) 位角色$/,(_,n)=>`Select Resonator ${n}`],
- [/^队伍 (\d+)$/,(_,n)=>`Team ${n}`],
+ [/队伍 (\d+)/g,(_,n)=>`Team ${n}`],
  [/^查看(.+)档案$/,(_,name)=>`View ${replaceNames(name)} profile`],
  [/^(已取消选择|已加入|未加入)(.+)$/,(_,action,name)=>`${{'已取消选择':'Deselected','已加入':'Added','未加入':'Could not add'}[action]} ${replaceNames(name)}`],
  [/^(加入|移除|选择|取消选择|编辑|删除)(.+)$/,(_,action,name)=>`${uiText[action]} ${replaceNames(name)}`],

@@ -1,4 +1,4 @@
-import {esc,safeVideo} from './core.js?v=20261023-i18n2';
+import {esc,safeVideo} from './core.js?v=20261023-i18n3';
 
 // Shared sources are keyed by BV; legacy inline videos remain readable by the admin panel.
 export function videoReferences(record,sources={}){
