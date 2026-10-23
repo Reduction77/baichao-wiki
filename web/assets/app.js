@@ -1,10 +1,10 @@
-import {initLanguage,onLanguageChange,localizeDOM,getLocale} from './i18n.js';
-import {renderTeamVideos,mergeTeamLibrary} from './team-videos.js';
-import {createTeamBuilder} from './team-builder.js?v=20261023-i18n';
-import {catalogEntries,compareCatalog,betaVersionsForKind} from './catalog-order.js?v=20261023-i18n';
-import {characterPage,sourcePage} from './experiment.js?v=20261023-i18n';
-import {eligibleBetaVersions,betaVersionsFor,comparisonPanel,betaCatalog} from './versions.js?v=20261023-i18n';
-import {elements,weapons,intensities,esc,plain,rich,imageLookupKey,echoCost,paramsAt,rowValue,statOptions,filterEntries,safeVideo,formatStat} from './core.js';
+import {initLanguage,onLanguageChange,localizeDOM,getLocale} from './i18n.js?v=20261023-i18n2';
+import {renderTeamVideos,mergeTeamLibrary} from './team-videos.js?v=20261023-i18n2';
+import {createTeamBuilder} from './team-builder.js?v=20261023-i18n2';
+import {catalogEntries,compareCatalog,betaVersionsForKind} from './catalog-order.js?v=20261023-i18n2';
+import {characterPage,sourcePage} from './experiment.js?v=20261023-i18n2';
+import {eligibleBetaVersions,betaVersionsFor,comparisonPanel,betaCatalog} from './versions.js?v=20261023-i18n2';
+import {elements,weapons,intensities,esc,plain,rich,imageLookupKey,echoCost,paramsAt,rowValue,statOptions,filterEntries,safeVideo,formatStat} from './core.js?v=20261023-i18n2';
 const main=document.querySelector('main');let db,meta,images,items,sonatas,teams=[];let renderToken=0,detail,tab='skills',skillLevel=10,charLevel=90,stage=null,refine=1,echoRarity=5;
 let betaRegistry={releasedGameVersion:'3.7.0',versions:[]};let betaContext=null;let diffState={skillLevel:10,charLevel:90,category:'',changedOnly:true};
 let teamSources={};let teamBuilder=null;let catalogOrder={};let simple=false;let skillLevels={};

@@ -1,5 +1,5 @@
 import {eligibleBetaVersions} from './versions.js';
-import {getLanguage,getLocale,gameText} from './i18n.js';
+import {getLanguage,getLocale,gameText} from './i18n.js?v=20261023-i18n2';
 const displayName=row=>getLanguage()==='en'?(row.en||gameText(row.zh||row.name||'')):(row.zh||row.name||'');
 const plural={character:'characters',weapon:'weapons',echo:'echoes'};
 function versionParts(v){return String(v||'').split('.').map(Number);}

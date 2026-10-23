@@ -1,6 +1,6 @@
-import {translateText,getLocale} from './i18n.js';
-import {renderTeamVideos} from './team-videos.js';
-import {esc,elements,safeVideo} from './core.js';
+import {translateText,getLocale} from './i18n.js?v=20261023-i18n2';
+import {renderTeamVideos} from './team-videos.js?v=20261023-i18n2';
+import {esc,elements,safeVideo} from './core.js?v=20261023-i18n2';
 import {configureMatrixRules,matrixPermanent,matrixCurrent,roleNames,defaultState,parseState,characterMap,uses,limitFor,unavailableReason,budgetConflicts,selectCharacter,saveTeam,recommend,matchingTeams} from './team-builder-core.js?v=20261016-admin-config';
 const STORAGE='baichao-team-builder-v1';
 export function createTeamBuilder({profiles,img,teams=[],recommendations:config={},matrixRules,storage=globalThis.localStorage,notify=()=>{}}){

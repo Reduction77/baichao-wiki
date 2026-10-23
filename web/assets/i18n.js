@@ -1,4 +1,4 @@
-import {uiText} from './i18n-ui.js';
+import {uiText} from './i18n-ui.js?v=20261023-i18n2';
 
 const STORAGE='baichao-language';
 let language='zh',game={},names={},editorial={},loading,expectedCommit='',changeHandler=()=>{};

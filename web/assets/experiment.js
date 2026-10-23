@@ -1,5 +1,5 @@
-import {getLocale} from './i18n.js';
-import {esc,plain,rich,elements,weapons,paramsAt,rowValue} from './core.js';
+import {getLocale} from './i18n.js?v=20261023-i18n2';
+import {esc,plain,rich,elements,weapons,paramsAt,rowValue} from './core.js?v=20261023-i18n2';
 export function sourcePage(report,status=null,updatedAt=''){
  const p=report.source,checked=status?.current?.commit===p.commit;
  const stamp=value=>value?new Date(value).toLocaleString(getLocale()):'暂无记录';

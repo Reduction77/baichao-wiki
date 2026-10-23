@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import {gunzipSync} from 'node:zlib';
-import {initLanguage,setLanguage,getLanguage,translateText,gameText,localizeDOM} from '../web/assets/i18n.js';
+import {initLanguage,setLanguage,getLanguage,translateText,gameText,localizeDOM} from '../web/assets/i18n.js?v=20261023-i18n2';
 import {echoCost,imageLookupKey,plain,paramsAt} from '../web/assets/core.js';
 const read=async file=>JSON.parse(await fs.readFile(new URL('../web/'+file,import.meta.url)));
 const meta=await read('data/index.json'),packed=await fs.readFile(new URL('../web/data/locales/en.game.json.gz',import.meta.url)),data=JSON.parse(gunzipSync(packed));
