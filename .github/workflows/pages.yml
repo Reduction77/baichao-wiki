@@ -40,12 +40,14 @@ jobs:
         run: |
           python3 tools/import_github_archive.py
           python3 tools/build_catalog_order.py
+          python3 tools/build_locales.py
       - name: Build team-builder role profiles
         run: python3 tools/build_team_profiles.py
       - name: Validate data and rendering
         run: |
           python3 tools/check_data.py
           node tools/test_core.mjs
+          node tools/test_i18n.mjs
           node tools/test_render.mjs
           node tools/test_versions.mjs
           node tools/test_team_builder.mjs

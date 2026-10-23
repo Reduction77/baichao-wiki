@@ -1,10 +1,16 @@
+import {gameText} from './i18n.js';
 export const elements={1:'冷凝',2:'热熔',3:'导电',4:'气动',5:'衍射',6:'湮灭'};
 export const weapons={1:'长刃',2:'迅刀',3:'佩枪',4:'臂铠',5:'音感仪'};
 export const intensities={0:'轻波级',1:'巨浪级',2:'怒涛级',3:'海啸级'};
 export function esc(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-export function fill(value,params=[]){return String(value??'').replace(/\{(\d+)\}/g,(m,i)=>params[Number(i)]??m);}
+export function fill(value,params=[]){return gameText(String(value??'')).replace(/\{(\d+)\}/g,(m,i)=>params[Number(i)]??m);}
 export function plain(value,params=[]){return fill(value,params).replace(/<br\s*\/?\s*>/gi,'\n').replace(/<[^>]*>/g,'').replace(/\n[ \t]*\n[ \t]*\n/g,'\n\n').trim();}
-export function assetUrl(value){return typeof value==='string'&&value.startsWith('/Game/Aki/UI/')?'https://static.nanoka.cc/assets/ww/'+value.replace('/Game/Aki/UI/','').split('.')[0]+'.webp':value;}
+// Normalize a game resource reference to the legacy key in images.json.
+// The URL-shaped string is an identifier only. img() resolves it to a local file;
+// this helper does not return an image src or request anything from nanoka.
+export function imageLookupKey(value){return typeof value==='string'&&value.startsWith('/Game/Aki/UI/')?'https://static.nanoka.cc/assets/ww/'+value.replace('/Game/Aki/UI/','').split('.')[0]+'.webp':value;}
+// Game rarity tiers: Common, Elite, Overlord and Calamity cost 1, 3, 4 and 4.
+export function echoCost(entry){if(Number(entry.cost)>0)return Number(entry.cost);const tier=entry.intensity_code??entry.intensity;return tier===undefined||tier===null||tier===''?null:({0:1,1:3,2:4,3:4}[tier]??null);}
 export function paramsAt(params,level){return (params??[]).map(p=>Array.isArray(p)?p[Math.min(level-1,p.length-1)]:p);}
 export function rowValue(row,level){const ps=paramsAt(row.param,level);return row.format?plain(row.format,ps):ps.join(' / ');}
 export function statOptions(stats,level){return Object.entries(stats??{}).filter(([,v])=>v[String(level)]!==undefined).map(([stage,v])=>({stage,value:v[String(level)]}));}

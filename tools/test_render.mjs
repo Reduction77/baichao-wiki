@@ -106,3 +106,11 @@ location.hash='#team-builder?character=1412';await winEvents.hashchange();
 assert(nodes.get('#team-builder-root').innerHTML.includes('BV1E7Awz8Evn'));
 assert(nodes.get('#team-builder-root').innerHTML.includes('角色攻略与手法参考'));
 console.log('Workbook integration UI passed: role filtering, Brant and Phoebe sources, character guide tabs and builder guide display.');
+
+location.hash='#echo';await winEvents.hashchange();
+const echoCards=nodes.get('#results').innerHTML;
+assert(echoCards.includes('COST 1'));assert(echoCards.includes('COST 3'));assert(echoCards.includes('COST 4'));
+assert(!/<span class="badge">\d+<\/span>/.test(echoCards),'Echo badges must not show internal IDs');
+location.hash='#echo/6000038';await winEvents.hashchange();
+assert(nodes.get('main').innerHTML.includes('编号：6000038 · COST 1'));
+console.log('Echo catalog passed: COST badges and IDs retained in detail pages.');

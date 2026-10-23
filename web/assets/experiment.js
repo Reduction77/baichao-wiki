@@ -1,7 +1,8 @@
+import {getLocale} from './i18n.js';
 import {esc,plain,rich,elements,weapons,paramsAt,rowValue} from './core.js';
 export function sourcePage(report,status=null,updatedAt=''){
  const p=report.source,checked=status?.current?.commit===p.commit;
- const stamp=value=>value?new Date(value).toLocaleString('zh-CN'):'暂无记录';
+ const stamp=value=>value?new Date(value).toLocaleString(getLocale()):'暂无记录';
  return `<p class="eyebrow">DATA SOURCES / UPDATES</p><h1 class="page-title">数据来源与更新</h1><p class="subtext">查看当前资料版本、数据来源与更新状态。</p><div class="about-grid"><section class="panel"><h2>当前资料</h2><p>游戏版本：${esc(p.gameVersion)}</p><p>资源版本：${esc(p.resourceVersion)}</p><p>更新时间：${esc(stamp(updatedAt))}</p><p>收录共鸣者、武器、声骸及相关材料资料。</p></section><section class="panel"><h2>更新状态</h2><p>${checked?(status.updateAvailable?'发现新的正式服资源':'最近一次检查未发现更新'):'尚无当前版本的更新检查记录'}</p>${checked?`<p>检查时间：${esc(stamp(status.checkedAt))}</p><p>上游游戏版本：${esc(status.latestRelease?.gameVersion||'—')} · 资源版本：${esc(status.latestRelease?.resourceVersion||'—')}</p>`:''}</section><section class="panel"><h2>数据来源</h2><p>游戏资料来源：${esc(p.repository)}。</p><p>图片来源：nanoka，已保存用于本站展示。</p><a class="button" href="https://github.com/${esc(p.repository)}/tree/${esc(p.commit)}" target="_blank" rel="noopener noreferrer">查看数据来源 ↗</a></section><section class="panel"><h2>版权说明</h2><p>《鸣潮》相关文字、数据与游戏素材版权归库洛游戏（KURO GAMES）所有。本站为非官方资料站。</p></section></div>`;
 }
 export function characterPage(d,{img,statPanel,materials,teamCards,teams=[],tab,skillLevel,simple,levels,version,sourceFooter,entry={},actions='',betaVersion,comparison=''}){

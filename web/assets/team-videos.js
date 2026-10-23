@@ -21,5 +21,5 @@ export function mergeTeamLibrary(legacy,config={}){
  return [...rows,...(config.guides||[])];
 }
 export function renderTeamVideos(record,sources={}){
- return videoReferences(record,sources).map(v=>`<div class="team-video-reference">${v.kind?`<small class="team-video-kind">${esc(v.kind)}</small>`:''}<a class="video" href="${esc(safeVideo(v.url))}" target="_blank" rel="noopener noreferrer">▶ ${esc(v.title||'配队视频')} <span class="muted">／ ${esc(v.up||'UP主未注明')} ↗</span></a>${v.note?`<p class="stat-note">${esc(v.note)}</p>`:''}${v.gameVersion?`<small>视频版本：${esc(v.gameVersion)}</small>`:''}</div>`).join('');
+ return videoReferences(record,sources).map(v=>`<div class="team-video-reference">${v.kind?`<small class="team-video-kind">${esc(v.kind)}</small>`:''}<a class="video" data-original-text lang="zh-CN" href="${esc(safeVideo(v.url))}" target="_blank" rel="noopener noreferrer">▶ ${esc(v.title||'配队视频')} <span class="muted">／ ${esc(v.up||'UP主未注明')} ↗</span></a>${v.note?`<p class="stat-note">${esc(v.note)}</p>`:''}${v.gameVersion?`<small>视频版本：${esc(v.gameVersion)}</small>`:''}</div>`).join('');
 }

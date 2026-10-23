@@ -1,3 +1,4 @@
+import {translateText,getLocale} from './i18n.js';
 import {renderTeamVideos} from './team-videos.js';
 import {esc,elements,safeVideo} from './core.js';
 import {configureMatrixRules,matrixPermanent,matrixCurrent,roleNames,defaultState,parseState,characterMap,uses,limitFor,unavailableReason,budgetConflicts,selectCharacter,saveTeam,recommend,matchingTeams} from './team-builder-core.js?v=20261016-admin-config';
@@ -54,10 +55,10 @@ export function createTeamBuilder({profiles,img,teams=[],recommendations:config=
   message('正在生成队伍图…');
   try{
    const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=150+list.length*174;
-   const ctx=canvas.getContext('2d');ctx.fillStyle='#0b111c';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#e7edf7';ctx.font='bold 34px sans-serif';ctx.fillText('白潮 · 我的配队',38,59);ctx.font='18px sans-serif';ctx.fillStyle='#a4b3c8';ctx.fillText(`${state.matrix?'矩阵模式 · 固定'+matrixPermanent.length+'名、本期额外'+matrixCurrent.length+'名角色各2次':'普通模式'} · 共 ${list.length} 队 · ${new Date().toLocaleDateString('zh-CN')}`,40,98);
+   const ctx=canvas.getContext('2d');ctx.fillStyle='#0b111c';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#e7edf7';ctx.font='bold 34px sans-serif';ctx.fillText(translateText('白潮 · 我的配队'),38,59);ctx.font='18px sans-serif';ctx.fillStyle='#a4b3c8';ctx.fillText(translateText(`${state.matrix?'矩阵模式 · 固定'+matrixPermanent.length+'名、本期额外'+matrixCurrent.length+'名角色各2次':'普通模式'} · 共 ${list.length} 队 · ${new Date().toLocaleDateString(getLocale())}`),40,98);
    const bitmapCache=new Map();
    for(let i=0;i<list.length;i++){
-    const t=list[i],y=130+i*174;ctx.fillStyle='#151f2e';ctx.fillRect(30,y,1020,156);ctx.fillStyle='#83b8ff';ctx.font='bold 19px sans-serif';ctx.fillText(`${i+1}. ${t.name}`.slice(0,42),48,y+29);
+    const t=list[i],y=130+i*174;ctx.fillStyle='#151f2e';ctx.fillRect(30,y,1020,156);ctx.fillStyle='#83b8ff';ctx.font='bold 19px sans-serif';ctx.fillText(translateText(`${i+1}. ${t.name}`).slice(0,60),48,y+29);
     for(let j=0;j<3;j++){
      const p=chars.get(t.characters[j]),x=49+j*330;
      if(!bitmapCache.has(p.id)){
@@ -65,7 +66,7 @@ export function createTeamBuilder({profiles,img,teams=[],recommendations:config=
       if(src){const res=await fetch(src);if(res.ok)bitmapCache.set(p.id,await createImageBitmap(await res.blob()));}
      }
      const bm=bitmapCache.get(p.id);if(bm)ctx.drawImage(bm,x,y+43,85,85);
-     ctx.fillStyle='#e7edf7';ctx.font='bold 21px sans-serif';ctx.fillText(p.name,x+97,y+79);ctx.fillStyle='#a4b3c8';ctx.font='17px sans-serif';ctx.fillText(primary(p),x+97,y+110);
+     ctx.fillStyle='#e7edf7';ctx.font='bold 21px sans-serif';ctx.fillText(translateText(p.name),x+97,y+79);ctx.fillStyle='#a4b3c8';ctx.font='17px sans-serif';ctx.fillText(translateText(primary(p)),x+97,y+110);
     }
    }
    for(const bm of bitmapCache.values())bm.close?.();
