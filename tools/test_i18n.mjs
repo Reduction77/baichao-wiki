@@ -18,6 +18,7 @@ assert.equal(translateText('编辑队伍 1'),'Edit Team 1');
 assert.equal(translateText('查看今汐档案'),'View Jinhsi profile');
 assert.equal(translateText('  今汐 / 长离 / 维里奈  '),'  Jinhsi / Changli / Verina  ');
 assert.equal(gameText('今汐'),'Jinhsi');
+const rue=await read(`data/${meta.snapshot}/weapon/21020107.json`);assert.equal(gameText(rue.effect),data.texts[rue.effect]);assert(data.texts[rue.effect].includes('fewer than'));
 assert.equal(gameText('莉莉'),'Lily');assert.equal(gameText('安魂'),'Lullaby');
 assert.equal(gameText('绮梦百合'),'Ascension Material #42601650');
 assert.equal(translateText('搜索共鸣者'),'Search Resonators');

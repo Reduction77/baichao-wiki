@@ -37,20 +37,9 @@ def main():
    if ident=='1512':
     # Nanoka still points the full portrait at Ciaccona; never present it as Lily.
     d['background']='';d['artworkPending']=True
-   elif ident=='1312':
-    # Keep the reviewed live fields, adding only the new version's stamina row.
-    current=json.loads((folder/'character/1312.json').read_text())
-    if locale=='zh':
-     level=current['skill_trees']['1']['skill']['level'];row=next(v for v in raw['skill_trees']['1']['skill']['level'].values() if v['name']=='下落攻击耐力消耗')
-     level[str(max(map(int,level))+1)]=copy.deepcopy(row)
-     current.pop('provenance',None);current['chara_info']={k:v for k,v in current['chara_info'].items() if k in INFO};d=current
   else:
    # Lullaby's supplied icon is Mirage, a different weapon.
    if ident=='21030076':d['icon']='';d['artworkPending']=True
-   if ident=='21020107' and locale=='zh':
-    current=json.loads((folder/'weapon/21020107.json').read_text());current.pop('provenance',None)
-    for key in ['effect','effect_name','param']:current[key]=copy.deepcopy(raw[key])
-    d=current
    missing=sorted({int(i) for i in re.findall(r'\{(\d+)\}',d.get('effect','')) if int(i)>=len(d.get('param',[]))})
    if missing:
     d['effect']=re.sub(r'\{(\d+)\}',lambda m:('待完善' if locale=='zh' else 'Pending') if int(m[1]) in missing else m[0],d['effect'])
@@ -69,7 +58,7 @@ def main():
    for key in zh.keys()&en.keys():pairs(zh[key],en[key])
   elif isinstance(zh,list) and isinstance(en,list):
    for a,b in zip(zh,en):pairs(a,b)
- for kind,ids in [('character',['1512','1312']),('weapon',['21030076','21020107'])]:
+ for kind,ids in [('character',['1512']),('weapon',['21030076'])]:
   records[kind]={}
   for ident in ids:
    # Pair original row keys before selected live rows are merged/reordered.
@@ -100,6 +89,8 @@ def main():
    path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(proc.stdout)
   images[url]='data/beta/media/'+name
  with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:list(pool.map(asset,sorted(x for x in refs if x)))
+ for kind,ident in [('character','1312'),('weapon','21020107')]:
+  (web/f'data/beta/{VERSION}/{kind}/{ident}.json').unlink(missing_ok=True)
  for kind,entries in records.items():
   for ident,d in entries.items():
    d['versionSource']={'name':'nanoka','version':VERSION,'url':f'https://ww.nanoka.cc/{kind}/{ident}'}

@@ -141,8 +141,8 @@ Excel 配队资料已合入上述配置：按三人角色集合合并队伍，�
 
 `python3 tools/complete_character_data.py --build` 可根据固定原始配置重新生成并应用清单。`python3 tools/test_character_completions.py` 验证补充范围、重复应用及未授权字段保持一致。
 
-`web/data/beta/3.8.1/` 保存 nanoka 3.8.1 的莉莉、安魂，以及锁暝与沉冥的版本变化，注册表为 `web/data/beta/index.json`。正式服数据不会被后续版本覆盖；入口沿用首页、图鉴及版本资料页，已有条目提供正式服与版本资料跳转。来源摘要与输入文件 SHA-256 记录在注册表中。
+`web/data/beta/3.8.1/` 保存 nanoka 3.8.1 的莉莉、安魂两个新增条目，注册表为 `web/data/beta/index.json`。锁暝的下落攻击耐力参数与沉冥的武器效果保存在 `tools/data/existing-entry-completions.json`，构建时并入现有资料的对应部分，不单列版本条目。新增条目入口沿用首页、图鉴及版本资料页。来源摘要与输入文件 SHA-256 记录在注册表中。
 
-维护这些条目时，先下载对应版本的中英文 character、weapon 与 item JSON，文件名使用 `ww__3.8.1__zh__character__1512.json` 等格式，再执行 `python3 tools/import_reviewed_beta.py --source-dir <下载目录>`。该工具仅导入审核过的四个版本条目，不扩展其他栏目；`--retry-missing-images` 可重新尝试尚未提供的图像。已确认借用其他角色或武器的占位图不会展示；缺失的安魂参数显示“待完善”，空缺的英文材料名称以材料编号显示。
+维护这些条目时，先下载对应版本的中英文 character、weapon 与 item JSON，文件名使用 `ww__3.8.1__zh__character__1512.json` 等格式，再执行 `python3 tools/import_reviewed_beta.py --source-dir <下载目录>`。该工具仅导入审核过的两个新增条目，不扩展其他栏目；`--retry-missing-images` 可重新尝试尚未提供的图像。已确认借用其他角色或武器的占位图不会展示；缺失的安魂参数显示“待完善”，空缺的英文材料名称以材料编号显示。
 
 补充完成后运行 `python3 tools/build_locales.py` 并提交更新后的英文语言包。`node tools/test_reviewed_content.mjs` 检查跳转、等级/谐振切换、材料、占位参数与正式服隔离。

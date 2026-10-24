@@ -83,6 +83,16 @@ def main():
   path=ROOT/'web/data'/meta['snapshot']/'character'/f'{ident}.json'
   old=json.loads(path.read_text());new=apply_record(old,entry)
   if old!=new:path.write_text(json.dumps(new,ensure_ascii=False,separators=(',',':'))+'\n')
+ # Existing-entry additions belong in the normal detail pages, not version cards.
+ extra=json.loads((ROOT/'tools/data/existing-entry-completions.json').read_text())
+ for kind,entries in [('character',extra['characters']),('weapon',extra['weapons'])]:
+  for ident,entry in entries.items():
+   path=ROOT/'web/data'/meta['snapshot']/kind/f'{ident}.json';old=json.loads(path.read_text())
+   if kind=='character':new=apply_record(old,entry)
+   else:
+    if set(entry)-{'effect','effect_name','param'}:raise ValueError('Unexpected weapon supplement field')
+    new=copy.deepcopy(old);new.update(copy.deepcopy(entry))
+   if old!=new:path.write_text(json.dumps(new,ensure_ascii=False,separators=(',',':'))+'\n')
  print('Applied reviewed character completions:',len(data['characters']),'records')
 
 if __name__=='__main__':main()

@@ -37,6 +37,9 @@ for version in json.loads((web/'data/beta/index.json').read_text()).get('version
     for key,value in overlay.get('names',{}).items():names.setdefault(key,value)
     beta_inline.update(overlay.get('inline',{}))
     beta_sources.append({'version':version['gameVersion'],'source':overlay['source'],'sha256':hashlib.sha256(path.read_bytes()).hexdigest()})
+existing=json.loads((ROOT/'tools/data/existing-entry-completions.json').read_text())
+texts.update(existing.get('texts',{}))
+beta_sources.append({'source':existing['source']['name'],'version':existing['source']['version'],'sha256':hashlib.sha256((ROOT/'tools/data/existing-entry-completions.json').read_bytes()).hexdigest()})
 names.update({'导电漂泊者':names.get('漂泊者·导电','Rover: Electro'),'气动漂泊者':names.get('漂泊者·气动','Rover: Aero'),'衍射漂泊者':names.get('漂泊者·衍射','Rover: Spectro'),'湮灭漂泊者':names.get('漂泊者·湮灭','Rover: Havoc')})
 editorial=json.loads((ROOT/'tools/localization-editorial-en.json').read_text())
 inline={}
