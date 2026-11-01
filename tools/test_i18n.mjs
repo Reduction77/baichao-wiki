@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import {gunzipSync} from 'node:zlib';
-import {initLanguage,setLanguage,getLanguage,translateText,gameText,localizeDOM} from '../web/assets/i18n.js?v=20261023-reviewed1';
+import {initLanguage,setLanguage,getLanguage,translateText,gameText,localizeDOM} from '../web/assets/i18n.js?v=20261101-diff1';
 import {echoCost,imageLookupKey,plain,paramsAt} from '../web/assets/core.js';
 const read=async file=>JSON.parse(await fs.readFile(new URL('../web/'+file,import.meta.url)));
 const meta=await read('data/index.json'),packed=await fs.readFile(new URL('../web/data/locales/en.game.json.gz',import.meta.url)),data=JSON.parse(gunzipSync(packed));
@@ -45,3 +45,6 @@ assert.equal(echoCost({intensity_code:3}),4);assert.equal(echoCost({cost:3}),3);
 const key=imageLookupKey('/Game/Aki/UI/UIResources/Test/Icon.Icon');assert.equal(key,'https://static.nanoka.cc/assets/ww/UIResources/Test/Icon.webp');
 assert.equal(imageLookupKey('assets/test.webp'),'assets/test.webp');
 console.log('Localization passed: pinned English data, lazy loading, preference persistence, reversible switching, official skill text, special conditions, COST tiers and image lookup keys.');
+
+const {highlightedDiff}=await import('../web/assets/versions.js');const translatedDiff=highlightedDiff('伤害提升10%，持续5秒。','伤害提升20%，持续5秒。');assert(translatedDiff.before.includes('<del>'));
+await setLanguage('en');const versionDiff=highlightedDiff('旧 · 3.8.1','新 · 3.8.3');assert(!/[\u4e00-\u9fff]/.test(versionDiff.before+versionDiff.after));

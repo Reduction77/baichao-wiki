@@ -1,4 +1,6 @@
-import {esc,plain,paramsAt,rowValue,elements,weapons} from './core.js?v=20261023-reviewed1';
+import {esc,plain,paramsAt,rowValue,elements,weapons} from './core.js?v=20261101-diff1';
+import {textDiff} from './text-diff.js?v=20261101-diff1';
+import {translateText} from './i18n.js?v=20261101-diff1';
 export function gameSeries(version){const m=String(version).match(/^(\d+)\.(\d+)(?:\.\d+)?$/);if(!m)return null;return [Number(m[1]),Number(m[2])];}
 function compareSeries(a,b){return a[0]-b[0]||a[1]-b[1];}
 export function eligibleBetaVersions(registry){const released=gameSeries(registry.releasedGameVersion);if(!released)return [];return (registry.versions||[]).filter(v=>{const s=gameSeries(v.gameVersion);return v.channel==='beta'&&s&&compareSeries(s,released)>0&&v.directory===`data/beta/${v.gameVersion}/`&&['characters','weapons','echoes'].some(k=>Array.isArray(v[k]))&&['characters','weapons','echoes'].every(k=>v[k]===undefined||Array.isArray(v[k]));}).sort((a,b)=>a.gameVersion.localeCompare(b.gameVersion,undefined,{numeric:true}));}
@@ -17,9 +19,12 @@ export function characterDiff(before,after,{skillLevel=10,charLevel=90}={}){
   const a=before.skill_trees?.[id]?.skill,b=after.skill_trees?.[id]?.skill,label=(b||a).name;
   add('skills',label+' / 名称',a?.name,b?.name);
   add('skills',label+' / 说明',a?plain(a.desc,paramsAt(a.param,skillLevel)):undefined,b?plain(b.desc,paramsAt(b.param,skillLevel)):undefined);
-  for(const key of new Set([...Object.keys(a?.level||{}),...Object.keys(b?.level||{})])){
-   const av=a?.level?.[key],bv=b?.level?.[key];add('skills',`${label} / ${(bv||av).name} / Lv.${skillLevel}`,av?rowValue(av,skillLevel):undefined,bv?rowValue(bv,skillLevel):undefined);
-   if(av&&bv&&av.name!==bv.name)add('skills',label+' / 参数 '+key+' 名称',av.name,bv.name);
+  // Source row IDs can be renumbered between revisions. Match labels rather
+  // than comparing unrelated parameters that happen to occupy the same ID.
+  const indexed=rows=>{const counts=new Map();return new Map(Object.values(rows||{}).map(row=>{const n=counts.get(row.name)||0;counts.set(row.name,n+1);return [row.name+'\0'+n,row];}));};
+  const left=indexed(a?.level),right=indexed(b?.level);
+  for(const key of new Set([...left.keys(),...right.keys()])){
+   const av=left.get(key),bv=right.get(key);add('skills',`${label} / ${(bv||av).name} / Lv.${skillLevel}`,av?rowValue(av,skillLevel):undefined,bv?rowValue(bv,skillLevel):undefined);
   }
  }
  for(const id of new Set([...Object.keys(before.skill_branches||{}),...Object.keys(after.skill_branches||{})])){const a=before.skill_branches?.[id],b=after.skill_branches?.[id];add('skills',`共鸣模态 ${id} / 名称`,a?.name,b?.name);add('skills',`共鸣模态 ${id} / 说明`,a?plain(a.desc,a.param):undefined,b?plain(b.desc,b.param):undefined);}
@@ -27,11 +32,20 @@ export function characterDiff(before,after,{skillLevel=10,charLevel=90}={}){
  for(const stage of new Set([...Object.keys(before.ascensions||{}),...Object.keys(after.ascensions||{})])){const map=cs=>Object.fromEntries((cs||[]).map(c=>[c.key,c.value]));const a=map(before.ascensions?.[stage]),b=map(after.ascensions?.[stage]);for(const key of new Set([...Object.keys(a),...Object.keys(b)]))add('materials',`突破 ${stage} / ${(after.source_items||before.source_items)?.[key]?.name||'材料 #'+key}`,a[key],b[key]);}
  return rows;
 }
+export function highlightedDiff(before,after){
+ const parts=textDiff(translateText(before),translateText(after));
+ const side=type=>parts.filter(p=>p.type==='equal'||p.type===type).map(p=>p.type==='equal'?esc(p.text):`<${type==='remove'?'del':'ins'}>${esc(p.text)}</${type==='remove'?'del':'ins'}>`).join('');
+ return {before:side('remove'),after:side('add')};
+}
+function diffItem(r,from,to){
+ const text=highlightedDiff(r.before,r.after);
+ return `<article class="diff-item ${r.changed?'changed':'unchanged'}"><h3><span>${esc(categories[r.category])}</span> ${esc(r.path)}</h3><div class="diff-columns"><div class="diff-before"><small>旧 · ${esc(from)}</small><p><span class="diff-sign" aria-hidden="true">${r.changed?'−':' '}</span><span class="diff-text">${text.before}</span></p></div><div class="diff-after"><small>新 · ${esc(to)}</small><p><span class="diff-sign" aria-hidden="true">${r.changed?'+':' '}</span><span class="diff-text">${text.after}</span></p></div></div></article>`;
+}
 export function comparisonPanel(versions,from,to,before,after,state={}){
  const {skillLevel=10,charLevel=90,category='',changedOnly=true}=state;
  const rows=characterDiff(before,after,{skillLevel,charLevel});const visible=rows.filter(r=>(!category||r.category===category)&&(!changedOnly||r.changed));
  const options=selected=>versions.map(v=>`<option value="${esc(v.gameVersion)}" ${v.gameVersion===selected?'selected':''}>${esc(v.gameVersion)}</option>`).join('');
- return `<section class="panel version-compare" aria-label="角色版本资料对比"><div class="compare-heading"><div><span class="pill beta-pill">版本资料 / 差异对比</span><h2>两个版本有哪些变化？</h2></div><span class="muted">${rows.filter(r=>r.changed).length} 项差异 / ${rows.length} 项字段</span></div><div class="compare-controls"><label>旧版本 <select data-beta-version="from" aria-label="对比旧版本">${options(from)}</select></label><label>新版本 <select data-beta-version="to" aria-label="对比新版本">${options(to)}</select></label><label>技能等级 <select data-diff-control="skillLevel">${Array.from({length:10},(_,i)=>`<option ${skillLevel===i+1?'selected':''}>${i+1}</option>`).join('')}</select></label><label>角色等级 <select data-diff-control="charLevel">${[1,20,30,40,50,60,70,80,90].map(v=>`<option ${charLevel===v?'selected':''}>${v}</option>`).join('')}</select></label><label>类别 <select data-diff-control="category"><option value="">全部</option>${Object.entries(categories).map(([k,v])=>`<option value="${k}" ${category===k?'selected':''}>${v}</option>`).join('')}</select></label><label class="simple-toggle"><input type="checkbox" data-diff-control="changedOnly" ${changedOnly?'checked':''}> 只看变化</label></div><p class="stat-note">比较所选等级下的档案、基础属性、技能说明与倍率、共鸣链和突破材料。— 表示该字段在此版本缺失。图片、故事、伤害拆分与配装推荐不参与比较。</p>${versions.length<2?'<div class="notice">目前只有一份版本资料，尚不能比较两个不同版本。</div>':visible.length?`<div class="diff-list">${visible.map(r=>`<article class="diff-item ${r.changed?'changed':'unchanged'}"><h3><span>${esc(categories[r.category])}</span> ${esc(r.path)}</h3><div class="diff-columns"><div><small>旧 · ${esc(from)}</small><p>${esc(r.before)}</p></div><div><small>新 · ${esc(to)}</small><p>${esc(r.after)}</p></div></div></article>`).join('')}</div>`:'<div class="empty"><strong>当前筛选下没有差异</strong>可调整等级、类别，或取消“只看变化”。</div>'}</section>`;
+ return `<section class="panel version-compare" aria-label="角色版本资料对比"><div class="compare-heading"><div><span class="pill beta-pill">版本资料 / 差异对比</span><h2>两个版本有哪些变化？</h2></div><span class="muted">${rows.filter(r=>r.changed).length} 项差异 / ${rows.length} 项字段</span></div><div class="compare-controls"><label>旧版本 <select data-beta-version="from" aria-label="对比旧版本">${options(from)}</select></label><label>新版本 <select data-beta-version="to" aria-label="对比新版本">${options(to)}</select></label><label>技能等级 <select data-diff-control="skillLevel">${Array.from({length:10},(_,i)=>`<option ${skillLevel===i+1?'selected':''}>${i+1}</option>`).join('')}</select></label><label>角色等级 <select data-diff-control="charLevel">${[1,20,30,40,50,60,70,80,90].map(v=>`<option ${charLevel===v?'selected':''}>${v}</option>`).join('')}</select></label><label>类别 <select data-diff-control="category"><option value="">全部</option>${Object.entries(categories).map(([k,v])=>`<option value="${k}" ${category===k?'selected':''}>${v}</option>`).join('')}</select></label><label class="simple-toggle"><input type="checkbox" data-diff-control="changedOnly" ${changedOnly?'checked':''}> 只看变化</label></div><p class="stat-note">比较所选等级下的档案、基础属性、技能说明与倍率、共鸣链和突破材料。— 表示该字段在此版本缺失。图片、故事、伤害拆分与配装推荐不参与比较。</p>${versions.length<2?'<div class="notice">目前只有一份版本资料，尚不能比较两个不同版本。</div>':visible.length?`<div class="diff-list">${visible.map(r=>diffItem(r,from,to)).join('')}</div>`:'<div class="empty"><strong>当前筛选下没有差异</strong>可调整等级、类别，或取消“只看变化”。</div>'}</section>`;
 }
 export function betaCatalog(registry,img){
  const versions=eligibleBetaVersions(registry),sections=[];

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {eligibleBetaVersions,betaVersionsFor,characterDiff,comparisonPanel} from '../web/assets/versions.js';
+import {eligibleBetaVersions,betaVersionsFor,characterDiff,comparisonPanel,highlightedDiff} from '../web/assets/versions.js';
 const row=(gameVersion,channel='beta')=>({gameVersion,channel,directory:`data/beta/${gameVersion}/`,characters:['1304']});
 const registry={releasedGameVersion:'3.7.0',versions:[row('3.6.50'),row('3.7.50'),row('3.7.8','release'),row('3.8.50'),row('3.8.51'),row('3.8.0','release')]};
 assert.deepEqual(eligibleBetaVersions(registry).map(v=>v.gameVersion),['3.8.50','3.8.51']);
@@ -21,3 +21,8 @@ const removed=structuredClone(old);delete removed.skill_trees[1];assert(characte
 const html=comparisonPanel(registry.versions.slice(3,5),'3.8.50','3.8.51',old,newer,{skillLevel:2});assert(html.includes('30%'));assert(html.includes('只看变化'));
 const single=comparisonPanel([row('3.8.50')],'3.8.50','3.8.50',old,old);assert(single.includes('尚不能比较两个不同版本'));
 console.log('Version checks passed: release/beta status, game/resource separation, release cutoff, invalid paths, additions/removals, level-dependent values, normalized text, chains and materials.');
+
+const reordered=structuredClone(old);reordered.skill_trees[1].skill.level={99:reordered.skill_trees[1].skill.level[1]};assert(!characterDiff(old,reordered).some(r=>r.changed),'Renumbered parameter IDs are not changes');
+const insert=structuredClone(reordered);insert.skill_trees[1].skill.level[100]={name:'持续时间',param:[['5','5']]};const added=characterDiff(old,insert).filter(r=>r.changed);assert.equal(added.length,1);assert(added[0].path.includes('持续时间'));assert.equal(added[0].before,'—');
+let diff=highlightedDiff('伤害提升10%，持续5秒。','伤害提升20%，持续5秒。');assert.equal(diff.before,'伤害提升<del>10%</del>，持续5秒。');assert.equal(diff.after,'伤害提升<ins>20%</ins>，持续5秒。');
+diff=highlightedDiff('a <script>alert(1)</script>','a safe');assert(!diff.before.includes('<script>'));assert(diff.before.includes('&lt;'));

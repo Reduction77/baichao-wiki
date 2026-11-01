@@ -56,6 +56,7 @@ jobs:
           node tools/test_i18n.mjs
           node tools/test_render.mjs
           node tools/test_versions.mjs
+          node tools/test_text_diff.mjs
           node tools/test_team_builder.mjs
           node tools/test_team_library.mjs
           node tools/test_catalog_order.mjs
