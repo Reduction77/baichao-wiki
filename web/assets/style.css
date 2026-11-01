@@ -30,5 +30,9 @@
 
 .version-compare>summary{cursor:pointer;list-style:none;user-select:none}.version-compare>summary::-webkit-details-marker{display:none}
 .compare-title{display:grid;gap:10px}.compare-title .pill{justify-self:start}.compare-title strong{font-size:18px;color:#edf3ff}
-.compare-summary-meta{display:flex;align-items:center;gap:16px}.compare-summary-meta .muted{font-size:13px}.compare-chevron{font-size:24px;color:#a9bedb;transition:transform .15s ease}
-.version-compare[open] .compare-chevron{transform:rotate(180deg)}.version-compare>summary:focus-visible{outline:2px solid #80b5ff;outline-offset:8px;border-radius:4px}
+.compare-summary-meta{display:flex;align-items:center;gap:16px}.compare-summary-meta .muted{font-size:13px}.compare-chevron{display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;border:1px solid #557395;border-radius:9px;background:#22354e;color:#c1dcff;font-size:0;transition:background-color .2s ease,border-color .2s ease}
+.compare-chevron::before{content:"";width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid currentColor;transform:rotate(0deg);transition:transform .24s cubic-bezier(.4,0,.2,1)}
+.version-compare>summary:hover .compare-chevron,.version-compare>summary:focus-visible .compare-chevron{background:#2c486a;border-color:#83b8f5}
+.version-compare[open] .compare-chevron::before{transform:rotate(180deg)}.version-compare>summary:focus-visible{outline:2px solid #80b5ff;outline-offset:8px;border-radius:4px}
+
+@media(prefers-reduced-motion:reduce){.compare-chevron,.compare-chevron::before{transition:none}}
