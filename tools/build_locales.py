@@ -40,6 +40,19 @@ for version in json.loads((web/'data/beta/index.json').read_text()).get('version
 existing=json.loads((ROOT/'tools/data/existing-entry-completions.json').read_text())
 texts.update(existing.get('texts',{}))
 beta_sources.append({'source':existing['source']['name'],'version':existing['source']['version'],'sha256':hashlib.sha256((ROOT/'tools/data/existing-entry-completions.json').read_bytes()).hexdigest()})
+# Comparison rows combine source names with UI labels; archive their complete
+# labels so English mode also covers paths containing several skill names.
+for version in json.loads((web/'data/beta/index.json').read_text()).get('versions',[]):
+    v=version['gameVersion']
+    texts['旧 · '+v]='Earlier · '+v;texts['新 · '+v]='Later · '+v
+    for ident in version.get('characters',[]):
+        detail=json.loads((web/version['directory']/'character'/f'{ident}.json').read_text())
+        for node in detail.get('skill_trees',{}).values():
+            skill=node['skill'];zh=skill['name'];en=texts.get(zh,zh)
+            for label,translated in [('名称','Name'),('说明','Description')]:texts[zh+' / '+label]=en+' / '+translated
+            for key,row in skill.get('level',{}).items():
+                texts[zh+' / 参数 '+key+' 名称']=en+' / Parameter '+key+' Name'
+                for level in range(1,21):texts[f'{zh} / {row["name"]} / Lv.{level}']=f'{en} / {texts.get(row["name"],row["name"])} / Lv.{level}'
 names.update({'导电漂泊者':names.get('漂泊者·导电','Rover: Electro'),'气动漂泊者':names.get('漂泊者·气动','Rover: Aero'),'衍射漂泊者':names.get('漂泊者·衍射','Rover: Spectro'),'湮灭漂泊者':names.get('漂泊者·湮灭','Rover: Havoc')})
 editorial=json.loads((ROOT/'tools/localization-editorial-en.json').read_text())
 inline={}

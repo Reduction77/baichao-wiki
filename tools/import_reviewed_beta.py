@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Build only the reviewed 3.8.1 entries from locally downloaded Nanoka JSON.
+"""Build only the reviewed Lily and Lullaby entries from locally downloaded Nanoka JSON.
 
-Use --source-dir with a directory containing ww__3.8.1__zh/en__*.json.
+Use --source-dir with a directory containing ww__VERSION__zh/en__*.json.
 All published content is local; input digests are retained in the registry.
 """
 import argparse, copy, concurrent.futures, datetime, hashlib, json, pathlib, re, subprocess
@@ -18,7 +18,12 @@ def write(path,data):
  path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
 
 def main():
- ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--source-dir',type=pathlib.Path,required=True);ap.add_argument('--retry-missing-images',action='store_true');args=ap.parse_args()
+ global VERSION
+ ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--source-dir',type=pathlib.Path,required=True);ap.add_argument('--retry-missing-images',action='store_true');ap.add_argument('--version',default=VERSION);ap.add_argument('--manifest',type=pathlib.Path);args=ap.parse_args()
+ if not re.fullmatch(r'3\.\d+\.\d+',args.version):raise ValueError('Expected a version such as 3.8.3')
+ VERSION=args.version
+ manifest=json.loads(args.manifest.read_text())['ww'] if args.manifest else None
+ if manifest and VERSION not in manifest['available']:raise ValueError('Requested version not available in source manifest')
  web=ROOT/'web';meta=json.loads((web/'data/index.json').read_text());folder=web/'data'/meta['snapshot'];digests={}
  def read(kind,ident=None,locale='zh'):
   tail=f'{kind}__{ident}' if ident else kind;path=args.source_dir/f'ww__{VERSION}__{locale}__{tail}.json';body=path.read_bytes()
@@ -35,13 +40,15 @@ def main():
    for node in d['skill_trees'].values():
     node['skill']={k:v for k,v in node['skill'].items() if k in DISPLAY_SKILL};node['skill'].setdefault('level',{})
    if ident=='1512':
-    # Nanoka still points the full portrait at Ciaccona; never present it as Lily.
-    d['background']='';d['artworkPending']=True
+    # Some source revisions still use Ciaccona's portrait for Lily.
+    if 'xiakong' in d.get('background','').lower():d['background']='';d['artworkPending']=True
   else:
    # Lullaby's supplied icon is Mirage, a different weapon.
-   if ident=='21030076':d['icon']='';d['artworkPending']=True
+   if ident=='21030076' and '21030056' in d.get('icon',''):d['icon']='';d['artworkPending']=True
    missing=sorted({int(i) for i in re.findall(r'\{(\d+)\}',d.get('effect','')) if int(i)>=len(d.get('param',[]))})
    if missing:
+    for i in missing:
+     d['effect']=d['effect'].replace('持续{'+str(i)+'}秒','持续时间待完善').replace('for {'+str(i)+'}s','for an unspecified duration')
     d['effect']=re.sub(r'\{(\d+)\}',lambda m:('待完善' if locale=='zh' else 'Pending') if int(m[1]) in missing else m[0],d['effect'])
     d['incompleteParameters']=missing
   costs=list(d.get('ascensions',{}).values())
@@ -106,7 +113,7 @@ def main():
  language_file=f'data/beta/{VERSION}/en.texts.json';write(web/language_file,{'texts':texts,'names':names,'inline':inline,'source':'nanoka','version':VERSION})
  info={'gameVersion':VERSION,'channel':'beta','directory':f'data/beta/{VERSION}/','source':f'https://static.nanoka.cc/ww/{VERSION}/','characters':list(records['character']),'weapons':list(records['weapon']),'echoes':[],'index':indexes['character'],'weaponIndex':indexes['weapon'],'images':images,'missingImages':sorted(missing),'languageFile':language_file,'inputSha256':digests}
  registry['checkedAt']=datetime.datetime.now(datetime.timezone.utc).isoformat();registry['versions']=[x for x in registry['versions'] if x['gameVersion']!=VERSION]+[info]
- registry['sources'][0].update({'live':'3.7','available':['3.7',VERSION]});write(web/'data/beta/index.json',registry)
- print('Reviewed 3.8.1 archive:',len(records['character']),'characters,',len(records['weapon']),'weapons;',len(images),'local images;',len(missing),'unavailable images;',len(texts),'English strings')
+ registry['sources'][0].update({'live':manifest['live'] if manifest else registry['sources'][0]['live'],'available':manifest['available'] if manifest else list(dict.fromkeys([*registry['sources'][0]['available'],VERSION]))});write(web/'data/beta/index.json',registry)
+ print('Reviewed '+VERSION+' archive:',len(records['character']),'characters,',len(records['weapon']),'weapons;',len(images),'local images;',len(missing),'unavailable images;',len(texts),'English strings')
 
 if __name__=='__main__':main()
