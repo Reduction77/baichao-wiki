@@ -26,3 +26,5 @@ const reordered=structuredClone(old);reordered.skill_trees[1].skill.level={99:re
 const insert=structuredClone(reordered);insert.skill_trees[1].skill.level[100]={name:'持续时间',param:[['5','5']]};const added=characterDiff(old,insert).filter(r=>r.changed);assert.equal(added.length,1);assert(added[0].path.includes('持续时间'));assert.equal(added[0].before,'—');
 let diff=highlightedDiff('伤害提升10%，持续5秒。','伤害提升20%，持续5秒。');assert.equal(diff.before,'伤害提升<del>10%</del>，持续5秒。');assert.equal(diff.after,'伤害提升<ins>20%</ins>，持续5秒。');
 diff=highlightedDiff('a <script>alert(1)</script>','a safe');assert(!diff.before.includes('<script>'));assert(diff.before.includes('&lt;'));
+
+assert(/<details class="panel version-compare"[^>]*>/.test(html));assert(!/<details[^>]*\bopen\b/.test(html));assert(comparisonPanel(registry.versions.slice(3,5),'3.8.50','3.8.51',old,newer,{expanded:true}).includes('open>'));

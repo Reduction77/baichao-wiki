@@ -27,3 +27,8 @@
 .diff-text del{background:#75343f;color:#ffe0e3;text-decoration:line-through;text-decoration-color:#ffa3ac;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 .diff-text ins{background:#225d3c;color:#d4ffdf;text-decoration:none;border-bottom:1px solid #6bd994;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 .diff-item.unchanged .diff-columns>div{background:inherit}
+
+.version-compare>summary{cursor:pointer;list-style:none;user-select:none}.version-compare>summary::-webkit-details-marker{display:none}
+.compare-title{display:grid;gap:10px}.compare-title .pill{justify-self:start}.compare-title strong{font-size:18px;color:#edf3ff}
+.compare-summary-meta{display:flex;align-items:center;gap:16px}.compare-summary-meta .muted{font-size:13px}.compare-chevron{font-size:24px;color:#a9bedb;transition:transform .15s ease}
+.version-compare[open] .compare-chevron{transform:rotate(180deg)}.version-compare>summary:focus-visible{outline:2px solid #80b5ff;outline-offset:8px;border-radius:4px}

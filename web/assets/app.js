@@ -1,12 +1,12 @@
-import {initLanguage,onLanguageChange,localizeDOM,getLocale} from './i18n.js?v=20261101-diff1';
-import {renderTeamVideos,mergeTeamLibrary} from './team-videos.js?v=20261101-diff1';
-import {createTeamBuilder} from './team-builder.js?v=20261101-diff1';
-import {catalogEntries,compareCatalog,betaVersionsForKind} from './catalog-order.js?v=20261101-diff1';
-import {characterPage,sourcePage} from './experiment.js?v=20261101-diff1';
-import {eligibleBetaVersions,betaVersionsFor,comparisonPanel,betaCatalog} from './versions.js?v=20261101-diff1';
-import {elements,weapons,intensities,esc,plain,rich,imageLookupKey,echoCost,paramsAt,rowValue,statOptions,filterEntries,safeVideo,formatStat} from './core.js?v=20261101-diff1';
+import {initLanguage,onLanguageChange,localizeDOM,getLocale} from './i18n.js?v=20261101-collapse1';
+import {renderTeamVideos,mergeTeamLibrary} from './team-videos.js?v=20261101-collapse1';
+import {createTeamBuilder} from './team-builder.js?v=20261101-collapse1';
+import {catalogEntries,compareCatalog,betaVersionsForKind} from './catalog-order.js?v=20261101-collapse1';
+import {characterPage,sourcePage} from './experiment.js?v=20261101-collapse1';
+import {eligibleBetaVersions,betaVersionsFor,comparisonPanel,betaCatalog} from './versions.js?v=20261101-collapse1';
+import {elements,weapons,intensities,esc,plain,rich,imageLookupKey,echoCost,paramsAt,rowValue,statOptions,filterEntries,safeVideo,formatStat} from './core.js?v=20261101-collapse1';
 const main=document.querySelector('main');let db,meta,images,items,sonatas,teams=[];let renderToken=0,detail,tab='skills',skillLevel=10,charLevel=90,stage=null,refine=1,echoRarity=5;
-let betaRegistry={releasedGameVersion:'3.7.0',versions:[]};let betaContext=null;let diffState={skillLevel:10,charLevel:90,category:'',changedOnly:true};
+let betaRegistry={releasedGameVersion:'3.7.0',versions:[]};let betaContext=null;let diffState={skillLevel:10,charLevel:90,category:'',changedOnly:true,expanded:false};
 let teamSources={};let teamBuilder=null;let catalogOrder={};let simple=false;let skillLevels={};
 const cache=new Map();let favorites=[];try{const f=JSON.parse(localStorage.getItem('baichao-favorites')||'[]');if(Array.isArray(f))favorites=f.filter(x=>/^(character|weapon|echo):\d+$/.test(x));}catch{}
 const names={character:'共鸣者',weapon:'武器',echo:'声骸'};
@@ -46,6 +46,7 @@ function toast(message){document.querySelector('.toast')?.remove();const t=docum
 document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.fav){const key=b.dataset.fav;favorites=isFav(...key.split(':'))?favorites.filter(x=>x!==key):[...favorites,key];try{localStorage.setItem('baichao-favorites',JSON.stringify(favorites));}catch{toast('浏览器不允许保存，收藏仅在本次访问有效');}document.querySelectorAll('[data-fav]').forEach(x=>{const active=favorites.includes(x.dataset.fav);x.classList.toggle('selected',active);x.setAttribute('aria-pressed',active);x.setAttribute('aria-label',active?'取消收藏':'收藏');x.textContent=active?'★':'☆';if(x.classList.contains('button'))x.textContent+=active?' 已收藏':' 收藏';});if(route().kind==='favorites')render();return;}
 if(b.dataset.filter){updateQuery(b.dataset.filter,b.dataset.value);document.querySelectorAll(`[data-filter="${b.dataset.filter}"]`).forEach(x=>x.classList.toggle('on',x===b));}if(b.hasAttribute('data-reset')){history.replaceState(null,'','#'+route().kind);render();}if(b.dataset.tab&&detail){tab=b.dataset.tab;main.innerHTML=detailPage(detail,route().kind.replace('beta-',''));}if(b.dataset.jump)document.getElementById(b.dataset.jump)?.scrollIntoView({behavior:'smooth',block:'start'});if(b.hasAttribute('data-retry'))db?render():location.reload();});
 document.addEventListener('input',e=>{if(e.target.id==='search')updateQuery('q',e.target.value);});
+document.addEventListener('toggle',e=>{if(e.target.matches?.('details.version-compare'))diffState.expanded=e.target.open;},true);
 document.addEventListener('change',e=>{const t=e.target;if(t.id==='team-character'){location.hash='#teams'+(t.value?'?character='+encodeURIComponent(t.value):'');return;}if(t.dataset.betaVersion&&betaContext){const r=route();r.query.set(t.dataset.betaVersion==='from'?'from':'version',t.value);location.hash='#beta/'+r.id+'?'+r.query;return;}if(t.dataset.diffControl&&betaContext){const key=t.dataset.diffControl;diffState[key]=key==='changedOnly'?t.checked:['skillLevel','charLevel'].includes(key)?Number(t.value):t.value;const y=window.scrollY;main.innerHTML=detailPage(detail,'beta');window.scrollTo(0,y);return;}if(detail&&['character','beta'].includes(route().kind)&&(t.dataset.skillLevel||t.hasAttribute?.('data-simple'))){if(t.dataset.skillLevel)skillLevels[t.dataset.skillLevel]=Number(t.value);else simple=t.checked;const y=window.scrollY;main.innerHTML=detailPage(detail,route().kind);window.scrollTo(0,y);return;}if(t.id==='sort')updateQuery('sort',t.value);if(t.id==='group')updateQuery('group',t.value);if(t.dataset.control&&detail){const value=Number(t.value);if(t.dataset.control==='skillLevel'){skillLevel=value;skillLevels={};}if(t.dataset.control==='charLevel'){charLevel=value;stage=null;}if(t.dataset.control==='stage')stage=t.value;if(t.dataset.control==='refine')refine=value;if(t.dataset.control==='echoRarity')echoRarity=value;if(['character','beta'].includes(route().kind)){const y=window.scrollY;main.innerHTML=detailPage(detail,route().kind);window.scrollTo(0,y);}else document.querySelector('#detail-content').innerHTML=detailContent(detail,route().kind.replace('beta-',''));}});
 window.addEventListener('hashchange',render);
 onLanguageChange(async()=>{if(detail)main.innerHTML=detailPage(detail,route().kind.replace('beta-',''));else if(names[route().kind])paintResults();localizeDOM();});
