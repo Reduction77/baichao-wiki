@@ -95,3 +95,18 @@ assert.throws(()=>configureMatrixRules({schema:1,permanent:['1503'],current:['15
 assert.throws(()=>configureMatrixRules({schema:1,permanent:[],current:['99999']},profiles));
 configureMatrixRules(configured,profiles);
 console.log('Published matrix JSON configuration and validation passed.');
+
+// The published training UI must reuse the established Wiki storage key.
+const previous=builder.getState();
+previous.excluded=['1304'];
+local.set('baichao-team-builder-v1',JSON.stringify(previous));
+local.set('baichao-team-builder-training-preview-v1',JSON.stringify(defaultState()));
+const integrated=createTeamBuilder({profiles,img:()=>'',storage,trainingImport:true});
+const integratedRoot=new Node();integrated.mount(integratedRoot);
+assert.deepEqual(integrated.getState(),previous);
+assert(integratedRoot.innerHTML.includes('导入练度图'));
+assert(!integratedRoot.innerHTML.includes('独立副本'));
+await integratedRoot.handlers.click({target:{closest:()=>({dataset:{tb:'matrix'}})}});
+assert.deepEqual(JSON.parse(local.get('baichao-team-builder-v1')),integrated.getState());
+assert.deepEqual(JSON.parse(local.get('baichao-team-builder-training-preview-v1')),defaultState());
+console.log('Production training UI preserves and updates the existing Wiki storage without switching to preview storage.');

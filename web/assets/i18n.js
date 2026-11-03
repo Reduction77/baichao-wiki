@@ -1,4 +1,4 @@
-import {uiText} from './i18n-ui.js?v=20261101-collapse1';
+import {uiText} from './i18n-ui.js?v=20261103-wiki1';
 
 const STORAGE='baichao-language';
 let language='zh',game={},names={},editorial={},loading,expectedCommit='',changeHandler=()=>{};
@@ -11,6 +11,16 @@ export const getLocale=()=>language==='en'?'en-US':'zh-CN';
 export function gameText(value){return language==='en'?(game[value]||value):value;}
 function replaceNames(text){for(const [from,to] of nameReplacements)text=text.split(from).join(to);for(const [from,to]of singleNames)text=text.replace(new RegExp(`(?<![\\u3400-\\u9fff])${from}(?![\\u3400-\\u9fff])`,'g'),to);return text;}
 const patterns=[
+ [/^当前编队次数不足：(.+)。请替换角色或调整暂存队伍。$/,(_,names)=>`Insufficient uses in this draft: ${replaceNames(names)}. Replace them or adjust saved teams.`],
+ [/^适配配队 · (\d+)组$/,(_,n)=>`Compatible teams · ${n}`],
+ [/^([0-6—])链$/,(_,n)=>`S${n}`],
+ [/^(.+)的武器类型不匹配，请重新选择武器。$/,(_,name)=>`${replaceNames(name)} cannot use this weapon type. Choose again.`],
+ [/^队伍含不可用角色：(.+)。请调整可用角色设置或编辑队伍。$/,(_,names)=>`This team includes unavailable Resonators: ${replaceNames(names)}. Adjust availability or edit the team.`],
+ [/^当前编队含不可用角色：(.+)。请启用或替换后再暂存。$/,(_,names)=>`The draft includes unavailable Resonators: ${replaceNames(names)}. Enable or replace them before saving.`],
+ [/^识别完成，耗时 (\d+) 秒。已识别的行已默认勾选，请核对后应用。$/,(_,seconds)=>`Recognition completed in ${seconds}s. Recognized rows are selected by default. Review before applying.`],
+
+ [/^第 (\d+) 行尚未选择角色，请补选角色或取消勾选该行。$/,(_,row)=>`Row ${row} has no Resonator. Select one or uncheck the row.`],
+ [/^第 (\d+)、(\d+) 行选择了同一个角色，请只保留一行。$/,(_,a,b)=>`Rows ${a} and ${b} have the same Resonator. Keep only one row.`],
  [/^(.+)技能等级$/,(_,name)=>`${gameText(name)} skill level`],
  [/^搜索(共鸣者|武器|声骸)$/,(_,kind)=>`Search ${uiText[kind]||gameText(kind)}`],
  [/ · 共 (\d+) 队 · /,(_,n)=>` · ${n} teams · `],

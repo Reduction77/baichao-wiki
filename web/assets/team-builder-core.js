@@ -21,11 +21,14 @@ export function unavailableReason(state,p,characters){
  return '';
 }
 export function budgetConflicts(state,characters){const count=uses(state,characters),seen=new Set();return [...characters.values()].filter(p=>{if(seen.has(p.family))return false;seen.add(p.family);return (count[p.family]||0)>limitFor(state,p);});}
+export function draftBudgetConflicts(state,characters){const count=uses(state,characters);return state.draft.map(id=>characters.get(id)).filter(p=>p&&(count[p.family]||0)>=limitFor(state,p));}
+export function unavailableMembers(state,characters,ids){return [...new Set(ids)].map(id=>characters.get(id)).filter(p=>p&&state.excluded.includes(p.family));}
 export function selectCharacter(state,id,characters){const p=characters.get(id);if(!p)return '角色不存在';const why=unavailableReason(state,p,characters);if(why)return why;state.draft.push(id);return '';}
 export function saveTeam(state,characters){
  if(state.draft.length!==3)return '请选择三名角色后再暂存';
+ if(state.teams.length>=100)return '最多暂存100支队伍，请先删除部分队伍。';
  const count=uses(state,characters),families=new Set();
- for(const id of state.draft){const p=characters.get(id);if(!p||families.has(p.family))return '同一角色及漂泊者的不同形态不能在同队重复';families.add(p.family);if(state.excluded.includes(p.family)||(count[p.family]||0)>=limitFor(state,p))return '当前编队超出可用次数，请调整';}
+ for(const id of state.draft){const p=characters.get(id);if(!p||families.has(p.family))return '同一角色及漂泊者的不同形态不能在同队重复';families.add(p.family);if(state.excluded.includes(p.family))return '当前编队包含不可用角色，请先启用或替换该角色';if((count[p.family]||0)>=limitFor(state,p))return '当前编队超出可用次数，请调整';}
  state.teams.push({name:`队伍 ${state.teams.length+1}`,characters:[...state.draft]});state.draft=[];return '';
 }
 export function parseState(raw,profiles){

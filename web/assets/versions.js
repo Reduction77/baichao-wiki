@@ -1,6 +1,6 @@
-import {esc,plain,paramsAt,rowValue,elements,weapons} from './core.js?v=20261101-collapse1';
-import {textDiff} from './text-diff.js?v=20261101-collapse1';
-import {translateText} from './i18n.js?v=20261101-collapse1';
+import {esc,plain,paramsAt,rowValue,elements,weapons} from './core.js?v=20261103-wiki1';
+import {textDiff} from './text-diff.js?v=20261103-wiki1';
+import {translateText} from './i18n.js?v=20261103-wiki1';
 export function gameSeries(version){const m=String(version).match(/^(\d+)\.(\d+)(?:\.\d+)?$/);if(!m)return null;return [Number(m[1]),Number(m[2])];}
 function compareSeries(a,b){return a[0]-b[0]||a[1]-b[1];}
 export function eligibleBetaVersions(registry){const released=gameSeries(registry.releasedGameVersion);if(!released)return [];return (registry.versions||[]).filter(v=>{const s=gameSeries(v.gameVersion);return v.channel==='beta'&&s&&compareSeries(s,released)>0&&v.directory===`data/beta/${v.gameVersion}/`&&['characters','weapons','echoes'].some(k=>Array.isArray(v[k]))&&['characters','weapons','echoes'].every(k=>v[k]===undefined||Array.isArray(v[k]));}).sort((a,b)=>a.gameVersion.localeCompare(b.gameVersion,undefined,{numeric:true}));}

@@ -47,6 +47,8 @@ jobs:
         run: python3 tools/build_locales.py
       - name: Build team-builder role profiles
         run: python3 tools/build_team_profiles.py
+      - name: Build local training dictionaries
+        run: python3 tools/build-training-catalog.py
       - name: Validate data and rendering
         run: |
           python3 tools/check_data.py
@@ -58,6 +60,11 @@ jobs:
           node tools/test_versions.mjs
           node tools/test_text_diff.mjs
           node tools/test_team_builder.mjs
+          node tools/test-training-text.mjs
+          node tools/test-training-weapons.mjs
+          node tools/test-training-matrix.mjs
+          node tools/test-training-fixes.mjs
+          node tools/test-training-review.mjs
           node tools/test_team_library.mjs
           node tools/test_catalog_order.mjs
           node tools/test_beta_catalog.mjs

@@ -146,3 +146,7 @@ Excel 配队资料已合入上述配置：按三人角色集合合并队伍，�
 维护这些条目时，先下载对应版本的中英文 character、weapon 与 item JSON，文件名使用 `ww__3.8.3__zh__character__1512.json` 等格式，再执行 `python3 tools/import_reviewed_beta.py --version 3.8.3 --manifest <manifest.json路径> --source-dir <下载目录>`，然后执行 `python3 tools/build_locales.py`。该工具仅导入审核过的两个新增条目，不扩展其他栏目；`--retry-missing-images` 可重新尝试尚未提供的图像。已确认借用其他角色或武器的占位图不会展示；缺失的安魂参数显示“待完善”，空缺的英文材料名称以材料编号显示。
 
 补充完成后运行 `python3 tools/build_locales.py` 并提交更新后的英文语言包。`node tools/test_reviewed_content.mjs` 检查跳转、等级/谐振切换、材料、占位参数与正式服隔离。
+
+## 练度图导入
+
+配队工作台已合并本地练度识别与紧凑布局，继续使用原有正式站配队存档。使用方式、备份迁移、模型来源及维护说明见 [练度导入说明](docs/training-import.md)。

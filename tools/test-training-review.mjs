@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import {abortable} from '../web/assets/training-loaders.js';
+import {recognizeTrainingFile} from '../web/assets/training-recognizer.js';
+import {defaultState,characterMap,draftBudgetConflicts,saveTeam} from '../web/assets/team-builder-core.js';
+const deferred=()=>{let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b;});return {promise,resolve,reject};};
+const cancel=new AbortController(),pending=deferred(),waiting=abortable(pending.promise,cancel.signal);cancel.abort();await assert.rejects(waiting,{name:'AbortError'});pending.reject(Error('late failure'));await Promise.resolve();
+const names=['document','createImageBitmap','Worker','fetch','Tesseract'],saved=new Map(names.map(k=>[k,Object.getOwnPropertyDescriptor(globalThis,k)]));
+let canvases=[],closed=0,decodes=0,dimensions=[400,1200];
+const bitmap=()=>({width:dimensions[0],height:dimensions[1],close(){closed++;}});
+const ctx={drawImage(){},fillRect(){},putImageData(){},getImageData(x,y,w,h){return {data:new Uint8ClampedArray(w*h*4)};}};
+const file={size:1,type:'image/jpeg'};
+try{
+ globalThis.document={createElement(type){assert.equal(type,'canvas');const c={getContext:()=>ctx};canvases.push(c);return c;}};
+ globalThis.createImageBitmap=async()=>{decodes++;return bitmap();};
+ dimensions=[5000,5000];await assert.rejects(recognizeTrainingFile(file),/像素过大/);assert.equal(canvases.length,0);assert.equal(closed,1);
+ dimensions=[400,500];await assert.rejects(recognizeTrainingFile(file),/完整的单列/);assert.equal(canvases.length,1);assert.equal(canvases[0].width,1);assert.equal(canvases[0].height,1);
+ const already=new AbortController();already.abort();const before=decodes;await assert.rejects(recognizeTrainingFile(file,{signal:already.signal}),{name:'AbortError'});assert.equal(decodes,before);
+ const decode=deferred(),duringDecode=new AbortController();globalThis.createImageBitmap=()=>decode.promise;const task=recognizeTrainingFile(file,{signal:duringDecode.signal});duringDecode.abort();const beforeClose=closed;decode.resolve(bitmap());await assert.rejects(task,{name:'AbortError'});assert.equal(closed,beforeClose+1);
+ dimensions=[400,1200];globalThis.createImageBitmap=async()=>bitmap();
+ globalThis.fetch=async url=>({ok:true,json:async()=>String(url).includes('training-templates')?{characters:[]}:{weapons:[]}});
+ globalThis.Worker=class{postMessage(){queueMicrotask(()=>this.onmessage?.({data:{type:'result',rows:[{id:'1311',index:0,y:214,confidence:.99,hasScore:true,score:null,scoreConfidence:0,chain:null,weaponRarity:0,refine:null}],timings:{}}}));}terminate(){}};
+ let entered=deferred(),created=deferred(),terminated=0;
+ globalThis.Tesseract={createWorker(){entered.resolve();return created.promise;}};
+ const late=new AbortController(),lateTask=recognizeTrainingFile(file,{signal:late.signal});await entered.promise;late.abort();await assert.rejects(lateTask,{name:'AbortError'});created.resolve({terminate(){terminated++;}});await Promise.resolve();await Promise.resolve();assert.equal(terminated,1);
+ entered=deferred();globalThis.Tesseract.createWorker=async()=>({setParameters:async()=>{},recognize(){entered.resolve();return new Promise(()=>{});},terminate(){terminated++;}});
+ const active=new AbortController(),activeTask=recognizeTrainingFile(file,{signal:active.signal});await entered.promise;active.abort();await assert.rejects(activeTask,{name:'AbortError'});assert.equal(terminated,2);assert.equal(canvases.filter(c=>c.width>1&&c.height>1).length,0);
+}finally{for(const [k,v]of saved){if(v)Object.defineProperty(globalThis,k,v);else delete globalThis[k];}}
+const chars=characterMap({characters:[{id:'d',family:'d'},{id:'s',family:'1110'},{id:'x',family:'x'}]});
+const state={...defaultState(),matrix:true,teams:[{name:'old',characters:['d','s','x']}],draft:['d','s','x']};assert.deepEqual(draftBudgetConflicts(state,chars).map(p=>p.id),['d','x']);assert.match(saveTeam(state,chars),/超出可用次数/);assert.equal(state.teams.length,1);
+state.draft=['s'];assert.deepEqual(draftBudgetConflicts(state,chars),[]);state.matrix=false;assert.deepEqual(draftBudgetConflicts(state,chars).map(p=>p.id),['s']);
+state.draft=['d','s','x'];state.teams=Array.from({length:100},()=>({name:'old',characters:['d','s','x']}));assert.match(saveTeam(state,chars),/100支/);assert.equal(state.teams.length,100);
+console.log('Oversize/cancel cleanup, late OCR worker disposal, pending OCR cancellation, draft budgets and saved-team limits passed.');

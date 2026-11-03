@@ -27,3 +27,6 @@ web/assets/github-media/
 
 !web/data/locales/
 !web/data/locales/*.gz
+
+!web/data/training-catalog.json
+!web/data/training-templates.json

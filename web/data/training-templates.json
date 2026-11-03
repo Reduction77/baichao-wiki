@@ -1,0 +1,425 @@
+{
+  "schema": 1,
+  "characters": [
+    {
+      "id": "1102",
+      "name": "散华",
+      "src": "data/20261013T031747-2/images/6b57c1f6e9e00020f95b6f17.webp",
+      "element": 1,
+      "family": "1102"
+    },
+    {
+      "id": "1103",
+      "name": "白芷",
+      "src": "data/20261013T031747-2/images/57aa257ac542c14c66275809.webp",
+      "element": 1,
+      "family": "1103"
+    },
+    {
+      "id": "1104",
+      "name": "凌阳",
+      "src": "data/20261013T031747-2/images/bec1ed396458fd0b3a6be305.webp",
+      "element": 1,
+      "family": "1104"
+    },
+    {
+      "id": "1105",
+      "name": "折枝",
+      "src": "data/20261013T031747-2/images/1601a9d9d03f5ab1260bf0b9.webp",
+      "element": 1,
+      "family": "1105"
+    },
+    {
+      "id": "1106",
+      "name": "釉瑚",
+      "src": "data/20261013T031747-2/images/f1fcb385fd834a88ae70f294.webp",
+      "element": 1,
+      "family": "1106"
+    },
+    {
+      "id": "1107",
+      "name": "珂莱塔",
+      "src": "data/20261013T031747-2/images/b71b5a3107ea45fb384e0e8b.webp",
+      "element": 1,
+      "family": "1107"
+    },
+    {
+      "id": "1108",
+      "name": "绯雪",
+      "src": "data/20261013T031747-2/images/8c9297ded040207bd711d501.webp",
+      "element": 1,
+      "family": "1108"
+    },
+    {
+      "id": "1109",
+      "name": "洛瑟菈",
+      "src": "data/20261013T031747-2/images/7389fd702fb8bce2327e08c1.webp",
+      "element": 1,
+      "family": "1109"
+    },
+    {
+      "id": "1110",
+      "name": "穗穗",
+      "src": "data/20261013T031747-2/images/e123464040c94f5793ce657f.webp",
+      "element": 1,
+      "family": "1110"
+    },
+    {
+      "id": "1202",
+      "name": "炽霞",
+      "src": "data/20261013T031747-2/images/7e6e41d917938d3e30f90fa3.webp",
+      "element": 2,
+      "family": "1202"
+    },
+    {
+      "id": "1203",
+      "name": "安可",
+      "src": "data/20261013T031747-2/images/4fd6fbb6b87a6488fd326dd7.webp",
+      "element": 2,
+      "family": "1203"
+    },
+    {
+      "id": "1204",
+      "name": "莫特斐",
+      "src": "data/20261013T031747-2/images/2c097987bb337b6e7e7f6ba4.webp",
+      "element": 2,
+      "family": "1204"
+    },
+    {
+      "id": "1205",
+      "name": "长离",
+      "src": "data/20261013T031747-2/images/5923ec33886190f156cd1d6a.webp",
+      "element": 2,
+      "family": "1205"
+    },
+    {
+      "id": "1206",
+      "name": "布兰特",
+      "src": "data/20261013T031747-2/images/4ffa75f357c3d3f7fd5472be.webp",
+      "element": 2,
+      "family": "1206"
+    },
+    {
+      "id": "1207",
+      "name": "露帕",
+      "src": "data/20261013T031747-2/images/dfa11b547d99590f6f5feeac.webp",
+      "element": 2,
+      "family": "1207"
+    },
+    {
+      "id": "1208",
+      "name": "嘉贝莉娜",
+      "src": "data/20261013T031747-2/images/e656b37a183db1c1b619c7eb.webp",
+      "element": 2,
+      "family": "1208"
+    },
+    {
+      "id": "1209",
+      "name": "莫宁",
+      "src": "data/20261013T031747-2/images/e0c324ff0fcbe86f0b1435c8.webp",
+      "element": 2,
+      "family": "1209"
+    },
+    {
+      "id": "1210",
+      "name": "爱弥斯",
+      "src": "data/20261013T031747-2/images/54bf6ef49838af5a3732ee47.webp",
+      "element": 2,
+      "family": "1210"
+    },
+    {
+      "id": "1211",
+      "name": "达妮娅",
+      "src": "data/20261013T031747-2/images/3a3637f91472ec9120680c74.webp",
+      "element": 2,
+      "family": "1211"
+    },
+    {
+      "id": "1212",
+      "name": "景燃",
+      "src": "data/20261013T031747-2/images/f42210de7a6ddc3318f8e667.webp",
+      "element": 2,
+      "family": "1212"
+    },
+    {
+      "id": "1301",
+      "name": "卡卡罗",
+      "src": "data/20261013T031747-2/images/03d0357f9af088baa0aa291a.webp",
+      "element": 3,
+      "family": "1301"
+    },
+    {
+      "id": "1302",
+      "name": "吟霖",
+      "src": "data/20261013T031747-2/images/55197818897c18edadefafd9.webp",
+      "element": 3,
+      "family": "1302"
+    },
+    {
+      "id": "1303",
+      "name": "渊武",
+      "src": "data/20261013T031747-2/images/0fe6f349ac8f0affd0b7b288.webp",
+      "element": 3,
+      "family": "1303"
+    },
+    {
+      "id": "1304",
+      "name": "今汐",
+      "src": "data/20261013T031747-2/images/b1cb6be80023f6e964e41417.webp",
+      "element": 5,
+      "family": "1304"
+    },
+    {
+      "id": "1305",
+      "name": "相里要",
+      "src": "data/20261013T031747-2/images/55678cc375064d868be5644d.webp",
+      "element": 3,
+      "family": "1305"
+    },
+    {
+      "id": "1306",
+      "name": "奥古斯塔",
+      "src": "data/20261013T031747-2/images/f3c664585a620b29d8760e40.webp",
+      "element": 3,
+      "family": "1306"
+    },
+    {
+      "id": "1307",
+      "name": "卜灵",
+      "src": "data/20261013T031747-2/images/4febfd5b1bcfbb0babb2c78b.webp",
+      "element": 3,
+      "family": "1307"
+    },
+    {
+      "id": "1308",
+      "name": "丽贝卡",
+      "src": "data/20261013T031747-2/images/87563d86b899863780d7ab4b.webp",
+      "element": 3,
+      "family": "1308"
+    },
+    {
+      "id": "1309",
+      "name": "漂泊者·导电",
+      "src": "data/20261013T031747-2/images/3e0cbe11d93b38e39433bac3.webp",
+      "element": 3,
+      "family": "rover"
+    },
+    {
+      "id": "1311",
+      "name": "心",
+      "src": "data/20261013T031747-2/images/9dace492dc4175fb19cc5531.webp",
+      "element": 3,
+      "family": "1311"
+    },
+    {
+      "id": "1312",
+      "name": "锁暝",
+      "src": "data/20261013T031747-2/images/ceefa1a56f9df99fe77341c1.webp",
+      "element": 3,
+      "family": "1312"
+    },
+    {
+      "id": "1402",
+      "name": "秧秧",
+      "src": "data/20261013T031747-2/images/063aa2c7e4593917f2cee855.webp",
+      "element": 4,
+      "family": "1402"
+    },
+    {
+      "id": "1403",
+      "name": "秋水",
+      "src": "data/20261013T031747-2/images/127632ee8a49f04faca84a1f.webp",
+      "element": 4,
+      "family": "1403"
+    },
+    {
+      "id": "1404",
+      "name": "忌炎",
+      "src": "data/20261013T031747-2/images/9ae5bf3cd97b253c6f795cf6.webp",
+      "element": 4,
+      "family": "1404"
+    },
+    {
+      "id": "1405",
+      "name": "鉴心",
+      "src": "data/20261013T031747-2/images/3e02dbfeb21a75891ae9580f.webp",
+      "element": 4,
+      "family": "1405"
+    },
+    {
+      "id": "1406",
+      "name": "漂泊者·气动",
+      "src": "data/20261013T031747-2/images/3e0cbe11d93b38e39433bac3.webp",
+      "element": 4,
+      "family": "rover"
+    },
+    {
+      "id": "1407",
+      "name": "夏空",
+      "src": "data/20261013T031747-2/images/71c7725ec44427bfe4449110.webp",
+      "element": 4,
+      "family": "1407"
+    },
+    {
+      "id": "1409",
+      "name": "卡提希娅",
+      "src": "data/20261013T031747-2/images/2f89bdd853747f27964e2171.webp",
+      "element": 4,
+      "family": "1409"
+    },
+    {
+      "id": "1410",
+      "name": "尤诺",
+      "src": "data/20261013T031747-2/images/606995fcf577843b8f335f76.webp",
+      "element": 4,
+      "family": "1410"
+    },
+    {
+      "id": "1411",
+      "name": "仇远",
+      "src": "data/20261013T031747-2/images/60bb11f2c4c3cea06c063397.webp",
+      "element": 4,
+      "family": "1411"
+    },
+    {
+      "id": "1412",
+      "name": "西格莉卡",
+      "src": "data/20261013T031747-2/images/b8fd0b213a8c675c04314013.webp",
+      "element": 4,
+      "family": "1412"
+    },
+    {
+      "id": "1413",
+      "name": "清宵",
+      "src": "data/20261013T031747-2/images/914d4d980214b7d8d67d2457.webp",
+      "element": 4,
+      "family": "1413"
+    },
+    {
+      "id": "1501",
+      "name": "漂泊者·衍射",
+      "src": "data/20261013T031747-2/images/3e0cbe11d93b38e39433bac3.webp",
+      "element": 5,
+      "family": "rover"
+    },
+    {
+      "id": "1503",
+      "name": "维里奈",
+      "src": "data/20261013T031747-2/images/631a83201797a6638f9fef36.webp",
+      "element": 5,
+      "family": "1503"
+    },
+    {
+      "id": "1504",
+      "name": "灯灯",
+      "src": "data/20261013T031747-2/images/eacccdfadce25c6716564611.webp",
+      "element": 3,
+      "family": "1504"
+    },
+    {
+      "id": "1505",
+      "name": "守岸人",
+      "src": "data/20261013T031747-2/images/1fa7f67a3929df0fcc0333b4.webp",
+      "element": 5,
+      "family": "1505"
+    },
+    {
+      "id": "1506",
+      "name": "菲比",
+      "src": "data/20261013T031747-2/images/925072060f1482a3dc6601eb.webp",
+      "element": 5,
+      "family": "1506"
+    },
+    {
+      "id": "1507",
+      "name": "赞妮",
+      "src": "data/20261013T031747-2/images/4af10ce0f04f56c398be3079.webp",
+      "element": 5,
+      "family": "1507"
+    },
+    {
+      "id": "1508",
+      "name": "千咲",
+      "src": "data/20261013T031747-2/images/4e0215ee39bf46c02d141e2c.webp",
+      "element": 6,
+      "family": "1508"
+    },
+    {
+      "id": "1509",
+      "name": "琳奈",
+      "src": "data/20261013T031747-2/images/bce6e3bfedbfcaecfe9beeb1.webp",
+      "element": 5,
+      "family": "1509"
+    },
+    {
+      "id": "1510",
+      "name": "陆·赫斯",
+      "src": "data/20261013T031747-2/images/358b3beb4fb8281ef91f8938.webp",
+      "element": 5,
+      "family": "1510"
+    },
+    {
+      "id": "1511",
+      "name": "露西",
+      "src": "data/20261013T031747-2/images/cb31042efc83cc01db20552f.webp",
+      "element": 5,
+      "family": "1511"
+    },
+    {
+      "id": "1601",
+      "name": "桃祈",
+      "src": "data/20261013T031747-2/images/ee8aa5be81bfd9ceac201110.webp",
+      "element": 6,
+      "family": "1601"
+    },
+    {
+      "id": "1602",
+      "name": "丹瑾",
+      "src": "data/20261013T031747-2/images/4d9891e2e689035af17e5f96.webp",
+      "element": 6,
+      "family": "1602"
+    },
+    {
+      "id": "1603",
+      "name": "椿",
+      "src": "data/20261013T031747-2/images/c76517ece3a7125f8d9b6c38.webp",
+      "element": 6,
+      "family": "1603"
+    },
+    {
+      "id": "1604",
+      "name": "漂泊者·湮灭",
+      "src": "data/20261013T031747-2/images/b780d7d830cd7161c7d678ab.webp",
+      "element": 6,
+      "family": "rover"
+    },
+    {
+      "id": "1606",
+      "name": "洛可可",
+      "src": "data/20261013T031747-2/images/589a4a3cec0ed247fe730f5b.webp",
+      "element": 6,
+      "family": "1606"
+    },
+    {
+      "id": "1607",
+      "name": "坎特蕾拉",
+      "src": "data/20261013T031747-2/images/b6a6d5cf66c5b92004f75dbc.webp",
+      "element": 6,
+      "family": "1607"
+    },
+    {
+      "id": "1608",
+      "name": "弗洛洛",
+      "src": "data/20261013T031747-2/images/ba2de23f3ec3bffdc47a14c5.webp",
+      "element": 6,
+      "family": "1608"
+    },
+    {
+      "id": "1610",
+      "name": "秧秧·玄翎",
+      "src": "data/20261013T031747-2/images/e4498e0b2d13bee2b0e47213.webp",
+      "element": 6,
+      "family": "1610"
+    }
+  ]
+}

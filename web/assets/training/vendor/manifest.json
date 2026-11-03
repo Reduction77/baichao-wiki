@@ -1,0 +1,58 @@
+{
+  "ocr/LICENSE": {
+    "bytes": 11376,
+    "sha256": "3840c5c0c61c294264d2dd77b8777be6ddd90121ef4e0e64abcd22edea581d6e"
+  },
+  "ocr/RapidOCR-LICENSE": {
+    "bytes": 11422,
+    "sha256": "3e0af25fdd06aa9586ae97adb00ea927ebe5a3805ac77d2d3a81ce5f55693333"
+  },
+  "ocr/keys.json": {
+    "bytes": 39511,
+    "sha256": "2ca57a031d4cc5777aa812b66fbdeb1a3461d9212b7b7258e562742fada2804a"
+  },
+  "ocr/weapon-rec.onnx": {
+    "bytes": 10857958,
+    "sha256": "48fc40f24f6d2a207a2b1091d3437eb3cc3eb6b676dc3ef9c37384005483683b"
+  },
+  "onnx/LICENSE": {
+    "bytes": 1073,
+    "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c"
+  },
+  "onnx/ort-wasm-simd-threaded.mjs": {
+    "bytes": 20321,
+    "sha256": "90a557d15c02bac4504d95b67f431d8594635ed2a0a62a7f2cd83d090ff91d3e"
+  },
+  "onnx/ort-wasm-simd-threaded.wasm": {
+    "bytes": 11905541,
+    "sha256": "45eaee27761ad883742a8d4b8fce1538d60ce43b51adf1726fafccc59b8c1a15"
+  },
+  "onnx/ort.wasm.min.js": {
+    "bytes": 49926,
+    "sha256": "c6bc9f8e1d0ecc3983a57910e6a30b2230a512bcd2e0207cd64306459c3de7b4"
+  },
+  "tesseract/LICENSE": {
+    "bytes": 11357,
+    "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1"
+  },
+  "tesseract/core/LICENSE": {
+    "bytes": 11358,
+    "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08"
+  },
+  "tesseract/core/tesseract-core-simd-lstm.wasm.js": {
+    "bytes": 3899472,
+    "sha256": "c58b46a4c796c0b8afccf77591d5b875b6896b45d402bbce8caa6f5362447b38"
+  },
+  "tesseract/lang/eng.traineddata.gz": {
+    "bytes": 1967599,
+    "sha256": "f1c22599ed6fd3eb821d87fdb43e09f98b61179a4abe38c43cfca2cdcb9f5ec2"
+  },
+  "tesseract/tesseract.min.js": {
+    "bytes": 62961,
+    "sha256": "000c27d9cd0def655f77b36c72a389c0ab13793aa31cb4d7aab56d09c0afbc7e"
+  },
+  "tesseract/worker.min.js": {
+    "bytes": 111307,
+    "sha256": "576b7df7e3393e137e51849357c9adb53fe7ac1bb69bfa06cf3d61520f182c6d"
+  }
+}
