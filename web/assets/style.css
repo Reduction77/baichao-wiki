@@ -36,3 +36,4 @@
 .version-compare[open] .compare-chevron::before{transform:rotate(180deg)}.version-compare>summary:focus-visible{outline:2px solid #80b5ff;outline-offset:8px;border-radius:4px}
 
 @media(prefers-reduced-motion:reduce){.compare-chevron,.compare-chevron::before{transition:none}}
+.tabs .tab-list{display:flex;gap:8px}.tabs .tab-jump{margin-left:auto;flex:0 0 auto;color:#dfc8ff;border-color:#705b8b}.version-compare{scroll-margin-top:90px}

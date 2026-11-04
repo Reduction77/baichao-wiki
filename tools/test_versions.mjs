@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict';
-import {eligibleBetaVersions,betaVersionsFor,characterDiff,comparisonPanel,highlightedDiff} from '../web/assets/versions.js';
+import {eligibleBetaVersions,betaVersionsFor,characterDiff,comparisonPanel,highlightedDiff,compareGameVersions} from '../web/assets/versions.js';
 const row=(gameVersion,channel='beta')=>({gameVersion,channel,directory:`data/beta/${gameVersion}/`,characters:['1304']});
 const registry={releasedGameVersion:'3.7.0',versions:[row('3.6.50'),row('3.7.50'),row('3.7.8','release'),row('3.8.50'),row('3.8.51'),row('3.8.0','release')]};
 assert.deepEqual(eligibleBetaVersions(registry).map(v=>v.gameVersion),['3.8.50','3.8.51']);
+assert(compareGameVersions('3.8.1','3.8.3')<0);assert(compareGameVersions('3.8.10','3.8.9')>0);assert.equal(compareGameVersions('3.8.3','3.8.3'),0);
 assert.equal(betaVersionsFor(registry,'9999').length,0);
 assert.equal(eligibleBetaVersions({...registry,releasedGameVersion:'3.8.0'}).length,0);
 assert.equal(eligibleBetaVersions({...registry,releasedGameVersion:'invalid'}).length,0);
@@ -18,7 +19,7 @@ assert(differences.some(r=>r.category==='profile'&&r.before==='—'&&r.after==='
 assert(!characterDiff(old,newer,{skillLevel:1}).some(r=>r.category==='skills'&&r.changed));
 const markup=structuredClone(old);markup.skill_trees[1].skill.desc='造成<color=Highlight>{0}</color>伤害';assert(!characterDiff(old,markup).some(r=>r.changed));
 const removed=structuredClone(old);delete removed.skill_trees[1];assert(characterDiff(old,removed).some(r=>r.category==='skills'&&r.after==='—'));
-const html=comparisonPanel(registry.versions.slice(3,5),'3.8.50','3.8.51',old,newer,{skillLevel:2});assert(html.includes('30%'));assert(html.includes('只看变化'));
+const html=comparisonPanel([row('3.8.50'),row('3.8.51'),row('3.8.52')],'3.8.51','3.8.51',old,newer,{skillLevel:2});assert(html.includes('30%'));assert(html.includes('只看变化'));assert.equal(html.match(/disabled/g)?.length,2,'Both selects must disable chronologically invalid choices');
 const single=comparisonPanel([row('3.8.50')],'3.8.50','3.8.50',old,old);assert(single.includes('尚不能比较两个不同版本'));
 console.log('Version checks passed: release/beta status, game/resource separation, release cutoff, invalid paths, additions/removals, level-dependent values, normalized text, chains and materials.');
 
@@ -27,4 +28,4 @@ const insert=structuredClone(reordered);insert.skill_trees[1].skill.level[100]={
 let diff=highlightedDiff('伤害提升10%，持续5秒。','伤害提升20%，持续5秒。');assert.equal(diff.before,'伤害提升<del>10%</del>，持续5秒。');assert.equal(diff.after,'伤害提升<ins>20%</ins>，持续5秒。');
 diff=highlightedDiff('a <script>alert(1)</script>','a safe');assert(!diff.before.includes('<script>'));assert(diff.before.includes('&lt;'));
 
-assert(/<details class="panel version-compare"[^>]*>/.test(html));assert(!/<details[^>]*\bopen\b/.test(html));assert(comparisonPanel(registry.versions.slice(3,5),'3.8.50','3.8.51',old,newer,{expanded:true}).includes('open>'));
+assert(/<details id="version-compare" class="panel version-compare"[^>]*>/.test(html));assert(!/<details[^>]*\bopen\b/.test(html));assert(comparisonPanel(registry.versions.slice(3,5),'3.8.50','3.8.51',old,newer,{expanded:true}).includes('open>'));

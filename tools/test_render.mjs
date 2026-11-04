@@ -132,3 +132,8 @@ console.log('Tab ARIA relationships, roving tabindex and arrow-key focus passed.
 const activeNav={scrollIntoView(options){this.options=options;}};document.querySelector=selector=>selector==='[data-nav].active'?activeNav:nodes.get(selector)||null;
 location.hash='#about';await winEvents.hashchange();assert.equal(activeNav.options.inline,'center');assert.equal(activeNav.options.block,'nearest');
 console.log('Active mobile navigation is scrolled into view.');
+
+events.click({target:{closest:()=>({dataset:{fav:'character:1304'}})}});
+events.click({target:{closest:()=>({dataset:{fav:'character:999999'}})}});
+location.hash='#favorites';await winEvents.hashchange();assert(nodes.get('main').innerHTML.includes('还没有收藏资料'),'Stale favorites must not suppress the empty state');assert.deepEqual(JSON.parse(storage.get('baichao-favorites')),[],'Stale favorites must be removed from storage');
+console.log('Stale favorite cleanup and visible empty state passed.');
