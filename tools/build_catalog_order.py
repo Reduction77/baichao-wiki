@@ -4,16 +4,19 @@ import concurrent.futures,hashlib,json,pathlib,re,sys
 from import_github_character import fetch
 from check_github_updates import config,get,metadata,readme
 ROOT=pathlib.Path(__file__).resolve().parents[1]
+def merge_commit_history(fresh,cached):
+ seen={row['sha'] for row in fresh}
+ return fresh+[row for row in cached if row.get('sha') not in seen]
 def main():
  source=config(ROOT/'tools/github_source.json');repo=source['repository'];commit=source['commit'];cache=ROOT/'.cache';cache.mkdir(exist_ok=True)
  history=cache/'release-commits.json'
- if history.exists():commits=json.loads(history.read_text())
- else:
-  commits=[]
-  for page in range(1,9):
-   rows=json.loads(get(f'https://api.github.com/repos/{repo}/commits?per_page=100&page={page}'));commits+=rows
-   if len(rows)<100:break
-  history.write_text(json.dumps(commits))
+ cached=json.loads(history.read_text(encoding='utf-8')) if history.exists() else []
+ commits=[]
+ for page in range(1,9):
+  rows=json.loads(get(f'https://api.github.com/repos/{repo}/commits?per_page=100&page={page}'));commits+=rows
+  if len(rows)<100:break
+ commits=merge_commit_history(commits,cached)
+ history.write_text(json.dumps(commits),encoding='utf-8')
  versions={};limit=tuple(map(int,source['gameVersion'].split('.')[:2]))
  for row in commits:
   match=re.search(r'GameVer\s+(\d+\.\d+\.\d+)',row['commit']['message'])
@@ -34,7 +37,7 @@ def main():
   if m['status']!='Release' or '.'.join(m['gameVersion'].split('.')[:2])!=v:raise ValueError('Unverified release snapshot: '+v)
   return v,{'metadata':m,'readmeSha256':hashlib.sha256(body.encode()).hexdigest()}
  with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:verified=dict(pool.map(verify_release,versions.items()))
- meta=json.loads((ROOT/'web/data/index.json').read_text());folder=ROOT/'web/data'/meta['snapshot'];catalogs={k:json.loads((folder/(k+'.json')).read_text()) for k in ['character','weapon','echo']}
+ meta=json.loads((ROOT/'web/data/index.json').read_text(encoding='utf-8'));folder=ROOT/'web/data'/meta['snapshot'];catalogs={k:json.loads((folder/(k+'.json')).read_text(encoding='utf-8')) for k in ['character','weapon','echo']}
  first={k:{} for k in catalogs};sources=[];paths={'weapon':'BinData/weapon/weaponconf.json','skin':'BinData/weapon/weaponskin.json','echo':'BinData/phantom/phantomitem.json'}
  def load(job):
   version,sha,kind,path=job
@@ -69,6 +72,6 @@ def main():
   for ident in catalogs[kind]:
    version=first[kind].get(ident)
    output[kind][ident]={'version':version,'order':first_banner.get(ident,0) if kind=='weapon' else 0}
- (ROOT/'web/data/catalog-order.json').write_text(json.dumps(output,ensure_ascii=False,indent=2)+'\n')
+ (ROOT/'web/data/catalog-order.json').write_text(json.dumps(output,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
  print('Catalog order saved:',{k:len(output[k]) for k in catalogs},flush=True)
 if __name__=='__main__':main()

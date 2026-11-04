@@ -2,6 +2,9 @@
 """Release gates and read-only update checks, using in-memory upstream fixtures."""
 import json,pathlib,tempfile
 import check_github_updates as u
+from build_catalog_order import merge_commit_history
+fresh=[{'sha':'new','commit':{'message':'new'}}];cached=[{'sha':'old','commit':{'message':'old'}},{'sha':'new','commit':{'message':'stale'}}]
+merged=merge_commit_history(fresh,cached);assert [row['sha'] for row in merged]==['new','old'];assert merged[0]['commit']['message']=='new'
 def readme(game='3.7.0',resource='3.7.8',status='Release'):
  return f'> Status: {status}</br>\n> Game Version: {game}</br>\n> Resource Version: {resource}</br>'
 source={'repository':'Arikatsu/WutheringWaves_Data','commit':'a'*40,'gameVersion':'3.7.0','resourceVersion':'3.7.8','status':'Release'}
@@ -20,7 +23,7 @@ for invalid in [{**source,'resourceVersion':'3.7.9'},{**source,'commit':'b'*40}]
 with tempfile.TemporaryDirectory() as folder:
  p=pathlib.Path(folder)/'source.json'
  for invalid in [{**source,'commit':'main'},{**source,'status':'Beta'},{**source,'repository':'../../invalid'},{**source,'gameVersion':'3.7'}]:
-  p.write_text(json.dumps(invalid))
+  p.write_text(json.dumps(invalid),encoding='utf-8')
   try:u.config(p)
   except ValueError:pass
   else:raise AssertionError('Unsafe config accepted')

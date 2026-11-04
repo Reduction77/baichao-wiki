@@ -15,21 +15,21 @@ INFO=['birth','sex','country','influence','cv_name_cn','cv_name_jp','cv_name_en'
 DISPLAY_SKILL=['name','desc','param','simple_desc','simple_param','icon','type','level','consume']
 
 def write(path,data):
- path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
+ path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 
 def main():
  global VERSION
  ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--source-dir',type=pathlib.Path,required=True);ap.add_argument('--retry-missing-images',action='store_true');ap.add_argument('--version',default=VERSION);ap.add_argument('--manifest',type=pathlib.Path);args=ap.parse_args()
  if not re.fullmatch(r'3\.\d+\.\d+',args.version):raise ValueError('Expected a version such as 3.8.3')
  VERSION=args.version
- manifest=json.loads(args.manifest.read_text())['ww'] if args.manifest else None
+ manifest=json.loads(args.manifest.read_text(encoding='utf-8'))['ww'] if args.manifest else None
  if manifest and VERSION not in manifest['available']:raise ValueError('Requested version not available in source manifest')
- web=ROOT/'web';meta=json.loads((web/'data/index.json').read_text());folder=web/'data'/meta['snapshot'];digests={}
+ web=ROOT/'web';meta=json.loads((web/'data/index.json').read_text(encoding='utf-8'));folder=web/'data'/meta['snapshot'];digests={}
  def read(kind,ident=None,locale='zh'):
   tail=f'{kind}__{ident}' if ident else kind;path=args.source_dir/f'ww__{VERSION}__{locale}__{tail}.json';body=path.read_bytes()
   url=f'https://static.nanoka.cc/ww/{VERSION}/{locale}/{kind}'+(f'/{ident}' if ident else '')+'.json'
   digests[url]=hashlib.sha256(body).hexdigest();return json.loads(body)
- live={kind:json.loads((folder/(kind+'.json')).read_text()) for kind in ['character','weapon']}
+ live={kind:json.loads((folder/(kind+'.json')).read_text(encoding='utf-8')) for kind in ['character','weapon']}
  item_languages={locale:read('item',locale=locale) for locale in ['zh','en']}
  records={};texts={};names={};inline={}
  def prepare(kind,ident,locale):
@@ -76,12 +76,12 @@ def main():
    records[kind][ident]=zh
  known_images={}
  for path in [folder/'images.json',web/'assets/character-icons.json',web/'assets/pilot/images.json']:
-  if path.exists():known_images.update(json.loads(path.read_text()))
+  if path.exists():known_images.update(json.loads(path.read_text(encoding='utf-8')))
  refs=set()
  for entries in records.values():
   for d in entries.values():
    refs.update([d.get('icon'),d.get('background')]);refs.update(n['skill'].get('icon') for n in d.get('skill_trees',{}).values());refs.update(c.get('icon') for c in d.get('chains',{}).values());refs.update(c.get('icon') for c in d['source_items'].values())
- registry=json.loads((web/'data/beta/index.json').read_text())
+ registry=json.loads((web/'data/beta/index.json').read_text(encoding='utf-8'))
  unavailable={url for v in registry.get('versions',[]) if v['gameVersion']==VERSION for url in v.get('missingImages',[])}
  images={};missing=[]
  def asset(ref):

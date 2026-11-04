@@ -62,6 +62,6 @@ export async function recognizeTrainingFile(file,{signal,onProgress=()=>{},onDia
   const sc=found.get(r.index);
   return refreshTrainingReview({...r,score:sc&&sc.score<=300?sc.score:null,scoreConfidence:sc?.confidence??0,selected:false,crops:rowCrops(c,r.y)});
  });
- if(!output.some(x=>x.confidence>.65)||!output.some(x=>x.score!==null))throw Error('未能可靠定位角色行，请使用完整的单列 ww练度图。');onProgress('识别完成，请核对后勾选需要导入的行。');return {rows:output,width:c.width,height:c.height,scored:output.filter(x=>x.score!==null).length,weapons:catalog.weapons,timings:{...recognized.timings,numericRetries:pending.length,totalMs:performance.now()-recognitionStarted}};
+ if(!output.some(x=>x.confidence>.65))throw Error('未能可靠定位角色行，请使用完整的单列 ww练度图。');onProgress('识别完成，请核对后勾选需要导入的行；未读出的分数可留空或手动补录。');return {rows:output,width:c.width,height:c.height,scored:output.filter(x=>x.score!==null).length,weapons:catalog.weapons,timings:{...recognized.timings,numericRetries:pending.length,totalMs:performance.now()-recognitionStarted}};
  }finally{signal?.removeEventListener('abort',abort);abort();c.width=c.height=1;}
 }

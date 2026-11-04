@@ -78,8 +78,8 @@ export function undoTraining(storage,builderKey,state){
  let backup;try{backup=JSON.parse(storage.getItem(TRAINING_BACKUP)||'null');}catch{}if(backup?.schema!==1||!Array.isArray(backup.excluded))throw Error('没有可撤销的练度导入。');
  let restored=backup.training;
  if(restored!==null){try{const previous=JSON.parse(restored);if(previous?.schema!==1||!previous.entries||typeof previous.entries!=='object')throw Error();restored=JSON.stringify({...previous,rosterLinked:true});}catch{throw Error('撤销备份中的练度资料无法读取。');}}
- const next=structuredClone(state);next.excluded=[];
- // Mark restored legacy records linked so matrix migration cannot re-disable the all-available roster.
+ const next=structuredClone(state);next.excluded=[...backup.excluded];
+ // Mark restored legacy records linked so matrix migration cannot overwrite the restored roster.
  atomicWrite(storage,[[TRAINING_KEY,restored],[builderKey,JSON.stringify(next)],[TRAINING_BACKUP,null]]);return next;
 }
 

@@ -2,13 +2,13 @@
 """Build compact, source-backed team-builder profiles from the restored archive."""
 import json,pathlib
 ROOT=pathlib.Path(__file__).resolve().parents[1]
-web=ROOT/'web';meta=json.loads((web/'data/index.json').read_text())
+web=ROOT/'web';meta=json.loads((web/'data/index.json').read_text(encoding='utf-8'))
 folder=web/'data'/meta['snapshot']
-index=json.loads((folder/'character.json').read_text())
-order=json.loads((web/'data/catalog-order.json').read_text())['character']
+index=json.loads((folder/'character.json').read_text(encoding='utf-8'))
+order=json.loads((web/'data/catalog-order.json').read_text(encoding='utf-8'))['character']
 profiles={};names={};aliases={}
 for ident,row in index.items():
-    d=json.loads((folder/'character'/(ident+'.json')).read_text())
+    d=json.loads((folder/'character'/(ident+'.json')).read_text(encoding='utf-8'))
     name=d['name'];canonical=names.setdefault(name,ident);aliases[ident]=canonical
     if canonical in profiles:
         profiles[canonical]['aliases'].append(ident);continue
@@ -26,5 +26,5 @@ for ident,row in index.items():
         'tags':tags,'roles':roles,'primary':primary,
         'releaseOrder':order.get(ident,{}).get('order',0)}
 result={'schema':1,'source':meta['provenance'],'version':meta['version'],'aliases':aliases,'characters':list(profiles.values())}
-(web/'data/team-builder.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+(web/'data/team-builder.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print('Team profiles:',len(profiles),'characters;',len(aliases),'archive IDs')

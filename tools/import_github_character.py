@@ -40,7 +40,7 @@ def fetch(root, path, commit=COMMIT, repo=REPO):
             except Exception:
                 if attempt == 2: raise
                 time.sleep(1)
-    return json.loads(dest.read_text()), hashlib.sha256(dest.read_bytes()).hexdigest()
+    return json.loads(dest.read_text(encoding='utf-8')), hashlib.sha256(dest.read_bytes()).hexdigest()
 
 def costs(rows):
     return [{'key': x['Key'], 'value': x['Value']} for x in rows]
@@ -154,9 +154,9 @@ def main():
         'missingFields':['称号：上游文本为异常占位内容，已隐藏'],
         'scope':'今汐试验：文字、基础属性、技能倍率、共鸣链与材料从 GitHub 原始配置转换。图片沿用本站保存的 nanoka 图片快照。未转换伤害拆分、战斗标签、故事、Live2D 与推荐配装。'}
     if args.compare:
-        out['comparison']=compare(out,json.loads(args.compare.read_text()))
+        out['comparison']=compare(out,json.loads(args.compare.read_text(encoding='utf-8')))
     args.output.parent.mkdir(parents=True,exist_ok=True)
-    args.output.write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n')
+    args.output.write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(out.get('comparison',{}),ensure_ascii=False,indent=2))
 
 if __name__=='__main__': main()

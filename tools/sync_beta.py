@@ -20,7 +20,7 @@ def eligible_versions(available,live):
 
 def write(path,value):
     path.parent.mkdir(parents=True,exist_ok=True)
-    tmp=path.with_suffix(path.suffix+'.tmp');tmp.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n');tmp.replace(path)
+    tmp=path.with_suffix(path.suffix+'.tmp');tmp.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');tmp.replace(path)
 
 def asset_url(ref):
     if not isinstance(ref,str):return None
@@ -31,10 +31,10 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--workers',type=int,default=4);args=parser.parse_args()
     if not 1<=args.workers<=6:parser.error('workers must be 1..6')
     manifest=fetch(BASE+'/manifest.json')['ww'];live=manifest['live'];available=eligible_versions(manifest.get('available',[]),live)
-    out=ROOT/'web/data/beta';meta=json.loads((ROOT/'web/data/index.json').read_text());current_images=json.loads((ROOT/'web/data'/meta['snapshot']/'images.json').read_text())
+    out=ROOT/'web/data/beta';meta=json.loads((ROOT/'web/data/index.json').read_text(encoding='utf-8'));current_images=json.loads((ROOT/'web/data'/meta['snapshot']/'images.json').read_text(encoding='utf-8'))
     for f in ['assets/character-icons.json','assets/pilot/images.json']:
         p=ROOT/'web'/f
-        if p.exists():current_images.update(json.loads(p.read_text()))
+        if p.exists():current_images.update(json.loads(p.read_text(encoding='utf-8')))
     records=[]
     for version in available:
         print('Importing beta game snapshot',version,flush=True)
@@ -70,7 +70,7 @@ def main():
                 if url:images[url]=ref
         for ident,d in details.items():write(out/version/'character'/f'{ident}.json',d)
         records.append({'gameVersion':version,'channel':'beta','directory':f'data/beta/{version}/','source':f'{BASE}/ww/{version}/','characters':sorted(details,key=int),'index':{i:{**d,'name':d.get('zh',i)} for i,d in index.items()},'images':images,'missingImages':missing})
-    old=json.loads((out/'index.json').read_text()) if (out/'index.json').exists() else {}
+    old=json.loads((out/'index.json').read_text(encoding='utf-8')) if (out/'index.json').exists() else {}
     # Old beta files may remain archived, but only eligible records are published.
     write(out/'index.json',{'schema':1,'releasedGameVersion':live if len(live.split('.'))==3 else live+'.0','checkedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'sources':[{'url':BASE+'/manifest.json','live':live,'available':manifest.get('available',[])}]+[s for s in old.get('sources',[]) if 'github.com/' in s.get('url','')],'versions':records})
     print('Published beta registry:',len(records),'future game snapshots; released game',live)

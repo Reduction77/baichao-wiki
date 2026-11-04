@@ -3,7 +3,7 @@
 import hashlib,io,json,pathlib,zipfile
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 def main():
- manifest=json.loads((ROOT/'snapshots/manifest.json').read_text())
+ manifest=json.loads((ROOT/'snapshots/manifest.json').read_text(encoding='utf-8'))
  for part in manifest['parts']:
   chunks=[]
   for fragment in part['fragments']:

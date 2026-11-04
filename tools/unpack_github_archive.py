@@ -3,7 +3,7 @@
 import hashlib,io,json,pathlib,re,zipfile
 ROOT=pathlib.Path(__file__).resolve().parents[1];folder=ROOT/'snapshots/github-data'
 def main():
- manifest=json.loads((folder/'manifest.json').read_text());parts=[]
+ manifest=json.loads((folder/'manifest.json').read_text(encoding='utf-8'));parts=[]
  for f in manifest['fragments']:
   if not re.fullmatch(r'data\.\d{3}\.bin',f['file']):raise ValueError('Invalid fragment name')
   data=(folder/f['file']).read_bytes()

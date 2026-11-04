@@ -10,7 +10,7 @@ const bitmap=()=>({width:dimensions[0],height:dimensions[1],close(){closed++;}})
 const ctx={drawImage(){},fillRect(){},putImageData(){},getImageData(x,y,w,h){return {data:new Uint8ClampedArray(w*h*4)};}};
 const file={size:1,type:'image/jpeg'};
 try{
- globalThis.document={createElement(type){assert.equal(type,'canvas');const c={getContext:()=>ctx};canvases.push(c);return c;}};
+ globalThis.document={createElement(type){assert.equal(type,'canvas');const c={getContext:()=>ctx,toDataURL:()=>''};canvases.push(c);return c;}};
  globalThis.createImageBitmap=async()=>{decodes++;return bitmap();};
  dimensions=[5000,5000];await assert.rejects(recognizeTrainingFile(file),/像素过大/);assert.equal(canvases.length,0);assert.equal(closed,1);
  dimensions=[400,500];await assert.rejects(recognizeTrainingFile(file),/完整的单列/);assert.equal(canvases.length,1);assert.equal(canvases[0].width,1);assert.equal(canvases[0].height,1);
@@ -24,6 +24,8 @@ try{
  const late=new AbortController(),lateTask=recognizeTrainingFile(file,{signal:late.signal});await entered.promise;late.abort();await assert.rejects(lateTask,{name:'AbortError'});created.resolve({terminate(){terminated++;}});await Promise.resolve();await Promise.resolve();assert.equal(terminated,1);
  entered=deferred();globalThis.Tesseract.createWorker=async()=>({setParameters:async()=>{},recognize(){entered.resolve();return new Promise(()=>{});},terminate(){terminated++;}});
  const active=new AbortController(),activeTask=recognizeTrainingFile(file,{signal:active.signal});await entered.promise;active.abort();await assert.rejects(activeTask,{name:'AbortError'});assert.equal(terminated,2);assert.equal(canvases.filter(c=>c.width>1&&c.height>1).length,0);
+ globalThis.Tesseract.createWorker=async()=>({setParameters:async()=>{},recognize:async()=>({data:{text:'',confidence:0}}),terminate(){}});
+ const unscored=await recognizeTrainingFile(file);assert.equal(unscored.rows.length,1);assert.equal(unscored.scored,0);assert.equal(unscored.rows[0].score,null,'Located rows must reach manual review even when no score can be read');
 }finally{for(const [k,v]of saved){if(v)Object.defineProperty(globalThis,k,v);else delete globalThis[k];}}
 const chars=characterMap({characters:[{id:'d',family:'d'},{id:'s',family:'1110'},{id:'x',family:'x'}]});
 const state={...defaultState(),matrix:true,teams:[{name:'old',characters:['d','s','x']}],draft:['d','s','x']};assert.deepEqual(draftBudgetConflicts(state,chars).map(p=>p.id),['d','x']);assert.match(saveTeam(state,chars),/超出可用次数/);assert.equal(state.teams.length,1);

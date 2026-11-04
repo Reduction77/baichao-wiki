@@ -4,25 +4,25 @@ import json,pathlib,sys
 from sync_data import image_url
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 web=ROOT/'web'
-meta=json.loads((web/'data/index.json').read_text())
+meta=json.loads((web/'data/index.json').read_text(encoding='utf-8'))
 folder=web/'data'/meta['snapshot']
 errors=[]
-order=json.loads((web/'data/catalog-order.json').read_text())
+order=json.loads((web/'data/catalog-order.json').read_text(encoding='utf-8'))
 if order.get('source',{}).get('commit')!=meta.get('provenance',{}).get('commit'):errors.append('Catalog ordering must match the selected data source')
-items=json.loads((folder/'items.json').read_text())
-images=json.loads((folder/'images.json').read_text())
+items=json.loads((folder/'items.json').read_text(encoding='utf-8'))
+images=json.loads((folder/'images.json').read_text(encoding='utf-8'))
 for extra in ['assets/character-icons.json','assets/pilot/images.json']:
     path=web/extra
     if not path.is_file():errors.append(extra+': missing')
-    else:images.update(json.loads(path.read_text()))
+    else:images.update(json.loads(path.read_text(encoding='utf-8')))
 for category in ['character','weapon','echo']:
-    rows=json.loads((folder/(category+'.json')).read_text())
+    rows=json.loads((folder/(category+'.json')).read_text(encoding='utf-8'))
     if len(rows)!=meta['counts'][category]: errors.append(category+': count mismatch')
     if set(order.get(category,{}))!=set(rows):errors.append(category+': incomplete catalog order')
     for ident,row in rows.items():
         f=folder/category/(ident+'.json')
         if not f.is_file(): errors.append(str(f)+': missing');continue
-        d=json.loads(f.read_text())
+        d=json.loads(f.read_text(encoding='utf-8'))
         if str(d.get('id'))!=ident:errors.append(category+'/'+ident+': ID mismatch')
         if meta.get('provenance') and d.get('provenance')!=meta['provenance']:errors.append(category+'/'+ident+': source mismatch')
         for ref in [d.get('icon'),d.get('background')]:
@@ -42,7 +42,7 @@ for ident,item in items.items():
     url=image_url(item.get('icon'))
     if url and url not in images:errors.append('Material '+ident+': missing image '+url)
 if meta.get('provenance'):
-    report=json.loads((folder/'provenance.json').read_text())
+    report=json.loads((folder/'provenance.json').read_text(encoding='utf-8'))
     if report['source']!=meta['provenance'] or report['counts']!=meta['counts']:errors.append('Provenance report mismatch')
     for kind,rows in report.get('comparison',{}).items():
         for row in rows:
@@ -52,7 +52,7 @@ for url,ref in images.items():
     if not f.is_file():errors.append(ref+': image missing');continue
     data=f.read_bytes()
     if not data.startswith(b'RIFF') or b'WEBP' not in data[:16]:errors.append(ref+': invalid image')
-for t in json.loads((web/'data/teams.json').read_text()):
+for t in json.loads((web/'data/teams.json').read_text(encoding='utf-8')):
     if len(t.get('characters',[]))!=3:errors.append('Team must contain 3 IDs')
     for v in t.get('videos',[]):
         if not v.get('url','').startswith(('https://www.bilibili.com/','https://bilibili.com/','https://b23.tv/')):errors.append('Invalid team video URL')

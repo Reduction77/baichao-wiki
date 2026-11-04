@@ -30,7 +30,7 @@ EXTRA={
 
 def write(path,value):
  path.parent.mkdir(parents=True,exist_ok=True)
- path.write_text(json.dumps(value,ensure_ascii=False,separators=(',',':'))+'\n')
+ path.write_text(json.dumps(value,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
 
 def build(data,scope):
  zh={x['Id']:x['Content'] for x in data['texts']}
@@ -102,14 +102,14 @@ def main():
  data={};hashes={}
  with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
   for key,value,path,digest in pool.map(load,files.items()):data[key]=value;hashes[path]=digest
- scope=json.loads((ROOT/'tools/github_catalog_scope.json').read_text())
+ scope=json.loads((ROOT/'tools/github_catalog_scope.json').read_text(encoding='utf-8'))
  coverage={'newCharacters':sorted({x['RoleId'] for x in data['favor']}-set(scope['character'])),'newWeapons':sorted(({x['ItemId'] for x in data['weapons']}|{x['Id'] for x in data['skins']})-set(scope['weapon']))}
  if any(coverage.values()) and not args.preview:raise ValueError('Update catalog scope before publishing newly discovered entries: '+json.dumps(coverage))
  details,catalog,items,sonatas,limitations=build(data,scope)
- web=ROOT/'web';old=json.loads((web/'data/index.json').read_text());previous=web/'data'/old['snapshot']
+ web=ROOT/'web';old=json.loads((web/'data/index.json').read_text(encoding='utf-8'));previous=web/'data'/old['snapshot']
  image_maps={}
  for p in [previous/'images.json',web/'assets/character-icons.json',web/'assets/pilot/images.json',web/'assets/github-images.json']:
-  if p.exists():image_maps.update(json.loads(p.read_text()))
+  if p.exists():image_maps.update(json.loads(p.read_text(encoding='utf-8')))
  snapshot=datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%S')+'-'+str(os.getpid());stage=web/'data'/('.staging-'+snapshot)
  provenance={'repository':repo,'commit':commit,'gameVersion':source['gameVersion'],'resourceVersion':source['resourceVersion'],'locale':'zh-Hans','scope':'文字、属性、技能倍率、共鸣链、武器效果、声骸技能与材料均由 GitHub 原始配置生成。图片沿用本站保存的本地图像快照。'}
  hashes['README.md']=hashlib.sha256(readme(repo,commit).encode()).hexdigest()
@@ -118,7 +118,7 @@ def main():
   for kind,rows in details.items():
    for ident,d in rows.items():
     d['provenance']=provenance
-    if args.compare and kind=='character':report['comparison'][ident]=compare(d,json.loads(((args.compare_snapshot or previous)/kind/(ident+'.json')).read_text()))
+    if args.compare and kind=='character':report['comparison'][ident]=compare(d,json.loads(((args.compare_snapshot or previous)/kind/(ident+'.json')).read_text(encoding='utf-8')))
     write(stage/kind/(ident+'.json'),d)
    write(stage/(kind+'.json'),catalog[kind])
   write(stage/'items.json',items);write(stage/'sonatas.json',sonatas)

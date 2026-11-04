@@ -17,17 +17,17 @@ for(const matrix of [false,true])for(const mode of ['append','replace']){
  state=undoTraining(storage,'builder',state);assert.deepEqual(state.excluded,[]);assert.equal(readTraining(storage).rosterLinked,true);
  assert.deepEqual(linkTrainingAvailability(storage,'builder',state,profiles).builder.excluded,[]);
 }
-// Undo from a partially disabled roster must still enable everybody, preserving teams/draft.
+// Undo restores a partially disabled roster, preserving teams/draft.
 data.clear();let state={...defaultState(),matrix:true,excluded:['b'],draft:['c'],teams:[{name:'saved',characters:['a','b','r1']}]};
 state=applyTraining(storage,'builder',state,[row('a')],profiles,'append').builder;
-state=undoTraining(storage,'builder',state);assert.deepEqual(state.excluded,[]);assert.deepEqual(state.draft,['c']);assert.equal(state.teams.length,1);assert.equal(readTraining(storage),null);
+state=undoTraining(storage,'builder',state);assert.deepEqual(state.excluded,['b']);assert.deepEqual(state.draft,['c']);assert.equal(state.teams.length,1);assert.equal(readTraining(storage),null);
 // Repeated undo -> All -> import cycles cannot leave absent characters enabled.
 data.clear();state={...defaultState(),matrix:true};
 for(let i=0;i<3;i++){state=applyTraining(storage,'builder',state,[row('a')],profiles,'append').builder;assert.deepEqual(state.excluded,['b','c','r']);state=undoTraining(storage,'builder',state);assert.deepEqual(state.excluded,[]);assert.equal(readTraining(storage),null);}
 // Legacy restored records must not trigger matrix migration after Undo.
 const old={schema:1,entries:{b:row('b')}};storage.setItem(TRAINING_KEY,JSON.stringify(old));state.excluded=['a'];
 state=applyTraining(storage,'builder',state,[row('a')],profiles,'append').builder;
-state=undoTraining(storage,'builder',state);assert.deepEqual(state.excluded,[]);assert.equal(readTraining(storage).rosterLinked,true);assert.deepEqual(linkTrainingAvailability(storage,'builder',state,profiles).builder.excluded,[]);
+state=undoTraining(storage,'builder',state);assert.deepEqual(state.excluded,['a']);assert.equal(readTraining(storage).rosterLinked,true);assert.deepEqual(linkTrainingAvailability(storage,'builder',state,profiles).builder.excluded,['a']);
 // Manual editing remains possible after an import, until the next application resets the list.
 state.excluded=['b'];saveAvailableRoster(storage,'builder',state);assert.equal(unavailableReason(state,chars.get('b'),chars),'未设为可用角色');
 state=restoreTrainingBackup(storage,'builder',{schema:1,builder:state,training:readTraining(storage)},profiles);assert.deepEqual(state.excluded,['b']);
@@ -35,4 +35,4 @@ state=applyTraining(storage,'builder',state,[row('r1')],profiles,'append').build
 state.draft=['a'];assert.equal(matchingTeams(state,profiles,{teams:[{characters:['a','b','c']}]}).length,0);
 // A corrupt undo backup fails before changing the current roster or records.
 storage.setItem(TRAINING_BACKUP,JSON.stringify({schema:1,excluded:[],training:'bad json'}));const before=new Map(data);assert.throws(()=>undoTraining(storage,'builder',state),/无法读取/);assert.deepEqual(data,before);
-console.log('Every import resets roster; Undo enables all; manual editing, legacy records, Rover families and repeated reimport passed.');
+console.log('Every import resets roster; Undo restores the prior roster; manual editing, legacy records, Rover families and repeated reimport passed.');

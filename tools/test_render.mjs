@@ -9,7 +9,7 @@ const events={},winEvents={};
 globalThis.document={querySelector:s=>nodes.get(s)||null,querySelectorAll:()=>[],addEventListener:(n,f)=>events[n]=f,createElement:()=>new Element(),body:{append(){}}};
 globalThis.location={hash:'#home'};
 globalThis.history={replaceState:(_a,_b,url)=>location.hash=url};
-globalThis.window={addEventListener:(n,f)=>winEvents[n]=f,scrollY:0,scrollTo(){}};
+globalThis.window={addEventListener:(n,f)=>winEvents[n]=f,scrollY:0,scrollTo(x,y){this.scrollY=y;}};
 const storage=new Map();globalThis.localStorage={getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)};
 globalThis.fetch=async uri=>{assert(!/^https?:/.test(uri),'Site must use local data');try{return {ok:true,status:200,json:async()=>JSON.parse(await fs.readFile(path.join(web,uri),'utf8'))};}catch{return {ok:false,status:404};}};
 await import('../web/assets/app.js');
@@ -116,3 +116,19 @@ assert(!/<span class="badge">\d+<\/span>/.test(echoCards),'Echo badges must not 
 location.hash='#echo/6000038';await winEvents.hashchange();
 assert(nodes.get('main').innerHTML.includes('编号：6000038 · COST 1'));
 console.log('Echo catalog passed: COST badges and IDs retained in detail pages.');
+
+location.hash='#echo';await winEvents.hashchange();window.scrollY=640;
+location.hash='#echo/6000038';await winEvents.hashchange();assert.equal(window.scrollY,0,'New routes must start at the top');
+location.hash='#echo';await winEvents.hashchange();assert.equal(window.scrollY,640,'Returning to a list must restore its scroll position');
+console.log('Hash route scroll restoration passed.');
+
+location.hash='#character/1304';await winEvents.hashchange();assert(nodes.get('main').innerHTML.includes('id="tab-skills"'));assert(nodes.get('main').innerHTML.includes('aria-labelledby="tab-skills"'));assert(nodes.get('main').innerHTML.includes('tabindex="-1"'));
+const tabButtons=['skills','chains','materials','overview','teams'].map(key=>({dataset:{tab:key},focus(){this.focused=true;}}));
+document.querySelectorAll=selector=>selector==='.tabs [role="tab"][data-tab]'?tabButtons:[];
+document.querySelector=selector=>{const match=selector.match(/^\[data-tab="(.+)"\]$/);return match?tabButtons.find(t=>t.dataset.tab===match[1]):nodes.get(selector)||null;};
+let prevented=false;events.keydown({target:{closest:()=>tabButtons[0]},key:'ArrowRight',preventDefault(){prevented=true;}});
+assert(prevented);assert(tabButtons[1].focused);assert(nodes.get('main').innerHTML.includes('aria-labelledby="tab-chains"'));assert(nodes.get('main').innerHTML.includes('data-tab="chains" class="active"'));
+console.log('Tab ARIA relationships, roving tabindex and arrow-key focus passed.');
+const activeNav={scrollIntoView(options){this.options=options;}};document.querySelector=selector=>selector==='[data-nav].active'?activeNav:nodes.get(selector)||null;
+location.hash='#about';await winEvents.hashchange();assert.equal(activeNav.options.inline,'center');assert.equal(activeNav.options.block,'nearest');
+console.log('Active mobile navigation is scrolled into view.');

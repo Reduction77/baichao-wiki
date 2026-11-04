@@ -17,6 +17,9 @@ https://reduction77.github.io/baichao-wiki/
 ```bash
 python3 tools/unpack_snapshot.py
 python3 tools/unpack_character_icons.py
+python3 tools/complete_character_data.py
+python3 tools/build_team_profiles.py
+python3 tools/build-training-catalog.py
 python3 tools/check_data.py
 node tools/test_core.mjs
 node tools/test_render.mjs

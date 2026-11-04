@@ -24,12 +24,17 @@ export function budgetConflicts(state,characters){const count=uses(state,charact
 export function draftBudgetConflicts(state,characters){const count=uses(state,characters);return state.draft.map(id=>characters.get(id)).filter(p=>p&&(count[p.family]||0)>=limitFor(state,p));}
 export function unavailableMembers(state,characters,ids){return [...new Set(ids)].map(id=>characters.get(id)).filter(p=>p&&state.excluded.includes(p.family));}
 export function selectCharacter(state,id,characters){const p=characters.get(id);if(!p)return '角色不存在';const why=unavailableReason(state,p,characters);if(why)return why;state.draft.push(id);return '';}
-export function saveTeam(state,characters){
+let teamSequence=0;
+function newTeamId(teams){let id;do{id=`team-${Date.now().toString(36)}-${(++teamSequence).toString(36)}`;}while(teams.some(t=>t.id===id));return id;}
+function newTeamName(teams){let n=1;while(teams.some(t=>t.name===`队伍 ${n}`))n++;return `队伍 ${n}`;}
+export function saveTeam(state,characters,editing=null){
  if(state.draft.length!==3)return '请选择三名角色后再暂存';
- if(state.teams.length>=100)return '最多暂存100支队伍，请先删除部分队伍。';
+ if(state.teams.length>=100&&!editing)return '最多暂存100支队伍，请先删除部分队伍。';
  const count=uses(state,characters),families=new Set();
  for(const id of state.draft){const p=characters.get(id);if(!p||families.has(p.family))return '同一角色及漂泊者的不同形态不能在同队重复';families.add(p.family);if(state.excluded.includes(p.family))return '当前编队包含不可用角色，请先启用或替换该角色';if((count[p.family]||0)>=limitFor(state,p))return '当前编队超出可用次数，请调整';}
- state.teams.push({name:`队伍 ${state.teams.length+1}`,characters:[...state.draft]});state.draft=[];return '';
+ const previous=editing?.team,team={id:previous?.id||newTeamId(state.teams),name:previous?.name||newTeamName(state.teams),characters:[...state.draft]};
+ const index=editing&&Number.isInteger(editing.index)?Math.max(0,Math.min(editing.index,state.teams.length)):state.teams.length;
+ state.teams.splice(index,0,team);state.draft=[];return '';
 }
 export function parseState(raw,profiles){
  if(!raw||typeof raw!=='object'||![1,2,3,4].includes(raw.schema)||!Array.isArray(raw.teams)||raw.teams.length>100)throw Error('不是有效的白潮配队文件，最多导入 100 支队伍');
@@ -47,7 +52,8 @@ export function parseState(raw,profiles){
  if(raw.excluded!==undefined&&(!Array.isArray(raw.excluded)||raw.excluded.some(key=>!families.has(key))))throw Error('可用角色设置格式不正确');
  state.excluded=[...new Set(raw.excluded||[])];
  function ids(input,max){if(!Array.isArray(input)||input.length>max)throw Error('队伍角色数量不正确');const ids=input.map(v=>canonicalId(v,profiles));if(ids.some(v=>!v))throw Error('文件包含当前资料库中不存在的角色');const fs=ids.map(id=>characters.get(id).family);if(new Set(fs).size!==ids.length)throw Error('同队存在重复角色或漂泊者形态');return ids;}
- state.teams=raw.teams.map((t,i)=>{if(!t||typeof t!=='object')throw Error('队伍格式不正确');const characters=ids(t.characters,3);if(characters.length!==3)throw Error('暂存队伍必须有三名角色');return {name:typeof t.name==='string'?t.name.slice(0,60):`队伍 ${i+1}`,characters};});
+ const usedTeamIds=new Set();
+ state.teams=raw.teams.map((t,i)=>{if(!t||typeof t!=='object')throw Error('队伍格式不正确');const characters=ids(t.characters,3);if(characters.length!==3)throw Error('暂存队伍必须有三名角色');const base=typeof t.id==='string'&&t.id.trim()?t.id.trim().slice(0,80):`team-${i+1}`;let id=base,suffix=2;while(usedTeamIds.has(id))id=`${base}-${suffix++}`;usedTeamIds.add(id);return {id,name:typeof t.name==='string'?t.name.slice(0,60):`队伍 ${i+1}`,characters};});
  state.draft=ids(raw.draft||[],3);
  // Exceeding budgets after a mode/config change is retained and visibly flagged.
  return state;

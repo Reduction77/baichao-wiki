@@ -2,7 +2,7 @@
 """Bundle generated GitHub JSON separately from unchanged local image archives."""
 import hashlib,io,json,pathlib,zipfile
 ROOT=pathlib.Path(__file__).resolve().parents[1]
-web=ROOT/'web';meta=json.loads((web/'data/index.json').read_text())
+web=ROOT/'web';meta=json.loads((web/'data/index.json').read_text(encoding='utf-8'))
 if not meta.get('provenance'):raise ValueError('Generate the GitHub archive first')
 folder=web/'data'/meta['snapshot'];output=io.BytesIO()
 with zipfile.ZipFile(output,'w',zipfile.ZIP_DEFLATED) as z:
@@ -14,7 +14,7 @@ manifest={'snapshot':meta['snapshot'],'sha256':hashlib.sha256(body).hexdigest(),
 for i,start in enumerate(range(0,len(body),512*1024)):
  data=body[start:start+512*1024];name=f'data.{i:03d}.bin';(dest/name).write_bytes(data)
  manifest['fragments'].append({'file':name,'sha256':hashlib.sha256(data).hexdigest()})
-(dest/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+(dest/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8')
 for p in dest.glob('data.*.bin'):
  if p.name not in {x['file'] for x in manifest['fragments']}:p.unlink()
 print('Packed GitHub JSON:',len(body),'bytes;',len(manifest['fragments']),'fragments')

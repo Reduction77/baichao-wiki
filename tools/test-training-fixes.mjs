@@ -9,13 +9,13 @@ const heart=profiles.characters.find(p=>p.id==='1311'),weapon=catalog.find(w=>w.
 const full={id:heart.id,selected:true,score:176.14,grade:'S',chain:6,weaponRarity:5,weaponId:weapon.id,weaponName:weapon.name,refine:5},blank={id:heart.id,selected:true,score:null,grade:null,chain:null,weaponRarity:null,weaponId:null,weaponName:'',refine:null};
 let data=new Map();const storage={getItem:k=>data.get(k)??null,setItem:(k,v)=>data.set(k,v),removeItem:k=>data.delete(k)};
 let state=applyTraining(storage,'preview',defaultState(),[full],profiles,'append',catalog).builder;
-state=applyTraining(storage,'preview',state,[blank],profiles,'append',catalog).builder;
+const excludedBefore=[...state.excluded];state=applyTraining(storage,'preview',state,[blank],profiles,'append',catalog).builder;
 let r=readTraining(storage).entries[heart.id];assert.equal(r.score,176.14);assert.equal(r.grade,'S');assert.equal(r.chain,6);assert.equal(r.refine,5);assert.equal(r.weaponId,weapon.id);
 let next=planTrainingImport(state,readTraining(storage),[{...blank,score:0,chain:0}],profiles,'append',catalog);assert.equal(next.training.entries[heart.id].score,0);assert.equal(next.training.entries[heart.id].chain,0);
 next=planTrainingImport(state,readTraining(storage),[{...blank,weaponRarity:5,weaponId:another.id,weaponName:another.name}],profiles,'append',catalog);assert.equal(next.training.entries[heart.id].weaponId,another.id);assert.equal(next.training.entries[heart.id].refine,null);
 next=planTrainingImport(state,readTraining(storage),[{...blank,weaponRarity:0}],profiles,'append',catalog);assert.equal(next.training.entries[heart.id].weaponId,null);assert.equal(next.training.entries[heart.id].refine,null);
 next=planTrainingImport(state,readTraining(storage),[blank],profiles,'replace',catalog);assert.equal(next.training.entries[heart.id].score,null);
-const before=readTraining(storage);state=undoTraining(storage,'preview',state);assert.deepEqual(readTraining(storage).entries,before.entries);assert.deepEqual(state.excluded,[]);
+const before=readTraining(storage);state=undoTraining(storage,'preview',state);assert.deepEqual(readTraining(storage).entries,before.entries);assert.deepEqual(state.excluded,excludedBefore);
 assert.throws(()=>normalizeTraining([{...full,weaponId:wrong.id,weaponName:wrong.name}],profiles,catalog),/类型不匹配/);
 assert.throws(()=>normalizeTraining([full],profiles),/尚未加载/);
 const dirty={...full,weaponId:wrong.id};reconcileTrainingWeapon(dirty,profiles,catalog);refreshTrainingReview(dirty);assert.equal(dirty.weaponId,null);assert.equal(dirty.review,true);

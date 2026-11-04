@@ -3,7 +3,7 @@
 import hashlib,io,json,pathlib,re,zipfile
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 folder=ROOT/'snapshots/character-icons'
-manifest=json.loads((folder/'manifest.json').read_text())
+manifest=json.loads((folder/'manifest.json').read_text(encoding='utf-8'))
 parts=[]
 for item in manifest['fragments']:
     if not re.fullmatch(r'icons\.\d{3}\.bin',item['file']):raise ValueError('Invalid archive fragment name')

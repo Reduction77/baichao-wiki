@@ -54,12 +54,14 @@ const legacy=parseState({schema:2,matrix:true,matrixCharacter:'1304',teams:[]},p
 const oldPeriod=parseState({schema:3,matrix:true,matrixPeriod:'legacy-period',teams:[{characters:['1509','1304','1503']}]},profiles);assert(!('matrixPeriod' in oldPeriod));assert.equal(oldPeriod.teams.length,1);assert.equal(limitFor(oldPeriod,chars.get('1509')),2);
 for(const raw of [{schema:4,teams:[],matrixPeriod:'invalid'},{schema:4,teams:[],matrixCharacter:'1304'},{schema:99,teams:[]},{schema:1,teams:[{characters:['1304','1105','999999']}]},{schema:2,teams:[],matrixCharacter:['1304','1107']},{schema:2,teams:[],matrixCharacter:'unknown'},{schema:2,teams:[],limits:{rover:2}},{schema:1,teams:[{characters:['1304','1304','1503']}]},{schema:1,teams:[],excluded:['unknown']},{schema:1,teams:[{characters:['1304','1105']}]}])assert.throws(()=>parseState(raw,profiles));
 
-class Node{constructor(){this.innerHTML='';this.textContent='';this.value='';this.handlers={};this.dataset={};}addEventListener(n,f){this.handlers[n]=f;}removeEventListener(n){delete this.handlers[n];}focus(){}querySelector(selector){return nodes.get(selector)||null;}querySelectorAll(){return [];}}
-const root=new Node(),nodes=new Map(['#tb-message','#tb-roster-list','#tb-import-text','#tb-import-error','.tb-dialog'].map(k=>[k,new Node()]));
+globalThis.document={activeElement:null};
+class Node{constructor(){this.innerHTML='';this.textContent='';this.value='';this.handlers={};this.dataset={};}addEventListener(n,f){this.handlers[n]=f;}removeEventListener(n){delete this.handlers[n];}focus(){document.activeElement=this;}showModal(){this.open=true;}querySelector(selector){const match=selector.match(/^\[data-tb="([^"]+)"\]$/);if(match){if(!nodes.has(selector)){const node=new Node();node.dataset.tb=match[1];nodes.set(selector,node);}return nodes.get(selector);}return nodes.get(selector)||null;}querySelectorAll(selector){return selector==='[data-tb]'?[...nodes.values()].filter(n=>n.dataset.tb):[];}}
+const root=new Node(),nodes=new Map(['#tb-message','#tb-roster-list','#tb-import-text','#tb-import-error','#tb-role','.tb-dialog'].map(k=>[k,new Node()]));
 const local=new Map();const storage={getItem:k=>local.get(k),setItem:(k,v)=>local.set(k,v)};
 const builder=createTeamBuilder({profiles,teams:records,recommendations:config,img:()=>'<img src="assets/test.webp" alt="">',storage});
 builder.mount(root);
 const click=async(tb,extra={})=>root.handlers.click({target:{closest:()=>({dataset:{tb,...extra}})}});
+const roleFilter=nodes.get('#tb-role');roleFilter.value='main';roleFilter.focus();root.handlers.change({target:roleFilter});assert.equal(document.activeElement,roleFilter,'Filter redraw must preserve focus');roleFilter.value='';root.handlers.change({target:roleFilter});
 assert(root.innerHTML.includes('矩阵模式'));assert(root.innerHTML.includes('60 个角色形态'));
 await click('pick',{id:'1304'});
 assert(root.innerHTML.includes('已收录完整配队'));assert(root.innerHTML.includes('bilibili.com/video/'));assert(!root.innerHTML.includes('伤害加深匹配'));
@@ -76,14 +78,24 @@ await click('pick',{id:'1509'});assert.equal(builder.getState().draft.length,1);
 await click('edit-team',{index:'0'});assert.equal(builder.getState().teams.length,1,'Editing must not overwrite a current draft');
 await click('clear-draft');await click('edit-team',{index:'0'});assert.equal(builder.getState().teams.length,0);
 assert.equal(builder.getState().draft.length,3);
-await click('save');await click('import');nodes.get('#tb-import-text').value='{"schema":1,"teams":[{"characters":["1304","1105","9999"]}]}';
+await click('save');await click('import');assert.equal(nodes.get('.tb-dialog').open,true,'Import must use a modal dialog');nodes.get('#tb-import-text').value='{"schema":1,"teams":[{"characters":["1304","1105","9999"]}]}';
 await click('confirm-import');assert.equal(builder.getState().teams.length,1);assert(nodes.get('#tb-import-error').textContent.includes('不存在'));
 nodes.get('#tb-import-text').value=JSON.stringify({...builder.getState(),teams:[{name:'<script>unsafe</script>',characters:['1304','1105','1503']}]});
 await click('confirm-import');assert(root.innerHTML.includes('&lt;script&gt;unsafe&lt;/script&gt;'));assert(!root.innerHTML.includes('<script>unsafe'));
-await click('clear-teams');assert.equal(builder.getState().teams.length,1);await click('cancel-dialog');assert.equal(builder.getState().teams.length,1);
+await click('clear-teams');assert.equal(builder.getState().teams.length,1);await click('cancel-dialog');assert.equal(builder.getState().teams.length,1);assert.equal(document.activeElement.dataset.tb,'clear-teams','Closing a dialog must return focus to its trigger');
 await click('clear-teams');await click('confirm-clear');assert.equal(builder.getState().teams.length,0);
 const reopened=createTeamBuilder({profiles,img:()=>'',storage});reopened.mount(new Node());assert.deepEqual(reopened.getState(),builder.getState());
 console.log('Team builder checks passed: 60 profiles, bidirectional recommendations, shared Rover quota, matrix budgets, ordering, persistence, safe import, links and UI events.');
+
+const editableRoot=new Node(),editableStorage=new Map(),editable=createTeamBuilder({profiles,img:()=>'',storage:{getItem:k=>editableStorage.get(k),setItem:(k,v)=>editableStorage.set(k,v)}});editable.mount(editableRoot);
+const editClick=async(tb,extra={})=>editableRoot.handlers.click({target:{closest:()=>({dataset:{tb,...extra}})}});
+for(const team of [['1304','1105','1503'],['1509','1107','1307'],['1311','1309','1110']]){for(const id of team)await editClick('pick',{id});await editClick('save');}
+const beforeEdit=editable.getState().teams;assert.deepEqual(beforeEdit.map(t=>t.name),['队伍 1','队伍 2','队伍 3']);assert.equal(new Set(beforeEdit.map(t=>t.id)).size,3);
+await editClick('edit-team',{index:'0'});await editClick('save');const afterEdit=editable.getState().teams;assert.deepEqual(afterEdit,beforeEdit,'Editing must preserve IDs, names and positions');
+await editClick('delete-team',{index:'1'});assert.equal(editable.getState().teams.length,2);assert(editableRoot.innerHTML.includes('撤销删除'));
+await editClick('undo-delete');assert.deepEqual(editable.getState().teams,beforeEdit,'Undo must restore the deleted team at its original position');
+await editClick('edit-team',{index:'0'});await editClick('clear-draft');assert.deepEqual(editable.getState().teams,beforeEdit,'Clearing an edited draft must not discard the original team');
+console.log('Stable team IDs, in-place editing and ten-second delete undo passed.');
 
 const configured=JSON.parse(await fs.readFile(new URL('data/matrix-rules.json',web)));
 configureMatrixRules(configured,profiles);
@@ -110,3 +122,5 @@ await integratedRoot.handlers.click({target:{closest:()=>({dataset:{tb:'matrix'}
 assert.deepEqual(JSON.parse(local.get('baichao-team-builder-v1')),integrated.getState());
 assert.deepEqual(JSON.parse(local.get('baichao-team-builder-training-preview-v1')),defaultState());
 console.log('Production training UI preserves and updates the existing Wiki storage without switching to preview storage.');
+const builderCss=await fs.readFile(new URL('assets/team-builder.css',web),'utf8');assert(/@media\(max-width:850px\)\{[^}]*\.tb-layout\{display:flex;flex-direction:column/.test(builderCss));assert(/\.tb-workspace>\.tb-current\{order:1\}/.test(builderCss));assert(/\.tb-roster\{order:2\}/.test(builderCss));
+console.log('Mobile layout keeps the current team before the character roster.');

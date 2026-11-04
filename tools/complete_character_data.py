@@ -23,7 +23,7 @@ SELECTED = {
 }
 
 def baseline():
- folder=ROOT/'snapshots/github-data'; manifest=json.loads((folder/'manifest.json').read_text())
+ folder=ROOT/'snapshots/github-data'; manifest=json.loads((folder/'manifest.json').read_text(encoding='utf-8'))
  parts=[]
  for entry in manifest['fragments']:
   body=(folder/entry['file']).read_bytes()
@@ -63,7 +63,7 @@ def build():
      refs.append(skill_id)
    result['characters'][ident]={'skills':patch,'sourceIds':refs}
   SUPPLEMENT.parent.mkdir(parents=True,exist_ok=True)
-  SUPPLEMENT.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+  SUPPLEMENT.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
  print('Built selected character completions:',len(result['characters']),'records')
 
 def apply_record(record,entry):
@@ -77,22 +77,22 @@ def apply_record(record,entry):
 def main():
  parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--build',action='store_true');args=parser.parse_args()
  if args.build:build()
- data=json.loads(SUPPLEMENT.read_text());meta=json.loads((ROOT/'web/data/index.json').read_text())
+ data=json.loads(SUPPLEMENT.read_text(encoding='utf-8'));meta=json.loads((ROOT/'web/data/index.json').read_text(encoding='utf-8'))
  if data['source']['commit']!=meta['provenance']['commit']:raise ValueError('Rebuild completions for the selected source before applying')
  for ident,entry in data['characters'].items():
   path=ROOT/'web/data'/meta['snapshot']/'character'/f'{ident}.json'
-  old=json.loads(path.read_text());new=apply_record(old,entry)
-  if old!=new:path.write_text(json.dumps(new,ensure_ascii=False,separators=(',',':'))+'\n')
+  old=json.loads(path.read_text(encoding='utf-8'));new=apply_record(old,entry)
+  if old!=new:path.write_text(json.dumps(new,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
  # Existing-entry additions belong in the normal detail pages, not version cards.
- extra=json.loads((ROOT/'tools/data/existing-entry-completions.json').read_text())
+ extra=json.loads((ROOT/'tools/data/existing-entry-completions.json').read_text(encoding='utf-8'))
  for kind,entries in [('character',extra['characters']),('weapon',extra['weapons'])]:
   for ident,entry in entries.items():
-   path=ROOT/'web/data'/meta['snapshot']/kind/f'{ident}.json';old=json.loads(path.read_text())
+   path=ROOT/'web/data'/meta['snapshot']/kind/f'{ident}.json';old=json.loads(path.read_text(encoding='utf-8'))
    if kind=='character':new=apply_record(old,entry)
    else:
     if set(entry)-{'effect','effect_name','param'}:raise ValueError('Unexpected weapon supplement field')
     new=copy.deepcopy(old);new.update(copy.deepcopy(entry))
-   if old!=new:path.write_text(json.dumps(new,ensure_ascii=False,separators=(',',':'))+'\n')
+   if old!=new:path.write_text(json.dumps(new,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
  print('Applied reviewed character completions:',len(data['characters']),'records')
 
 if __name__=='__main__':main()

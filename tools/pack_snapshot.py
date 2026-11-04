@@ -3,7 +3,7 @@
 import hashlib,io,json,pathlib,shutil,tempfile,zipfile
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 def main():
- web=ROOT/'web';meta=json.loads((web/'data/index.json').read_text());snapshot=web/'data'/meta['snapshot']
+ web=ROOT/'web';meta=json.loads((web/'data/index.json').read_text(encoding='utf-8'));snapshot=web/'data'/meta['snapshot']
  files=[web/'data/index.json',*sorted(p for p in snapshot.rglob('*') if p.is_file())]
  groups=[];group=[];size=0
  for p in files:
@@ -23,7 +23,7 @@ def main():
     data=raw[start:start+512*1024];f=stage/(name+f'.part{j:03d}');f.write_bytes(data)
     part['fragments'].append({'file':f.name,'sha256':hashlib.sha256(data).hexdigest()})
    manifest['parts'].append(part)
-  (stage/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
+  (stage/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
   keep={p.name for p in stage.iterdir()}
   for p in list(stage.iterdir()):p.replace(dest/p.name)
   for p in dest.glob('snapshot-*'):

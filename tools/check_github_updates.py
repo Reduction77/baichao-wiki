@@ -14,7 +14,7 @@ def metadata(body):
  return result
 
 def config(path):
- d=json.loads(path.read_text())
+ d=json.loads(path.read_text(encoding='utf-8'))
  if not re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+',d.get('repository','')):raise ValueError('Invalid source repository')
  if not re.fullmatch(r'[0-9a-f]{40}',d.get('commit','')):raise ValueError('Source must use a full immutable commit SHA')
  if d.get('status')!='Release':raise ValueError('Only Release data can replace the live archive')
@@ -32,7 +32,7 @@ def readme(repo,sha):
  if not path.exists():
   body=get(f'https://raw.githubusercontent.com/{repo}/{sha}/README.md')
   metadata(body.decode());path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(body)
- return path.read_text()
+ return path.read_text(encoding='utf-8')
 
 def verify(source):
  declared=metadata(readme(source['repository'],source['commit']))
@@ -56,7 +56,7 @@ def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--source-config',type=pathlib.Path,default=ROOT/'tools/github_source.json');p.add_argument('--output',type=pathlib.Path);p.add_argument('--candidate',type=pathlib.Path);a=p.parse_args()
  source=config(a.source_config);rows=json.loads(get(f'https://api.github.com/repos/{source["repository"]}/commits?per_page=30'));result=check(source,rows)
  body=json.dumps(result,ensure_ascii=False,indent=2)+'\n'
- if a.output:a.output.parent.mkdir(parents=True,exist_ok=True);a.output.write_text(body)
- if a.candidate:a.candidate.parent.mkdir(parents=True,exist_ok=True);a.candidate.write_text(json.dumps(result['latestRelease'],indent=2)+'\n')
+ if a.output:a.output.parent.mkdir(parents=True,exist_ok=True);a.output.write_text(body,encoding='utf-8')
+ if a.candidate:a.candidate.parent.mkdir(parents=True,exist_ok=True);a.candidate.write_text(json.dumps(result['latestRelease'],indent=2)+'\n',encoding='utf-8')
  print(body)
 if __name__=='__main__':main()

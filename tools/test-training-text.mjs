@@ -23,7 +23,7 @@ const state={excluded:['1102'],draft:[],teams:[]};
 const next=applyTraining(storage,'preview',state,[{...row,weaponId:'21010026',weaponName:'苍鳞千嶂'}],profiles,'append');
 assert.equal(JSON.parse(storage.getItem(TRAINING_KEY)).entries['1102'].weaponName,'苍鳞千嶂');
 assert.equal(JSON.parse(storage.getItem(TRAINING_KEY)).entries['1102'].grade,'S');
-assert.deepEqual(undoTraining(storage,'preview',next.builder).excluded,[]);
+assert.deepEqual(undoTraining(storage,'preview',next.builder).excluded,['1102']);
 assert.equal(storage.getItem(TRAINING_KEY),null);
 console.log('Text parsing, catalog correction, missing-only grouping, low-star save and undo passed.');
 // Constrained CTC must prefer the observed word and reject confident out-of-catalog text.

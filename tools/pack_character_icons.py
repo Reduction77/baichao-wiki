@@ -45,13 +45,13 @@ def download(url):
             time.sleep(attempt + 1)
 
 def main():
-    meta = json.loads((WEB / 'data/index.json').read_text())
+    meta = json.loads((WEB / 'data/index.json').read_text(encoding='utf-8'))
     existing = {}
     for path in [WEB / 'data' / meta['snapshot'] / 'images.json', WEB / 'assets/pilot/images.json']:
-        existing.update(json.loads(path.read_text()))
+        existing.update(json.loads(path.read_text(encoding='utf-8')))
     refs = set()
     for path in (WEB / 'data' / meta['snapshot'] / 'character').glob('*.json'):
-        character = json.loads(path.read_text())
+        character = json.loads(path.read_text(encoding='utf-8'))
         refs.update(image_url(node.get('skill', {}).get('icon')) for node in character['skill_trees'].values())
         refs.update(image_url(chain.get('icon')) for chain in character['chains'].values())
     refs.discard('')
@@ -64,7 +64,7 @@ def main():
                 print(f'Icons verified: {count}/{len(needed)}', flush=True)
     mapping = WEB / 'assets/character-icons.json'
     mapping.parent.mkdir(parents=True, exist_ok=True)
-    mapping.write_text(json.dumps(images, ensure_ascii=False, sort_keys=True) + '\n')
+    mapping.write_text(json.dumps(images, ensure_ascii=False, sort_keys=True) + '\n', encoding='utf-8')
     output = io.BytesIO()
     with zipfile.ZipFile(output, 'w', zipfile.ZIP_DEFLATED) as archive:
         for path in [mapping, *[WEB / ref for ref in sorted(images.values())]]:
@@ -80,7 +80,7 @@ def main():
         name = f'icons.{index:03d}.bin'
         (folder / name).write_bytes(part)
         manifest['fragments'].append({'file': name, 'sha256': hashlib.sha256(part).hexdigest()})
-    (folder / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
+    (folder / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
     print('Packed', len(images), 'icons;', len(body), 'bytes', flush=True)
 
 if __name__ == '__main__':
