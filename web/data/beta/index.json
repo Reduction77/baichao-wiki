@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "releasedGameVersion": "3.7.0",
-  "checkedAt": "2026-11-01T03:49:37.928169+00:00",
+  "checkedAt": "2026-11-08T07:44:57.829217+00:00",
   "sources": [
     {
       "url": "https://static.nanoka.cc/manifest.json",
@@ -9,7 +9,8 @@
       "available": [
         "3.7",
         "3.8.1",
-        "3.8.3"
+        "3.8.3",
+        "3.8.5"
       ]
     },
     {
@@ -190,6 +191,93 @@
         "https://static.nanoka.cc/ww/3.8.3/en/character/1512.json": "40ddc2538b584f2df60d98c7ddaa3da340c8c27448222a8a1f8ec327f937de7e",
         "https://static.nanoka.cc/ww/3.8.3/zh/weapon/21030076.json": "2d19f499d30f9b916d59d5f57bad0fe129e48c2ef752375a96f8c6023991a5c3",
         "https://static.nanoka.cc/ww/3.8.3/en/weapon/21030076.json": "0ad5fd9eecd5c82ced9776b0c313cdc04eaef1629a8f64c600746d8cd3996b69"
+      }
+    },
+    {
+      "gameVersion": "3.8.5",
+      "channel": "beta",
+      "directory": "data/beta/3.8.5/",
+      "source": "https://static.nanoka.cc/ww/3.8.5/",
+      "characters": [
+        "1512"
+      ],
+      "weapons": [
+        "21030076"
+      ],
+      "echoes": [],
+      "index": {
+        "1512": {
+          "zh": "莉莉",
+          "en": "Lily",
+          "name": "莉莉",
+          "icon": "/Game/Aki/UI/UIResources/Common/Image/IconRoleHead256/T_IconRoleHead256_77_UI.T_IconRoleHead256_77_UI",
+          "rank": 5,
+          "element": 5,
+          "weapon": 3
+        }
+      },
+      "weaponIndex": {
+        "21030076": {
+          "zh": "安魂",
+          "en": "Lullaby",
+          "name": "安魂",
+          "icon": "/Game/Aki/UI/UIResources/Common/Image/IconWeapon/T_IconWeapon21030076_UI.T_IconWeapon21030076_UI",
+          "rank": 5,
+          "type": 3
+        }
+      },
+      "images": {
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Atlas/SkillIcon/SkillIconNor/SP_IconNorGun.webp": "assets/character-icons/ed67f1c71ac16cfbffb1.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Atlas/SkillIcon/SkillIconNor/SP_IconWeakPointBreakGun.webp": "assets/character-icons/24b5fa5ad7a3dc9cbdb2.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconA/T_IconA_hsb_UI.webp": "data/20261013T031747-2/images/c83b5ce9db9b7ec7780984b1.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconAttribute/T_Iconpropertygreencure_UI.webp": "assets/character-icons/82854ea2c7a87626d588.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconAttribute/T_Iconpropertygreenlife_UI.webp": "assets/character-icons/63848bc6e5d26e0374bc.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconMout/T_IconMout_E_002_2_UI.webp": "data/20261013T031747-2/images/6929fcfba8c42a13c2c08147.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconMout/T_IconMout_L_023_UI.webp": "data/20261013T031747-2/images/fbb06f66394709bf48adcddc.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconMout/T_IconMout_L_025_UI.webp": "assets/github-media/d9095f1c4039c8866bdb.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconMout/T_IconMout_L_028_UI.webp": "assets/github-media/a6a44089b8c6bf1cfb39.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconMout/T_IconMout_O_007_1_UI.webp": "data/20261013T031747-2/images/a35d5eb0d0a4c5b674625627.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconMout/T_IconMout_O_007_2_UI.webp": "data/20261013T031747-2/images/c54e08325870791814257269.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconMout/T_IconMout_O_007_3_UI.webp": "data/20261013T031747-2/images/fb94160f5872354f0aa19535.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconMout/T_IconMout_O_007_4_UI.webp": "data/20261013T031747-2/images/48a29222e39b4327f04f19f4.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconMout/T_IconMout_O_009_1_UI.webp": "data/20261013T031747-2/images/7b0ce529ad2de37bf24a0390.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconMout/T_IconMout_O_009_2_UI.webp": "data/20261013T031747-2/images/a4347462440afff0decd3973.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconMout/T_IconMout_O_009_3_UI.webp": "data/20261013T031747-2/images/6b19a6f2fe7394534031621f.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconMout/T_IconMout_O_009_4_UI.webp": "data/20261013T031747-2/images/9700cbb0d5e14dfdbf360fbc.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconMout/T_IconMout_O_013_3_UI.webp": "data/20261013T031747-2/images/eb26cb1cc591b71c3a3f0e11.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconMout/T_IconMout_O_013_4_UI.webp": "data/20261013T031747-2/images/d61fb6e465ec7d3ad89f782b.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconWup/T_IconWup_006_UI.webp": "data/20261013T031747-2/images/03d25588dc9ccdc3def0967f.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconWup/T_IconWup_021_UI.webp": "data/20261013T031747-2/images/90f8ae68c503f1279cf2c5fb.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconWup/T_IconWup_022_UI.webp": "data/20261013T031747-2/images/54aa6e6d27be575af6605a42.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconWup/T_IconWup_023_UI.webp": "data/20261013T031747-2/images/e4b294b82773907355734812.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconWup/T_IconWup_024_UI.webp": "data/20261013T031747-2/images/6d629c2ae4e192cd33db0067.webp"
+      },
+      "missingImages": [
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Atlas/SkillIcon/SkillIconLili/SP_IconLiliB1.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Atlas/SkillIcon/SkillIconLili/SP_IconLiliC1.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Atlas/SkillIcon/SkillIconLili/SP_IconLiliD1.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Atlas/SkillIcon/SkillIconLili/SP_IconLiliD2.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Atlas/SkillIcon/SkillIconLili/SP_IconLiliQTE.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Atlas/SkillIcon/SkillIconLili/SP_IconLiliT.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Atlas/SkillIcon/SkillIconLili/SP_IconLiliY.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconC/T_IconC_090_UI.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconDevice/T_IconDevice_LiliM1_UI.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconDevice/T_IconDevice_LiliM2_UI.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconDevice/T_IconDevice_LiliM3_UI.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconDevice/T_IconDevice_LiliM4_UI.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconDevice/T_IconDevice_LiliM5_UI.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconDevice/T_IconDevice_LiliM6_UI.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconRoleHead256/T_IconRoleHead256_77_UI.webp",
+        "https://static.nanoka.cc/assets/ww/UIResources/Common/Image/IconWeapon/T_IconWeapon21030076_UI.webp"
+      ],
+      "languageFile": "data/beta/3.8.5/en.texts.json",
+      "inputSha256": {
+        "https://static.nanoka.cc/ww/3.8.5/zh/item.json": "849824f795ac42e5f526251b3c771210600b2885bf8b59ed6424a3f9ab8e49f3",
+        "https://static.nanoka.cc/ww/3.8.5/en/item.json": "c9b2728a441a551263142b7d65ade6681071e627b10411306121d8cf34631238",
+        "https://static.nanoka.cc/ww/3.8.5/zh/character/1512.json": "8ccf9a7d4706c614ad86955028b197bc17753c7f64cb336a68df30b059a62695",
+        "https://static.nanoka.cc/ww/3.8.5/en/character/1512.json": "02f3eceeff925955d4390966d3947fd87d46c73afaab3403da8ee79904be4d89",
+        "https://static.nanoka.cc/ww/3.8.5/zh/weapon/21030076.json": "07f15015018ff6b53c06220eb60d380885aa6b8c34d2c35cf66fe4b60a677a37",
+        "https://static.nanoka.cc/ww/3.8.5/en/weapon/21030076.json": "b84c45f144ea82622b4f720282e07da1d23b42f6e2c6884aac69b4ce85f3a5d4"
       }
     }
   ]

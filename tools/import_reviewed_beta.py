@@ -96,6 +96,12 @@ def main():
    path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(proc.stdout)
   images[url]='data/beta/media/'+name
  with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:list(pool.map(asset,sorted(x for x in refs if x)))
+ # A corrected asset path can still be unavailable upstream. Keep the visible
+ # pending notice even though the reference itself is no longer a known mismatch.
+ unavailable_now=set(missing)
+ for entries in records.values():
+  for d in entries.values():
+   if any(image_url(d.get(key)) in unavailable_now for key in ['icon','background']):d['artworkPending']=True
  for kind,ident in [('character','1312'),('weapon','21020107')]:
   (web/f'data/beta/{VERSION}/{kind}/{ident}.json').unlink(missing_ok=True)
  for kind,entries in records.items():
