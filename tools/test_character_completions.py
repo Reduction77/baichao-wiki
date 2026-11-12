@@ -29,6 +29,7 @@ with baseline() as archive:
 assert added==18,'16 distinct additions plus male/female Rover variants'
 suoming=json.loads((ROOT/'web'/prefix/'character/1312.json').read_text(encoding='utf-8'))
 assert any(x['name']=='下落攻击耐力消耗' and x['param'][0][9]=='30' for x in suoming['skill_trees']['1']['skill']['level'].values())
+assert not any(x['name']=='普攻·解伞形·旋雷破第二段伤害' for x in suoming['skill_trees']['1']['skill']['level'].values())
 excluded={'1304':('7',['游龙廻光持续时间']),'1109':('6',['剪辑回复协奏能量']),'1203':('3',['黑咩·重击耐力消耗']),'1309':('1',['空中攻击耐力消耗']),'1511':('1',['空中攻击耐力消耗']),'1508':('7',['锯环·疾攻第二段长按伤害','锯环·疾攻第三段·坠响伤害'])}
 for ident,(node,names) in excluded.items():
  d=json.loads((ROOT/'web'/prefix/'character'/f'{ident}.json').read_text(encoding='utf-8'));found={x['name'] for x in d['skill_trees'][node]['skill']['level'].values()}

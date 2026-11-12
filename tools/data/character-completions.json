@@ -1,15 +1,15 @@
 {
   "schema": 1,
-  "snapshot": "20261014T105808-5",
+  "snapshot": "20261112T153454-38796",
   "source": {
     "repository": "Arikatsu/WutheringWaves_Data",
-    "commit": "9218d612ad815e398e064e577e42aaf878899968",
+    "commit": "a96f6c6e87717d528a340de37374d9fc5a5ba563",
     "inputSha256": {
-      "BinData/role/roleinfo.json": "85699a49aa28fe566343d47e7db26c86d8b03c5ab9e3ec07c250e6475b9eba22",
-      "BinData/skill/skill.json": "a4cb40f9b6f1de9254cc843a57739b7b5f18c39262d8284f62ae0dd0d5f72228",
-      "BinData/skillTree/skilltree.json": "1fbf0da2038f082e989fcbb6ae775ad835eb74eb4cc28b09fe628932e3ebda20",
-      "BinData/skill/skilldescription.json": "94b2a2144912a51fff462c52c45661e865082dd968e6dfdfe9c6104b9c11468f",
-      "Textmaps/zh-Hans/multi_text/MultiText.json": "99f8cfb17ebcde84ffbd7ffa8b0a567f2fe49f74d06cfe863d7e3b352331a95f"
+      "BinData/role/roleinfo.json": "2d0a416e26f8b728bad141e857084877e7f076c9769cac7642e9807333d468b6",
+      "BinData/skill/skill.json": "68173244c633369c3f4b3ef4f65020e9120c1dae381ec33a905783b586f18099",
+      "BinData/skillTree/skilltree.json": "b7eb07365c5d8a2a2cdf629c60eba949c902bc088784c067c48aaad5d934a142",
+      "BinData/skill/skilldescription.json": "e1751f3f4f261e828d2612737f1888415dbbe4cbaad1ef6630e8d982dab5c616",
+      "Textmaps/zh-Hans/multi_text/MultiText.json": "9981d1750c3f4b5b727c8d462069395bf7232260abc8cff2445a505db0a47ee8"
     }
   },
   "characters": {

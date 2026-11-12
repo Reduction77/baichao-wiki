@@ -118,7 +118,9 @@ def main():
   for kind,rows in details.items():
    for ident,d in rows.items():
     d['provenance']=provenance
-    if args.compare and kind=='character':report['comparison'][ident]=compare(d,json.loads(((args.compare_snapshot or previous)/kind/(ident+'.json')).read_text(encoding='utf-8')))
+    if args.compare and kind=='character':
+     previous_path=(args.compare_snapshot or previous)/kind/(ident+'.json')
+     report['comparison'][ident]=compare(d,json.loads(previous_path.read_text(encoding='utf-8'))) if previous_path.is_file() else {'status':'new'}
     write(stage/kind/(ident+'.json'),d)
    write(stage/(kind+'.json'),catalog[kind])
   write(stage/'items.json',items);write(stage/'sonatas.json',sonatas)

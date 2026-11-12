@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Build explicit catalog order from game display priority and release snapshots."""
-import concurrent.futures,hashlib,json,pathlib,re,sys
+import concurrent.futures,hashlib,json,pathlib,re,sys,urllib.error
 from import_github_character import fetch
 from check_github_updates import config,get,metadata,readme
 ROOT=pathlib.Path(__file__).resolve().parents[1]
@@ -9,15 +9,22 @@ def merge_commit_history(fresh,cached):
  return fresh+[row for row in cached if row.get('sha') not in seen]
 def main():
  source=config(ROOT/'tools/github_source.json');repo=source['repository'];commit=source['commit'];cache=ROOT/'.cache';cache.mkdir(exist_ok=True)
- history=cache/'release-commits.json'
+ history=cache/'release-commits.json';order_path=ROOT/'web/data/catalog-order.json'
  cached=json.loads(history.read_text(encoding='utf-8')) if history.exists() else []
- commits=[]
- for page in range(1,9):
-  rows=json.loads(get(f'https://api.github.com/repos/{repo}/commits?per_page=100&page={page}'));commits+=rows
-  if len(rows)<100:break
- commits=merge_commit_history(commits,cached)
+ previous_order=json.loads(order_path.read_text(encoding='utf-8')) if order_path.exists() else {}
+ commits=[];offline=False
+ try:
+  for page in range(1,9):
+   rows=json.loads(get(f'https://api.github.com/repos/{repo}/commits?per_page=100&page={page}'));commits+=rows
+   if len(rows)<100:break
+ except urllib.error.URLError as error:
+  if not cached or not previous_order:raise
+  commits=cached;offline=True
+  print('GitHub history unavailable; reusing cached commits and verified release records:',error,flush=True)
+ else:
+  commits=merge_commit_history(commits,cached)
  history.write_text(json.dumps(commits),encoding='utf-8')
- versions={};limit=tuple(map(int,source['gameVersion'].split('.')[:2]))
+ versions={row['version']:row['commit'] for row in previous_order.get('snapshotSources',[])};limit=tuple(map(int,source['gameVersion'].split('.')[:2]))
  for row in commits:
   match=re.search(r'GameVer\s+(\d+\.\d+\.\d+)',row['commit']['message'])
   if not match:continue
@@ -31,14 +38,19 @@ def main():
    try:
     if metadata(readme(repo,row['sha']))['status']=='Release':versions.setdefault('2.3',row['sha']);break
    except ValueError:continue
- versions['.'.join(source['gameVersion'].split('.')[:2])]=commit
+ current_version='.'.join(source['gameVersion'].split('.')[:2]);versions[current_version]=commit
+ previous_verified={(row['version'],row['commit']):row for row in previous_order.get('snapshotSources',[]) if row.get('metadata') and row.get('readmeSha256')}
  def verify_release(pair):
-  v,sha=pair;body=readme(repo,sha);m=metadata(body)
+  v,sha=pair
+  if (v,sha) in previous_verified:
+   row=previous_verified[v,sha]
+   return v,{'metadata':row['metadata'],'readmeSha256':row['readmeSha256']}
+  body=readme(repo,sha);m=metadata(body)
   if m['status']!='Release' or '.'.join(m['gameVersion'].split('.')[:2])!=v:raise ValueError('Unverified release snapshot: '+v)
   return v,{'metadata':m,'readmeSha256':hashlib.sha256(body.encode()).hexdigest()}
  with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:verified=dict(pool.map(verify_release,versions.items()))
  meta=json.loads((ROOT/'web/data/index.json').read_text(encoding='utf-8'));folder=ROOT/'web/data'/meta['snapshot'];catalogs={k:json.loads((folder/(k+'.json')).read_text(encoding='utf-8')) for k in ['character','weapon','echo']}
- first={k:{} for k in catalogs};sources=[];paths={'weapon':'BinData/weapon/weaponconf.json','skin':'BinData/weapon/weaponskin.json','echo':'BinData/phantom/phantomitem.json'}
+ first={k:({i:row.get('version') for i,row in previous_order.get(k,{}).items()} if offline else {}) for k in catalogs};sources=previous_order.get('snapshotSources',[]).copy() if offline else [];paths={'weapon':'BinData/weapon/weaponconf.json','skin':'BinData/weapon/weaponskin.json','echo':'BinData/phantom/phantomitem.json'}
  def load(job):
   version,sha,kind,path=job
   try:d,h=fetch(cache/'arikatsu'/sha,path,commit=sha,repo=repo)
@@ -46,7 +58,7 @@ def main():
    if kind=='skin' and ('404' in str(e)):return version,sha,kind,[],None
    raise
   return version,sha,kind,d,h
- jobs=[(v,sha,k,p) for v,sha in sorted(versions.items(),key=lambda x:tuple(map(int,x[0].split('.')))) for k,p in paths.items()]
+ jobs=[(v,sha,k,p) for v,sha in sorted(versions.items(),key=lambda x:tuple(map(int,x[0].split('.')))) if not offline or v==current_version for k,p in paths.items()]
  with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
   for v,sha,kind,rows,digest in pool.map(load,jobs):
    category='weapon' if kind in ['weapon','skin'] else 'echo';key={'weapon':'ItemId','skin':'Id','echo':'MonsterId'}[kind]

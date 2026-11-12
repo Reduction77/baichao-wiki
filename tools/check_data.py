@@ -45,6 +45,7 @@ if meta.get('provenance'):
     report=json.loads((folder/'provenance.json').read_text(encoding='utf-8'))
     if report['source']!=meta['provenance'] or report['counts']!=meta['counts']:errors.append('Provenance report mismatch')
     for kind,rows in report.get('comparison',{}).items():
+        if isinstance(rows,dict) and rows.get('status')=='new':continue
         for row in rows:
             if not 0<=row['matched']<=row['checked']:errors.append('Invalid comparison report: '+kind+'/'+row['label'])
 for url,ref in images.items():

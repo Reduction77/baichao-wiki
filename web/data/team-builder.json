@@ -2,13 +2,13 @@
   "schema": 1,
   "source": {
     "repository": "Arikatsu/WutheringWaves_Data",
-    "commit": "9218d612ad815e398e064e577e42aaf878899968",
-    "gameVersion": "3.7.0",
-    "resourceVersion": "3.7.8",
+    "commit": "a96f6c6e87717d528a340de37374d9fc5a5ba563",
+    "gameVersion": "3.8.0",
+    "resourceVersion": "3.8.9",
     "locale": "zh-Hans",
     "scope": "文字、属性、技能倍率、共鸣链、武器效果、声骸技能与材料均由 GitHub 原始配置生成。图片沿用本站保存的本地图像快照。"
   },
-  "version": "3.7",
+  "version": "3.8",
   "aliases": {
     "1102": "1102",
     "1103": "1103",
@@ -73,7 +73,8 @@
     "1606": "1606",
     "1607": "1607",
     "1608": "1608",
-    "1610": "1610"
+    "1610": "1610",
+    "1512": "1512"
   },
   "characters": [
     {
@@ -1629,6 +1630,32 @@
       ],
       "primary": "main",
       "releaseOrder": 55
+    },
+    {
+      "zh": "莉莉",
+      "en": "Lily",
+      "icon": "/Game/Aki/UI/UIResources/Common/Image/IconRoleHead256/T_IconRoleHead256_77_UI.T_IconRoleHead256_77_UI",
+      "background": "/Game/Aki/UI/UIResources/Common/Image/IconRolePile/T_IconRole_Pile_Lili_UI.T_IconRole_Pile_Lili_UI",
+      "rank": 5,
+      "element": 5,
+      "weapon": 3,
+      "id": "1512",
+      "name": "莉莉",
+      "aliases": [
+        "1512"
+      ],
+      "family": "1512",
+      "tags": [
+        "生存治疗",
+        "牵引",
+        "伤害加深"
+      ],
+      "roles": [
+        "support",
+        "sustain"
+      ],
+      "primary": "sustain",
+      "releaseOrder": 0
     }
   ]
 }

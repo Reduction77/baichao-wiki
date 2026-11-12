@@ -38,8 +38,9 @@ for version in json.loads((web/'data/beta/index.json').read_text(encoding='utf-8
     beta_inline.update(overlay.get('inline',{}))
     beta_sources.append({'version':version['gameVersion'],'source':overlay['source'],'sha256':hashlib.sha256(path.read_bytes()).hexdigest()})
 existing=json.loads((ROOT/'tools/data/existing-entry-completions.json').read_text(encoding='utf-8'))
-texts.update(existing.get('texts',{}))
-beta_sources.append({'source':existing['source']['name'],'version':existing['source']['version'],'sha256':hashlib.sha256((ROOT/'tools/data/existing-entry-completions.json').read_bytes()).hexdigest()})
+if any(existing.get(key) for key in ['characters','weapons','texts']):
+    texts.update(existing.get('texts',{}))
+    beta_sources.append({'source':existing['source']['name'],'version':existing['source']['version'],'sha256':hashlib.sha256((ROOT/'tools/data/existing-entry-completions.json').read_bytes()).hexdigest()})
 # Comparison rows combine source names with UI labels; archive their complete
 # labels so English mode also covers paths containing several skill names.
 for version in json.loads((web/'data/beta/index.json').read_text(encoding='utf-8')).get('versions',[]):

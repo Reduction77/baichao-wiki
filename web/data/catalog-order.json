@@ -2,9 +2,9 @@
   "schema": 1,
   "source": {
     "repository": "Arikatsu/WutheringWaves_Data",
-    "commit": "9218d612ad815e398e064e577e42aaf878899968",
-    "gameVersion": "3.7.0",
-    "resourceVersion": "3.7.8",
+    "commit": "a96f6c6e87717d528a340de37374d9fc5a5ba563",
+    "gameVersion": "3.8.0",
+    "resourceVersion": "3.8.9",
     "status": "Release"
   },
   "notes": "Characters use game role display priority checked against release sequence; weapons use first release snapshot and first convene sequence; echoes use first confirmed release snapshot. Entries introduced in the same snapshot have stable name order; no release dates are invented.",
@@ -800,6 +800,42 @@
         "resourceVersion": "3.7.8"
       },
       "readmeSha256": "53118accbecc7809107aca5642164bb6a79f35f31bad8bd81071bffd49d7b06f"
+    },
+    {
+      "version": "3.8",
+      "commit": "a96f6c6e87717d528a340de37374d9fc5a5ba563",
+      "path": "BinData/weapon/weaponconf.json",
+      "sha256": "6c7f72625fe9d58bfb7d47332f643c1b730622e7ac344ccf5cc229c55c2a2897",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.8.0",
+        "resourceVersion": "3.8.9"
+      },
+      "readmeSha256": "84d6c14157b53f175ea589628c3b45e037896dd2b0ab42fadc3e60292f1897eb"
+    },
+    {
+      "version": "3.8",
+      "commit": "a96f6c6e87717d528a340de37374d9fc5a5ba563",
+      "path": "BinData/weapon/weaponskin.json",
+      "sha256": "72eeb7d096a25ab351239bea6e93ad4ee4dbba46877a792e6b27dad61dd2e175",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.8.0",
+        "resourceVersion": "3.8.9"
+      },
+      "readmeSha256": "84d6c14157b53f175ea589628c3b45e037896dd2b0ab42fadc3e60292f1897eb"
+    },
+    {
+      "version": "3.8",
+      "commit": "a96f6c6e87717d528a340de37374d9fc5a5ba563",
+      "path": "BinData/phantom/phantomitem.json",
+      "sha256": "c224be97ea99b70f3fc093a1ed9984f286e26c8edbe0b8abe34e2ec2c6456604",
+      "metadata": {
+        "status": "Release",
+        "gameVersion": "3.8.0",
+        "resourceVersion": "3.8.9"
+      },
+      "readmeSha256": "84d6c14157b53f175ea589628c3b45e037896dd2b0ab42fadc3e60292f1897eb"
     }
   ],
   "character": {
@@ -994,6 +1030,9 @@
     },
     "1312": {
       "order": 60
+    },
+    "1512": {
+      "order": 61
     }
   },
   "weapon": {
@@ -1528,6 +1567,10 @@
     "80080009": {
       "version": "3.6",
       "order": 0
+    },
+    "21030076": {
+      "version": "3.8",
+      "order": 200090
     }
   },
   "echo": {
@@ -2277,6 +2320,30 @@
     },
     "390080007": {
       "version": "1.0",
+      "order": 0
+    },
+    "6000145": {
+      "version": "3.8",
+      "order": 0
+    },
+    "6010052": {
+      "version": "3.8",
+      "order": 0
+    },
+    "390180010": {
+      "version": "3.8",
+      "order": 0
+    },
+    "391070105": {
+      "version": "3.8",
+      "order": 0
+    },
+    "391077024": {
+      "version": "3.8",
+      "order": 0
+    },
+    "391080003": {
+      "version": "3.8",
       "order": 0
     }
   }

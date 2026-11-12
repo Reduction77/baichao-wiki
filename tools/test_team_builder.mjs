@@ -62,7 +62,7 @@ const builder=createTeamBuilder({profiles,teams:records,recommendations:config,i
 builder.mount(root);
 const click=async(tb,extra={})=>root.handlers.click({target:{closest:()=>({dataset:{tb,...extra}})}});
 const roleFilter=nodes.get('#tb-role');roleFilter.value='main';roleFilter.focus();root.handlers.change({target:roleFilter});assert.equal(document.activeElement,roleFilter,'Filter redraw must preserve focus');roleFilter.value='';root.handlers.change({target:roleFilter});
-assert(root.innerHTML.includes('矩阵模式'));assert(root.innerHTML.includes('60 个角色形态'));
+assert(root.innerHTML.includes('矩阵模式'));assert(root.innerHTML.includes('61 个角色形态'));
 await click('pick',{id:'1304'});
 assert(root.innerHTML.includes('已收录完整配队'));assert(root.innerHTML.includes('bilibili.com/video/'));assert(!root.innerHTML.includes('伤害加深匹配'));
 assert(root.innerHTML.includes('href="#character/1105"'));
@@ -85,7 +85,7 @@ await click('confirm-import');assert(root.innerHTML.includes('&lt;script&gt;unsa
 await click('clear-teams');assert.equal(builder.getState().teams.length,1);await click('cancel-dialog');assert.equal(builder.getState().teams.length,1);assert.equal(document.activeElement.dataset.tb,'clear-teams','Closing a dialog must return focus to its trigger');
 await click('clear-teams');await click('confirm-clear');assert.equal(builder.getState().teams.length,0);
 const reopened=createTeamBuilder({profiles,img:()=>'',storage});reopened.mount(new Node());assert.deepEqual(reopened.getState(),builder.getState());
-console.log('Team builder checks passed: 60 profiles, bidirectional recommendations, shared Rover quota, matrix budgets, ordering, persistence, safe import, links and UI events.');
+console.log('Team builder checks passed: 61 profiles, bidirectional recommendations, shared Rover quota, matrix budgets, ordering, persistence, safe import, links and UI events.');
 
 const editableRoot=new Node(),editableStorage=new Map(),editable=createTeamBuilder({profiles,img:()=>'',storage:{getItem:k=>editableStorage.get(k),setItem:(k,v)=>editableStorage.set(k,v)}});editable.mount(editableRoot);
 const editClick=async(tb,extra={})=>editableRoot.handlers.click({target:{closest:()=>({dataset:{tb,...extra}})}});

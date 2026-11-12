@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "releasedGameVersion": "3.7.0",
-  "checkedAt": "2026-11-08T07:44:57.829217+00:00",
+  "releasedGameVersion": "3.8.0",
+  "checkedAt": "2026-11-12T15:37:34.480709+00:00",
   "sources": [
     {
       "url": "https://static.nanoka.cc/manifest.json",
@@ -14,10 +14,10 @@
       ]
     },
     {
-      "url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/9218d612ad815e398e064e577e42aaf878899968/README.md",
+      "url": "https://github.com/Arikatsu/WutheringWaves_Data/blob/a96f6c6e87717d528a340de37374d9fc5a5ba563/README.md",
       "status": "Release",
-      "gameVersion": "3.7.0",
-      "resourceVersion": "3.7.8"
+      "gameVersion": "3.8.0",
+      "resourceVersion": "3.8.9"
     }
   ],
   "versions": [
