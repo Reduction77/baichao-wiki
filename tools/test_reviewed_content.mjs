@@ -9,7 +9,9 @@ assert(nodes.get('main').innerHTML.indexOf('莉莉')<nodes.get('main').innerHTML
 async function open(route){location.hash=route;await win.hashchange();const html=nodes.get('main').innerHTML;assert(!html.includes('暂时无法打开资料'),route);return html;}
 let html=await open('#beta');assert(html.includes('暂无可对比的版本资料'));assert(!html.includes('#beta/1512'));assert(!html.includes('#beta-weapon/21030076'));
 html=await open('#character/1512');assert(html.includes('莉莉'));assert(html.includes('熏香绽放'));assert(html.includes('63.62%'));assert(!html.includes('版本资料 3.8.'));
-events.click({target:{closest:()=>({dataset:{tab:'materials'},hasAttribute:()=>false})}});assert(nodes.get('main').innerHTML.includes('绮梦百合'));assert(nodes.get('main').innerHTML.includes('技能材料合计'));
+assert(html.includes('assets/github-media/4d8fe3c344ada484937b56b3.webp'));assert(html.includes('联邦城'));assert(html.includes('克洛瑞德医师联盟'));assert(!html.includes('<s>'));assert(!html.includes('</s>'));
+html=await open('#character/1211');assert(html.includes('残星会'));assert(!html.includes('<s>'));assert(!html.includes('</s>'));
+html=await open('#character/1512');events.click({target:{closest:()=>({dataset:{tab:'materials'},hasAttribute:()=>false})}});assert(nodes.get('main').innerHTML.includes('绮梦百合'));assert(nodes.get('main').innerHTML.includes('技能材料合计'));
 html=await open('#weapon/21030076');assert(html.includes('安魂'));assert(html.includes('重击造成治疗时'));assert(html.includes('落梦归魂'));assert(html.includes('30秒'));assert(!html.includes('Stay tuned'));assert(!html.includes('资料尚未完善'));assert(!html.includes('{7}'));
 events.change({target:{dataset:{control:'refine'},value:'5'}});assert(nodes.get('#detail-content').innerHTML.includes('48%'));assert(!nodes.get('#detail-content').innerHTML.includes('{7}'));
 for(const ident of ['6000145','6010052','390180010','391070105','391077024','391080003'])await open('#echo/'+ident);

@@ -110,7 +110,7 @@ def convert(data, role_id):
         'desc':text(r['Introduction']), 'rarity':r['QualityId'],
         'weapon':r['WeaponType'], 'element':r['ElementId'], 'tag':{},
         'icon':r['RoleHeadIconLarge'], 'background':r['FormationRoleCard'],
-        'chara_info': {key:text(f[field]) for key,field in
+        'chara_info': {key:re.sub(r'</?s>', '', text(f[field])) for key,field in
             [('birth','Birthday'),('sex','Sex'),('country','Country'),('influence','Influence'),
              ('cv_name_cn','CVNameCn'),('cv_name_jp','CVNameJp'),('cv_name_en','CVNameEn'),('cv_name_ko','CVNameKo')]},
         'stats':stats, 'skill_trees':dict(sorted(nodes.items(),key=lambda x:int(x[0]))),

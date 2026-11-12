@@ -52,7 +52,8 @@ for url,ref in images.items():
     f=web/ref
     if not f.is_file():errors.append(ref+': image missing');continue
     data=f.read_bytes()
-    if not data.startswith(b'RIFF') or b'WEBP' not in data[:16]:errors.append(ref+': invalid image')
+    if len(data)<12 or not data.startswith(b'RIFF') or data[8:12]!=b'WEBP':errors.append(ref+': invalid image')
+    elif int.from_bytes(data[4:8],'little')+8!=len(data):errors.append(ref+': incomplete image')
 for t in json.loads((web/'data/teams.json').read_text(encoding='utf-8')):
     if len(t.get('characters',[]))!=3:errors.append('Team must contain 3 IDs')
     for v in t.get('videos',[]):
