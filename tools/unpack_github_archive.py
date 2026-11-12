@@ -16,7 +16,7 @@ def main():
   if bad:raise ValueError('Corrupt archive entry: '+bad)
   for name in z.namelist():
    p=pathlib.PurePosixPath(name)
-   valid=(name.endswith('.json') and (name=='data/index.json' or name.startswith('data/'+manifest['snapshot']+'/'))) or name=='assets/github-images.json' or bool(re.fullmatch(r'assets/github-media/[0-9a-f]{20}\.webp',name))
+   valid=(name.endswith('.json') and (name=='data/index.json' or name.startswith('data/'+manifest['snapshot']+'/'))) or name=='assets/github-images.json' or bool(re.fullmatch(r'assets/github-media/[0-9a-f]{20,64}\.webp',name))
    if p.is_absolute() or '..' in p.parts or not valid:raise ValueError('Invalid archive path')
   z.extractall(ROOT/'web')
  print('Restored GitHub archive:',manifest['snapshot'])
