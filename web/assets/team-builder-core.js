@@ -2,7 +2,7 @@
 export const roleNames={main:'主力输出',support:'协奏增益',sustain:'生存治疗'};
 // Permanent allowances apply in every matrix period; temporary bonuses never stack.
 export let matrixPermanent=['1110','1505','1503','1307','1209','1103'];
-export let matrixCurrent=['1509'];
+export let matrixCurrent=['1512','1109'];
 export function configureMatrixRules(rules,profiles){
  const families=new Set(profiles.characters.map(p=>p.family));
  if(!rules||rules.schema!==1||!['permanent','current'].every(key=>Array.isArray(rules[key])&&rules[key].every(id=>typeof id==='string'&&families.has(id))&&new Set(rules[key]).size===rules[key].length)||rules.permanent.some(id=>rules.current.includes(id)))throw Error('矩阵规则暂时无法读取，请刷新重试。');

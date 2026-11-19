@@ -29,12 +29,12 @@ assert.equal(recommend(s,profiles,config).length,0);assert.match(selectCharacter
 assert.equal(saveTeam(s,chars),'');assert.equal(s.teams.length,1);assert.equal(s.draft.length,0);
 assert.match(unavailableReason(s,jinhsi,chars),/次数/);
 s.matrix=true;assert.equal(limitFor(s,jinhsi),1);assert.equal(limitFor(s,zhezhi),1);
-assert.equal(matrixPermanent.length,6);assert(!matrixPermanent.includes('1106'));assert.deepEqual(matrixCurrent,['1509']);
+assert.equal(matrixPermanent.length,6);assert(!matrixPermanent.includes('1106'));assert.deepEqual(matrixCurrent,['1512','1109']);
 for(const id of [...matrixPermanent,...matrixCurrent])assert.equal(limitFor(s,chars.get(id)),2,`${id} must have two uses in the current rules`);
 s=defaultState();s.matrix=true;
-for(const team of [['1509','1304','1503'],['1509','1107','1503']]){for(const id of team)assert.equal(selectCharacter(s,id,chars),'');assert.equal(saveTeam(s,chars),'');}
-assert.equal(uses(s,chars)['1509'],2);assert.equal(uses(s,chars)['1503'],2);
-assert.match(selectCharacter(s,'1509',chars),/次数/);assert.match(selectCharacter(s,'1503',chars),/次数/);
+for(const team of [['1512','1109','1509'],['1512','1109','1503']]){for(const id of team)assert.equal(selectCharacter(s,id,chars),'');assert.equal(saveTeam(s,chars),'');}
+assert.equal(uses(s,chars)['1512'],2);assert.equal(uses(s,chars)['1109'],2);
+for(const id of ['1512','1109','1509'])assert.match(selectCharacter(s,id,chars),/次数/);
 assert.equal(budgetConflicts(s,chars).length,0);
 s.matrix=false;assert.equal(budgetConflicts(s,chars).length,2);
 s.teams.splice(0,1);assert.equal(budgetConflicts(s,chars).length,0);
@@ -50,8 +50,8 @@ const r=defaultState();selectCharacter(r,rover[0].id,chars);assert.match(selectC
 assert.throws(()=>parseState({schema:1,teams:[{characters:[rover[0].id,rover[1].id,'1304']}]},profiles),/重复/);
 const restored=parseState({schema:1,matrix:true,teams:[{name:'<script>text</script>',characters:['1304','1105','1503']}],draft:['1502'],limits:{rover:3}},profiles);
 assert.equal(restored.draft[0],profiles.aliases['1502']);assert.equal(restored.schema,4);assert(!('matrixPeriod' in restored));assert(!('matrixCharacter' in restored));assert(!('limits' in restored));assert.equal(limitFor(restored,jinhsi),1);
-const legacy=parseState({schema:2,matrix:true,matrixCharacter:'1304',teams:[]},profiles);assert(!('matrixPeriod' in legacy));assert.equal(limitFor(legacy,jinhsi),1);assert.equal(limitFor(legacy,chars.get('1509')),2);
-const oldPeriod=parseState({schema:3,matrix:true,matrixPeriod:'legacy-period',teams:[{characters:['1509','1304','1503']}]},profiles);assert(!('matrixPeriod' in oldPeriod));assert.equal(oldPeriod.teams.length,1);assert.equal(limitFor(oldPeriod,chars.get('1509')),2);
+const legacy=parseState({schema:2,matrix:true,matrixCharacter:'1304',teams:[]},profiles);assert(!('matrixPeriod' in legacy));assert.equal(limitFor(legacy,jinhsi),1);assert.equal(limitFor(legacy,chars.get('1509')),1);
+const oldPeriod=parseState({schema:3,matrix:true,matrixPeriod:'legacy-period',teams:[{characters:['1509','1304','1503']},{characters:['1509','1107','1512']}]},profiles);assert(!('matrixPeriod' in oldPeriod));assert.equal(oldPeriod.teams.length,2);assert.deepEqual(budgetConflicts(oldPeriod,chars).map(p=>p.id),['1509']);
 for(const raw of [{schema:4,teams:[],matrixPeriod:'invalid'},{schema:4,teams:[],matrixCharacter:'1304'},{schema:99,teams:[]},{schema:1,teams:[{characters:['1304','1105','999999']}]},{schema:2,teams:[],matrixCharacter:['1304','1107']},{schema:2,teams:[],matrixCharacter:'unknown'},{schema:2,teams:[],limits:{rover:2}},{schema:1,teams:[{characters:['1304','1304','1503']}]},{schema:1,teams:[],excluded:['unknown']},{schema:1,teams:[{characters:['1304','1105']}]}])assert.throws(()=>parseState(raw,profiles));
 
 globalThis.document={activeElement:null};
@@ -99,6 +99,7 @@ console.log('Stable team IDs, in-place editing and ten-second delete undo passed
 
 const configured=JSON.parse(await fs.readFile(new URL('data/matrix-rules.json',web)));
 configureMatrixRules(configured,profiles);
+for(const [id,limit] of [['1512',2],['1109',2],['1509',1]])assert.equal(limitFor({...defaultState(),matrix:true},chars.get(id)),limit);
 assert.equal(limitFor({...defaultState(),matrix:true},chars.get('1106')),1);
 configureMatrixRules({schema:1,permanent:['1503'],current:['1304']},profiles);
 assert.equal(limitFor({...defaultState(),matrix:true},chars.get('1304')),2);
