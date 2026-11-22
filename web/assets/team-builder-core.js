@@ -11,30 +11,42 @@ export function configureMatrixRules(rules,profiles){
 export const defaultState=()=>({schema:4,matrix:false,excluded:[],draft:[],teams:[]});
 export function characterMap(profiles){return new Map(profiles.characters.map(p=>[p.id,p]));}
 export function canonicalId(value,profiles){return profiles.aliases?.[String(value)]||null;}
-export function uses(state,characters){const counts={};for(const t of state.teams)for(const id of t.characters){const family=characters.get(id)?.family;if(family)counts[family]=(counts[family]||0)+1;}return counts;}
+export function uses(state,characters,skipTeamId=null){
+ const counts={};
+ for(const team of state.teams){
+  if(skipTeamId&&team.id===skipTeamId)continue;
+  for(const id of team.characters){const family=characters.get(id)?.family;if(family)counts[family]=(counts[family]||0)+1;}
+ }
+ return counts;
+}
 export function limitFor(state,p){return state.matrix&&(matrixPermanent.includes(p.family)||matrixCurrent.includes(p.family))?2:1;}
 export function unavailableReason(state,p,characters){
  if(state.excluded.includes(p.family))return '未设为可用角色';
  if(state.draft.some(id=>characters.get(id)?.family===p.family))return '已在当前编队中';
- if((uses(state,characters)[p.family]||0)>=limitFor(state,p))return '本轮使用次数已用完';
+ if((uses(state,characters,state.editingTeamId)[p.family]||0)>=limitFor(state,p))return '本轮使用次数已用完';
  if(state.draft.length>=3)return '当前编队已满';
  return '';
 }
 export function budgetConflicts(state,characters){const count=uses(state,characters),seen=new Set();return [...characters.values()].filter(p=>{if(seen.has(p.family))return false;seen.add(p.family);return (count[p.family]||0)>limitFor(state,p);});}
-export function draftBudgetConflicts(state,characters){const count=uses(state,characters);return state.draft.map(id=>characters.get(id)).filter(p=>p&&(count[p.family]||0)>=limitFor(state,p));}
+export function exhaustedMembers(state,characters,ids,skipTeamId=null){
+ const count=uses(state,characters,skipTeamId);
+ return ids.map(id=>characters.get(id)).filter(p=>p&&(count[p.family]||0)>=limitFor(state,p));
+}
+export function draftBudgetConflicts(state,characters){return exhaustedMembers(state,characters,state.draft,state.editingTeamId);}
 export function unavailableMembers(state,characters,ids){return [...new Set(ids)].map(id=>characters.get(id)).filter(p=>p&&state.excluded.includes(p.family));}
 export function selectCharacter(state,id,characters){const p=characters.get(id);if(!p)return '角色不存在';const why=unavailableReason(state,p,characters);if(why)return why;state.draft.push(id);return '';}
 let teamSequence=0;
 function newTeamId(teams){let id;do{id=`team-${Date.now().toString(36)}-${(++teamSequence).toString(36)}`;}while(teams.some(t=>t.id===id));return id;}
 function newTeamName(teams){let n=1;while(teams.some(t=>t.name===`队伍 ${n}`))n++;return `队伍 ${n}`;}
-export function saveTeam(state,characters,editing=null){
+export function saveTeam(state,characters){
  if(state.draft.length!==3)return '请选择三名角色后再暂存';
+ const editing=state.editingTeamId&&state.teams.find(t=>t.id===state.editingTeamId);
  if(state.teams.length>=100&&!editing)return '最多暂存100支队伍，请先删除部分队伍。';
- const count=uses(state,characters),families=new Set();
+ const count=uses(state,characters,state.editingTeamId),families=new Set();
  for(const id of state.draft){const p=characters.get(id);if(!p||families.has(p.family))return '同一角色及漂泊者的不同形态不能在同队重复';families.add(p.family);if(state.excluded.includes(p.family))return '当前编队包含不可用角色，请先启用或替换该角色';if((count[p.family]||0)>=limitFor(state,p))return '当前编队超出可用次数，请调整';}
- const previous=editing?.team,team={id:previous?.id||newTeamId(state.teams),name:previous?.name||newTeamName(state.teams),characters:[...state.draft]};
- const index=editing&&Number.isInteger(editing.index)?Math.max(0,Math.min(editing.index,state.teams.length)):state.teams.length;
- state.teams.splice(index,0,team);state.draft=[];return '';
+ if(editing)editing.characters=[...state.draft];
+ else state.teams.push({id:newTeamId(state.teams),name:newTeamName(state.teams),characters:[...state.draft]});
+ delete state.editingTeamId;state.draft=[];return '';
 }
 export function parseState(raw,profiles){
  if(!raw||typeof raw!=='object'||![1,2,3,4].includes(raw.schema)||!Array.isArray(raw.teams)||raw.teams.length>100)throw Error('不是有效的白潮配队文件，最多导入 100 支队伍');
@@ -55,14 +67,19 @@ export function parseState(raw,profiles){
  const usedTeamIds=new Set();
  state.teams=raw.teams.map((t,i)=>{if(!t||typeof t!=='object')throw Error('队伍格式不正确');const characters=ids(t.characters,3);if(characters.length!==3)throw Error('暂存队伍必须有三名角色');const base=typeof t.id==='string'&&t.id.trim()?t.id.trim().slice(0,80):`team-${i+1}`;let id=base,suffix=2;while(usedTeamIds.has(id))id=`${base}-${suffix++}`;usedTeamIds.add(id);return {id,name:typeof t.name==='string'?t.name.slice(0,60):`队伍 ${i+1}`,characters};});
  state.draft=ids(raw.draft||[],3);
+ if(raw.schema===4&&raw.editingTeamId!==undefined){
+  if(!usedTeamIds.has(raw.editingTeamId))throw Error('找不到正在编辑的队伍');
+  state.editingTeamId=raw.editingTeamId;
+ }
  // Exceeding budgets after a mode/config change is retained and visibly flagged.
  return state;
 }
 export function matchingTeams(state,profiles,config={}){
  if(!state.draft.length)return [];
  const chars=characterMap(profiles);
+ const count=uses(state,chars,state.editingTeamId);
  return (config.teams||[]).filter(t=>t.characters.length===3&&state.draft.every(id=>t.characters.includes(id))&&t.characters.every(id=>{
-  const p=chars.get(id);return p&&!state.excluded.includes(p.family)&&(uses(state,chars)[p.family]||0)<limitFor(state,p);
+  const p=chars.get(id);return p&&!state.excluded.includes(p.family)&&(count[p.family]||0)<limitFor(state,p);
  }));
 }
 export function recommend(state,profiles,config={}){

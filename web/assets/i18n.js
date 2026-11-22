@@ -11,6 +11,7 @@ export const getLocale=()=>language==='en'?'en-US':'zh-CN';
 export function gameText(value){return language==='en'?(game[value]||value):value;}
 function replaceNames(text){for(const [from,to] of nameReplacements)text=text.split(from).join(to);for(const [from,to]of singleNames)text=text.replace(new RegExp(`(?<![\\u3400-\\u9fff])${from}(?![\\u3400-\\u9fff])`,'g'),to);return text;}
 const patterns=[
+ [/^无法恢复队伍，以下角色次数已用完：(.+)。$/,(_,names)=>`Cannot restore this team. No remaining uses for: ${replaceNames(names)}.`],
  [/^当前编队次数不足：(.+)。请替换角色或调整暂存队伍。$/,(_,names)=>`Insufficient uses in this draft: ${replaceNames(names)}. Replace them or adjust saved teams.`],
  [/^适配配队 · (\d+)组$/,(_,n)=>`Compatible teams · ${n}`],
  [/^([0-6—])链$/,(_,n)=>`S${n}`],

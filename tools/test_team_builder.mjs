@@ -76,7 +76,7 @@ assert(!root.innerHTML.includes('tb-matrix-period'));assert(root.innerHTML.inclu
 
 await click('pick',{id:'1509'});assert.equal(builder.getState().draft.length,1);
 await click('edit-team',{index:'0'});assert.equal(builder.getState().teams.length,1,'Editing must not overwrite a current draft');
-await click('clear-draft');await click('edit-team',{index:'0'});assert.equal(builder.getState().teams.length,0);
+await click('clear-draft');await click('edit-team',{index:'0'});assert.equal(builder.getState().teams.length,1);
 assert.equal(builder.getState().draft.length,3);
 await click('save');await click('import');assert.equal(nodes.get('.tb-dialog').open,true,'Import must use a modal dialog');nodes.get('#tb-import-text').value='{"schema":1,"teams":[{"characters":["1304","1105","9999"]}]}';
 await click('confirm-import');assert.equal(builder.getState().teams.length,1);assert(nodes.get('#tb-import-error').textContent.includes('不存在'));
@@ -96,6 +96,47 @@ await editClick('delete-team',{index:'1'});assert.equal(editable.getState().team
 await editClick('undo-delete');assert.deepEqual(editable.getState().teams,beforeEdit,'Undo must restore the deleted team at its original position');
 await editClick('edit-team',{index:'0'});await editClick('clear-draft');assert.deepEqual(editable.getState().teams,beforeEdit,'Clearing an edited draft must not discard the original team');
 console.log('Stable team IDs, in-place editing and ten-second delete undo passed.');
+
+await editClick('edit-team',{index:'1'});
+await editClick('remove',{index:'1'});
+const resumed=createTeamBuilder({profiles,img:()=>'',storage:{
+ getItem:key=>editableStorage.get(key),setItem:(key,value)=>editableStorage.set(key,value)
+}});
+const resumedRoot=new Node();resumed.mount(resumedRoot);
+const resumeClick=(tb,extra={})=>resumedRoot.handlers.click({target:{closest:()=>({dataset:{tb,...extra}})}});
+assert.deepEqual(resumed.getState().teams,beforeEdit);
+assert.deepEqual(resumed.getState().draft,['1509','1307']);
+await resumeClick('pick',{id:'1109'});
+await resumeClick('save');
+const changed=beforeEdit.map((team,index)=>index===1?{...team,characters:['1509','1307','1109']}:team);
+assert.deepEqual(resumed.getState().teams,changed);
+assert.equal(resumed.getState().editingTeamId,undefined);
+
+await resumeClick('edit-team',{index:'1'});
+for(let i=0;i<3;i++)await resumeClick('remove',{index:'0'});
+assert.match(resumedRoot.innerHTML,/data-tb="clear-draft"\s*>取消编辑/);
+await resumeClick('clear-draft');
+assert.deepEqual(resumed.getState().teams,changed);
+await resumeClick('matrix');
+await resumeClick('delete-team',{index:'1'});
+for(const id of ['1509','1512','1109'])await resumeClick('pick',{id});
+await resumeClick('save');
+const replacement=resumed.getState().teams;
+await resumeClick('undo-delete');
+assert.deepEqual(resumed.getState().teams,replacement);
+assert.match(nodes.get('#tb-message').textContent,/次数已用完：琳奈。/);
+// Editing releases this team's uses only for the draft. Undo still counts the saved team.
+await resumeClick('edit-team',{index:'2'});
+await resumeClick('pick',{id:'1509'});
+await resumeClick('undo-delete');
+assert.deepEqual(resumed.getState().teams,replacement);
+await resumeClick('pick',{id:'1107'});
+await resumeClick('save');
+await resumeClick('undo-delete');
+assert.equal(resumed.getState().teams.length,4);
+assert.deepEqual(resumed.getState().teams[1],changed[1]);
+assert.equal(budgetConflicts(resumed.getState(),chars).length,0);
+console.log('Reload during editing, empty draft cancellation and matrix quota checks on undo passed.');
 
 const configured=JSON.parse(await fs.readFile(new URL('data/matrix-rules.json',web)));
 configureMatrixRules(configured,profiles);

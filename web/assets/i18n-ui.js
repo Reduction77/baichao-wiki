@@ -1,5 +1,6 @@
 // Interface and editorial text. Game descriptions use the pinned official text map.
 export const uiText={
+ '取消编辑':'Cancel edit','正在编辑队伍，保存后将更新原队。':'Editing the saved team. Save to apply your changes.','找不到正在编辑的队伍':'The team being edited could not be found.',
 "练度资料 · 图片本地识别":"Training records · On-device image recognition","恢复备份会替换当前工作台的编队、可用角色和练度资料。是否继续？":"Restore this backup and replace the current teams, availability and training records?",
  "当前编队有角色已用完次数，请替换后再继续。":"A Resonator in this draft has no remaining uses. Replace them to continue.","最多暂存100支队伍，请先删除部分队伍。":"You can save up to 100 teams. Remove some teams first.","练度导入组件加载失败，请重试。":"Training import failed to load. Please retry.",
  "请选择角色，或取消勾选此行。":"Choose a Resonator or uncheck this row.","角色重复，请改选或取消勾选其中一行。":"Duplicate Resonator. Choose another or uncheck one of these rows.","请勾选要导入的角色。":"Select the Resonators to import.",
