@@ -87,6 +87,7 @@
       "weapon": 2,
       "id": "1102",
       "name": "散华",
+      "pinyinInitials": "sh",
       "aliases": [
         "1102"
       ],
@@ -111,6 +112,7 @@
       "weapon": 5,
       "id": "1103",
       "name": "白芷",
+      "pinyinInitials": "bz",
       "aliases": [
         "1103"
       ],
@@ -137,6 +139,7 @@
       "weapon": 4,
       "id": "1104",
       "name": "凌阳",
+      "pinyinInitials": "ly",
       "aliases": [
         "1104"
       ],
@@ -160,6 +163,7 @@
       "weapon": 5,
       "id": "1105",
       "name": "折枝",
+      "pinyinInitials": "zz",
       "aliases": [
         "1105"
       ],
@@ -188,6 +192,7 @@
       "weapon": 4,
       "id": "1106",
       "name": "釉瑚",
+      "pinyinInitials": "yh",
       "aliases": [
         "1106"
       ],
@@ -215,6 +220,7 @@
       "weapon": 3,
       "id": "1107",
       "name": "珂莱塔",
+      "pinyinInitials": "klt",
       "aliases": [
         "1107"
       ],
@@ -239,6 +245,7 @@
       "weapon": 2,
       "id": "1108",
       "name": "绯雪",
+      "pinyinInitials": "fx",
       "aliases": [
         "1108"
       ],
@@ -264,6 +271,7 @@
       "weapon": 5,
       "id": "1109",
       "name": "洛瑟菈",
+      "pinyinInitials": "lsl",
       "aliases": [
         "1109"
       ],
@@ -291,6 +299,7 @@
       "weapon": 5,
       "id": "1110",
       "name": "穗穗",
+      "pinyinInitials": "ss",
       "aliases": [
         "1110"
       ],
@@ -317,6 +326,7 @@
       "weapon": 3,
       "id": "1202",
       "name": "炽霞",
+      "pinyinInitials": "cx",
       "aliases": [
         "1202"
       ],
@@ -340,6 +350,7 @@
       "weapon": 5,
       "id": "1203",
       "name": "安可",
+      "pinyinInitials": "ak",
       "aliases": [
         "1203"
       ],
@@ -364,6 +375,7 @@
       "weapon": 3,
       "id": "1204",
       "name": "莫特斐",
+      "pinyinInitials": "mtf",
       "aliases": [
         "1204"
       ],
@@ -390,6 +402,7 @@
       "weapon": 2,
       "id": "1205",
       "name": "长离",
+      "pinyinInitials": "cl",
       "aliases": [
         "1205"
       ],
@@ -417,6 +430,7 @@
       "weapon": 2,
       "id": "1206",
       "name": "布兰特",
+      "pinyinInitials": "blt",
       "aliases": [
         "1206"
       ],
@@ -445,6 +459,7 @@
       "weapon": 1,
       "id": "1207",
       "name": "露帕",
+      "pinyinInitials": "lp",
       "aliases": [
         "1207"
       ],
@@ -471,6 +486,7 @@
       "weapon": 3,
       "id": "1208",
       "name": "嘉贝莉娜",
+      "pinyinInitials": "jbln",
       "aliases": [
         "1208"
       ],
@@ -495,6 +511,7 @@
       "weapon": 1,
       "id": "1209",
       "name": "莫宁",
+      "pinyinInitials": "mn",
       "aliases": [
         "1209"
       ],
@@ -523,6 +540,7 @@
       "weapon": 2,
       "id": "1210",
       "name": "爱弥斯",
+      "pinyinInitials": "ams",
       "aliases": [
         "1210"
       ],
@@ -551,6 +569,7 @@
       "weapon": 5,
       "id": "1211",
       "name": "达妮娅",
+      "pinyinInitials": "dny",
       "aliases": [
         "1211"
       ],
@@ -579,6 +598,7 @@
       "weapon": 1,
       "id": "1212",
       "name": "景燃",
+      "pinyinInitials": "jr",
       "aliases": [
         "1212"
       ],
@@ -603,6 +623,7 @@
       "weapon": 1,
       "id": "1301",
       "name": "卡卡罗",
+      "pinyinInitials": "kkl",
       "aliases": [
         "1301"
       ],
@@ -627,6 +648,7 @@
       "weapon": 5,
       "id": "1302",
       "name": "吟霖",
+      "pinyinInitials": "yl",
       "aliases": [
         "1302"
       ],
@@ -654,6 +676,7 @@
       "weapon": 4,
       "id": "1303",
       "name": "渊武",
+      "pinyinInitials": "yw",
       "aliases": [
         "1303"
       ],
@@ -680,6 +703,7 @@
       "weapon": 1,
       "id": "1304",
       "name": "今汐",
+      "pinyinInitials": "jx",
       "aliases": [
         "1304"
       ],
@@ -705,6 +729,7 @@
       "weapon": 4,
       "id": "1305",
       "name": "相里要",
+      "pinyinInitials": "xly",
       "aliases": [
         "1305"
       ],
@@ -729,6 +754,7 @@
       "weapon": 1,
       "id": "1306",
       "name": "奥古斯塔",
+      "pinyinInitials": "agst",
       "aliases": [
         "1306"
       ],
@@ -755,6 +781,7 @@
       "weapon": 5,
       "id": "1307",
       "name": "卜灵",
+      "pinyinInitials": "bl",
       "aliases": [
         "1307"
       ],
@@ -781,6 +808,7 @@
       "weapon": 3,
       "id": "1308",
       "name": "丽贝卡",
+      "pinyinInitials": "lbk",
       "aliases": [
         "1308"
       ],
@@ -808,6 +836,7 @@
       "weapon": 2,
       "id": "1309",
       "name": "漂泊者·导电",
+      "pinyinInitials": "pbzdd",
       "aliases": [
         "1309",
         "1310"
@@ -834,6 +863,7 @@
       "weapon": 5,
       "id": "1311",
       "name": "心",
+      "pinyinInitials": "x",
       "aliases": [
         "1311"
       ],
@@ -861,6 +891,7 @@
       "weapon": 2,
       "id": "1312",
       "name": "锁暝",
+      "pinyinInitials": "sm",
       "aliases": [
         "1312"
       ],
@@ -888,6 +919,7 @@
       "weapon": 2,
       "id": "1402",
       "name": "秧秧",
+      "pinyinInitials": "yy",
       "aliases": [
         "1402"
       ],
@@ -913,6 +945,7 @@
       "weapon": 3,
       "id": "1403",
       "name": "秋水",
+      "pinyinInitials": "qs",
       "aliases": [
         "1403"
       ],
@@ -937,6 +970,7 @@
       "weapon": 1,
       "id": "1404",
       "name": "忌炎",
+      "pinyinInitials": "jy",
       "aliases": [
         "1404"
       ],
@@ -962,6 +996,7 @@
       "weapon": 4,
       "id": "1405",
       "name": "鉴心",
+      "pinyinInitials": "jx",
       "aliases": [
         "1405"
       ],
@@ -989,6 +1024,7 @@
       "weapon": 2,
       "id": "1406",
       "name": "漂泊者·气动",
+      "pinyinInitials": "pbzqd",
       "aliases": [
         "1406",
         "1408"
@@ -1015,6 +1051,7 @@
       "weapon": 3,
       "id": "1407",
       "name": "夏空",
+      "pinyinInitials": "xk",
       "aliases": [
         "1407"
       ],
@@ -1040,6 +1077,7 @@
       "weapon": 2,
       "id": "1409",
       "name": "卡提希娅",
+      "pinyinInitials": "ktxy",
       "aliases": [
         "1409"
       ],
@@ -1067,6 +1105,7 @@
       "weapon": 4,
       "id": "1410",
       "name": "尤诺",
+      "pinyinInitials": "yn",
       "aliases": [
         "1410"
       ],
@@ -1095,6 +1134,7 @@
       "weapon": 2,
       "id": "1411",
       "name": "仇远",
+      "pinyinInitials": "qy",
       "aliases": [
         "1411"
       ],
@@ -1120,6 +1160,7 @@
       "weapon": 4,
       "id": "1412",
       "name": "西格莉卡",
+      "pinyinInitials": "xglk",
       "aliases": [
         "1412"
       ],
@@ -1145,6 +1186,7 @@
       "weapon": 2,
       "id": "1413",
       "name": "清宵",
+      "pinyinInitials": "qx",
       "aliases": [
         "1413"
       ],
@@ -1169,6 +1211,7 @@
       "weapon": 2,
       "id": "1501",
       "name": "漂泊者·衍射",
+      "pinyinInitials": "pbzys",
       "aliases": [
         "1501",
         "1502"
@@ -1194,6 +1237,7 @@
       "weapon": 5,
       "id": "1503",
       "name": "维里奈",
+      "pinyinInitials": "wln",
       "aliases": [
         "1503"
       ],
@@ -1220,6 +1264,7 @@
       "weapon": 1,
       "id": "1504",
       "name": "灯灯",
+      "pinyinInitials": "dd",
       "aliases": [
         "1504"
       ],
@@ -1246,6 +1291,7 @@
       "weapon": 5,
       "id": "1505",
       "name": "守岸人",
+      "pinyinInitials": "sar",
       "aliases": [
         "1505"
       ],
@@ -1272,6 +1318,7 @@
       "weapon": 5,
       "id": "1506",
       "name": "菲比",
+      "pinyinInitials": "fb",
       "aliases": [
         "1506"
       ],
@@ -1298,6 +1345,7 @@
       "weapon": 4,
       "id": "1507",
       "name": "赞妮",
+      "pinyinInitials": "zn",
       "aliases": [
         "1507"
       ],
@@ -1325,6 +1373,7 @@
       "weapon": 1,
       "id": "1508",
       "name": "千咲",
+      "pinyinInitials": "qx",
       "aliases": [
         "1508"
       ],
@@ -1351,6 +1400,7 @@
       "weapon": 3,
       "id": "1509",
       "name": "琳奈",
+      "pinyinInitials": "ln",
       "aliases": [
         "1509"
       ],
@@ -1380,6 +1430,7 @@
       "weapon": 4,
       "id": "1510",
       "name": "陆·赫斯",
+      "pinyinInitials": "lhs",
       "aliases": [
         "1510"
       ],
@@ -1405,6 +1456,7 @@
       "weapon": 3,
       "id": "1511",
       "name": "露西",
+      "pinyinInitials": "lx",
       "aliases": [
         "1511"
       ],
@@ -1432,6 +1484,7 @@
       "weapon": 1,
       "id": "1601",
       "name": "桃祈",
+      "pinyinInitials": "tq",
       "aliases": [
         "1601"
       ],
@@ -1458,6 +1511,7 @@
       "weapon": 2,
       "id": "1602",
       "name": "丹瑾",
+      "pinyinInitials": "dj",
       "aliases": [
         "1602"
       ],
@@ -1482,6 +1536,7 @@
       "weapon": 2,
       "id": "1603",
       "name": "椿",
+      "pinyinInitials": "c",
       "aliases": [
         "1603"
       ],
@@ -1508,6 +1563,7 @@
       "weapon": 2,
       "id": "1604",
       "name": "漂泊者·湮灭",
+      "pinyinInitials": "pbzym",
       "aliases": [
         "1604",
         "1605"
@@ -1532,6 +1588,7 @@
       "weapon": 4,
       "id": "1606",
       "name": "洛可可",
+      "pinyinInitials": "lkk",
       "aliases": [
         "1606"
       ],
@@ -1559,6 +1616,7 @@
       "weapon": 5,
       "id": "1607",
       "name": "坎特蕾拉",
+      "pinyinInitials": "ktll",
       "aliases": [
         "1607"
       ],
@@ -1588,6 +1646,7 @@
       "weapon": 5,
       "id": "1608",
       "name": "弗洛洛",
+      "pinyinInitials": "fll",
       "aliases": [
         "1608"
       ],
@@ -1615,6 +1674,7 @@
       "weapon": 2,
       "id": "1610",
       "name": "秧秧·玄翎",
+      "pinyinInitials": "yyxl",
       "aliases": [
         "1610"
       ],
@@ -1641,6 +1701,7 @@
       "weapon": 3,
       "id": "1512",
       "name": "莉莉",
+      "pinyinInitials": "ll",
       "aliases": [
         "1512"
       ],

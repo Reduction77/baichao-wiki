@@ -60,6 +60,31 @@ const root=new Node(),nodes=new Map(['#tb-message','#tb-roster-list','#tb-import
 const local=new Map();const storage={getItem:k=>local.get(k),setItem:(k,v)=>local.set(k,v)};
 const builder=createTeamBuilder({profiles,teams:records,recommendations:config,img:()=>'<img src="assets/test.webp" alt="">',storage});
 builder.mount(root);
+function searchRoster(value){
+ root.handlers.input({target:{id:'tb-search',value}});
+ const html=nodes.get('#tb-roster-list').innerHTML;
+ return [...html.matchAll(/data-tb="pick" data-id="(\d+)"/g)].map(match=>match[1]).sort();
+}
+for(const p of profiles.characters){
+ assert.match(p.pinyinInitials,/^[a-z]+$/,p.name);
+ assert.equal(p.pinyinInitials.length,[...p.name.replace(/[\s·]/gu,'')].length,p.name);
+ assert(searchRoster(p.pinyinInitials).includes(p.id),p.name);
+}
+for(const query of ['守岸人','守 岸','岸人','sar',' ＳＡＲ ','s a'])assert(searchRoster(query).includes('1505'),query);
+assert(!searchRoster('ar').includes('1505'),'Match pinyin only from the start');
+assert(searchRoster('cl').includes('1205'));
+for(const query of ['陆赫斯','陆 · 赫斯','LHS'])assert.deepEqual(searchRoster(query),['1510']);
+for(const query of ['Lucilla','瑟菈','1109','lsl'])assert.deepEqual(searchRoster(query),['1109']);
+assert.deepEqual(searchRoster('jx'),['1304','1405']);
+assert.deepEqual(searchRoster('pbz'),rover.map(p=>p.id).sort());
+for(const query of ['pbzdd','导电','1310'])assert.deepEqual(searchRoster(query),['1309']);
+assert.deepEqual(searchRoster('没有这个角色'),[]);
+root.handlers.change({target:{id:'tb-element',value:String(jinhsi.element)}});
+assert.deepEqual(searchRoster('jx'),['1304']);
+root.handlers.change({target:{id:'tb-role',value:'sustain'}});
+assert.deepEqual(searchRoster('jx'),[]);
+for(const id of ['tb-element','tb-role'])root.handlers.change({target:{id,value:''}});
+assert.equal(searchRoster('').length,profiles.characters.length);
 const click=async(tb,extra={})=>root.handlers.click({target:{closest:()=>({dataset:{tb,...extra}})}});
 const roleFilter=nodes.get('#tb-role');roleFilter.value='main';roleFilter.focus();root.handlers.change({target:roleFilter});assert.equal(document.activeElement,roleFilter,'Filter redraw must preserve focus');roleFilter.value='';root.handlers.change({target:roleFilter});
 assert(root.innerHTML.includes('矩阵模式'));assert(root.innerHTML.includes('61 个角色形态'));

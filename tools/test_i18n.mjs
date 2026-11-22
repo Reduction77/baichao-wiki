@@ -31,11 +31,11 @@ const detail=await read(`data/${meta.snapshot}/character/1304.json`),skill=detai
 assert(/[a-z]/i.test(plain(skill.desc,paramsAt(skill.param,10))));assert(!/[\u4e00-\u9fff]/.test(plain(skill.desc,paramsAt(skill.param,10))));
 assert.equal(translateText('<script>'),'<script>','Translation must not inject markup');
 const textNode={nodeValue:'资料首页',parentElement:{closest:()=>null}},originalVideo={nodeValue:'原始视频标题',parentElement:{closest:()=>true}};
-const attributes=new Map([['placeholder','搜索角色名称 / ID']]),input={closest:()=>null,getAttribute:k=>attributes.get(k)??null,setAttribute:(k,v)=>attributes.set(k,v)};
+const attributes=new Map([['placeholder','搜索角色名、拼音首字母或 ID']]),input={closest:()=>null,getAttribute:k=>attributes.get(k)??null,setAttribute:(k,v)=>attributes.set(k,v)};
 const root={querySelectorAll:()=>[input]};globalThis.NodeFilter={SHOW_TEXT:4};
 globalThis.document={body:root,title:'今汐 · 白潮资料站',documentElement:{},querySelector:()=>null,createTreeWalker:()=>{let i=0;return {nextNode:()=>[textNode,originalVideo][i++]||null};}};
-localizeDOM();assert.equal(textNode.nodeValue,'Home');assert.equal(originalVideo.nodeValue,'原始视频标题');assert.equal(attributes.get('placeholder'),'Search character name / ID');assert.equal(document.title,'Jinhsi · Baichao Wiki');
-await setLanguage('zh');assert.equal(textNode.nodeValue,'资料首页');assert.equal(attributes.get('placeholder'),'搜索角色名称 / ID');assert.equal(document.title,'今汐 · 白潮资料站');
+localizeDOM();assert.equal(textNode.nodeValue,'Home');assert.equal(originalVideo.nodeValue,'原始视频标题');assert.equal(attributes.get('placeholder'),'Search by name, pinyin initials or ID');assert.equal(document.title,'Jinhsi · Baichao Wiki');
+await setLanguage('zh');assert.equal(textNode.nodeValue,'资料首页');assert.equal(attributes.get('placeholder'),'搜索角色名、拼音首字母或 ID');assert.equal(document.title,'今汐 · 白潮资料站');
 await setLanguage('en');textNode.nodeValue='角色列表';localizeDOM();assert.equal(textNode.nodeValue,'Roster');await setLanguage('zh');assert.equal(textNode.nodeValue,'角色列表');
 delete globalThis.document;
 await setLanguage('zh');assert.equal(translateText('资料首页'),'资料首页');assert.equal(gameText(skill.desc),skill.desc);
